@@ -1,10 +1,13 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using backend.Data;
+using backend.DTOs;
 using backend.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Controllers;
@@ -28,9 +31,58 @@ public class AuthController : ControllerBase
     
     // POST
     [HttpPost("login")]
-    public async Task<IActionResult> Login()
+    public async Task<IActionResult> Login(LoginRequestDTO request)
     {
-        return Ok();
+        // Look up the user by request.Username in _db.Users
+        var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Username == request.Username);
+        
+        // If no user was found, return Unauthorized
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+        
+        // Verify the password matches the stored hash
+        var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
+        
+        // Check if verification passes or fails
+        if (passwordVerificationResult == PasswordVerificationResult.Failed)
+        {
+            return Unauthorized();
+        }
+        
+        // Generate the JWT
+        var jwt = GenerateJwt(user, _configuration);
+        
+        // Generate a raw refresh token
+        var refreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+        
+        // Has the raw value with SHA256
+        var hashedRefreshToken = SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken));
+        var tokenHash = Convert.ToBase64String(hashedRefreshToken);
+        
+        // Create and save a new RefreshToken
+        var refreshTokenEntity = new RefreshToken()
+        {
+            TokenHash = tokenHash,
+            UserId = user.Id,
+            ExpiresAt = DateTime.UtcNow.AddDays(7)
+            
+        };
+        
+        _dbContext.RefreshTokens.Add(refreshTokenEntity);
+        await _dbContext.SaveChangesAsync();
+        
+        // Set the refresh token in the response
+        Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = refreshTokenEntity.ExpiresAt
+        });
+
+        return Ok(new {token = jwt});
     }
 
     private static string GenerateJwt(User user, IConfiguration config)
