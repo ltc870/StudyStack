@@ -1,0 +1,39 @@
+# .NET
+backend/bin/
+backend/obj/
+**/bin/
+**/obj/
+*.user
+.vs/
+/backend/tokens.json
+
+# Angular / Node
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Rider / JetBrains
+.idea/
+*.iml
+
+# DataGrip (if its workspace files land in the repo)
+.idea/dataSources.local.xml
+.idea/dataSources/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment / secrets (defense-in-depth, even though
+# connection strings and the JWT key live in User Secrets,
+# not in the repo)
+.env
+.env.*
+*.pfx
+*.key
+
+# Logs
+*.log
