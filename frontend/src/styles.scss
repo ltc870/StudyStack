@@ -1,0 +1,21 @@
+// frontend/src/styles.scss
+:root {
+  --color-bg: #F6F4EF;
+  --color-surface: #FFFFFF;
+  --color-surface-tint: #FBFAF6;
+  --color-border: #E3DFD5;
+  --color-text-primary: #2A2924;
+  --color-text-secondary: #6B675E;
+  --color-primary: #3E4C74;
+  --color-primary-hover: #2F3B5C;
+  --color-accent: #5E8272;
+  --color-warning: #B15C3E;
+  --color-warning-hover: #96492F;
+  --color-focus-ring: #7C8FC4;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: 'Inter', sans-serif;
+}
