@@ -26,8 +26,6 @@ public class AuthController : ControllerBase
         _passwordHasher = passwordHasher;
         _configuration = configuration;
     }
-
-    // GET
     
     // POST
     [HttpPost("login")]
