@@ -1,7 +1,10 @@
+using System.Text;
 using backend.Data;
 using backend.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +27,19 @@ builder.Services.AddCors(options =>
             .AllowCredentials());
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SigningKey"]!)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+        };
+    });
+
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 
 var app = builder.Build();
@@ -39,6 +55,8 @@ app.UseHttpsRedirection();
 
 // use Cors
 app.UseCors("FrontendDev");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
