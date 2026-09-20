@@ -85,6 +85,77 @@ public class AuthController : ControllerBase
         return Ok(new {token = jwt});
     }
 
+    [HttpPost("refresh")]
+    public async Task<IActionResult> Refresh()
+    {
+        // Read the raw refresh token from the incoming cookie
+        var currentRefreshToken = Request.Cookies["refreshToken"];
+        
+        // If there's no cookie at all, return Unauthorized()
+        if (currentRefreshToken == null)
+        {
+            return Unauthorized();
+        }
+        
+        // Hash that raw value with SHA256
+        var currentHashedRefreshToken = SHA256.HashData(Encoding.UTF8.GetBytes(currentRefreshToken));
+        var currentTokenHash = Convert.ToBase64String(currentHashedRefreshToken);
+        
+        // Look up the RefreshToken row
+        var token = await _dbContext.RefreshTokens.FirstOrDefaultAsync(x => x.TokenHash == currentTokenHash);
+        
+        // Validate the token
+        if (token == null || token.IsRevoked || token.ExpiresAt < DateTime.UtcNow)
+        {
+            return Unauthorized();
+        }
+        
+        // Rotate -> mark the old token IsRevoked = true
+        token.IsRevoked = true;
+        
+        // Generate a raw refresh token
+        var newRefreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+        
+        // Has the raw value with SHA256
+        var newHashedRefreshToken = SHA256.HashData(Encoding.UTF8.GetBytes(newRefreshToken));
+        var newTokenHash = Convert.ToBase64String(newHashedRefreshToken);
+
+        // Find the current user
+        var user =  await _dbContext.Users.FindAsync(token.UserId);
+
+        // Check if the user came back
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+        
+        // Create and save a new RefreshToken
+        var refreshTokenEntity = new RefreshToken()
+        {
+            TokenHash = newTokenHash,
+            UserId = user.Id,
+            ExpiresAt = DateTime.UtcNow.AddDays(7)
+        };
+        
+        // Generate a new JWT 
+        var jwt = GenerateJwt(user, _configuration);
+        
+        await _dbContext.RefreshTokens.AddAsync(refreshTokenEntity);
+        await _dbContext.SaveChangesAsync();
+        
+        // Set the new cookie with the new raw token
+        Response.Cookies.Append("refreshToken", newRefreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = refreshTokenEntity.ExpiresAt
+        });
+
+        // Return the new JWT and refresh token
+        return Ok(new { Token = jwt });
+    }
+
     private static string GenerateJwt(User user, IConfiguration config)
     {
         // Claims are the actual "payload" of the token -- the facts it asserts.
