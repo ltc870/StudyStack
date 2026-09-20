@@ -85,6 +85,38 @@ public class AuthController : ControllerBase
         return Ok(new {token = jwt});
     }
 
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        // Read the raw refresh toke from the cookie
+        var currentRefreshToken = Request.Cookies["refreshToken"];
+        
+        // Validate if the cookie is present. I so, hash it, if not, early return
+        if (currentRefreshToken == null)
+        {
+            return Ok();
+        }
+        
+        // Hash that raw value with SHA256
+        var currentHashedRefreshToken = SHA256.HashData(Encoding.UTF8.GetBytes(currentRefreshToken));
+        var currentTokenHash = Convert.ToBase64String(currentHashedRefreshToken);
+        
+        // Look up the RefreshToken row
+        var token = await _dbContext.RefreshTokens.FirstOrDefaultAsync(x => x.TokenHash == currentTokenHash);
+
+        if (token == null)
+        {
+            return Ok();
+        }
+        
+        token.IsRevoked = true;
+        await _dbContext.SaveChangesAsync();
+        
+        Response.Cookies.Delete("refreshToken");
+        
+        return Ok();
+    }
+
     [HttpPost("refresh")]
     public async Task<IActionResult> Refresh()
     {
