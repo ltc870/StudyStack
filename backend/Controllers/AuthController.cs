@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using backend.Data;
-using backend.DTOs;
+using backend.Dtos;
 using backend.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +29,7 @@ public class AuthController : ControllerBase
     
     // POST
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginRequestDTO request)
+    public async Task<IActionResult> Login(LoginRequestDto request)
     {
         // Look up the user by request.Username in _db.Users
         var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Username == request.Username);

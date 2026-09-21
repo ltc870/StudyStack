@@ -1,6 +1,6 @@
-﻿namespace backend.DTOs;
+﻿namespace backend.Dtos;
 
-public class LoginRequestDTO
+public class LoginRequestDto
 {
     public string Username { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
