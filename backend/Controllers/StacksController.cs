@@ -1,10 +1,11 @@
 ﻿using System.Security.Claims;
 using backend.Data;
-using backend.DTOs;
+using backend.Dtos;
 using backend.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static System.Int32;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace backend.Controllers;
 
@@ -21,25 +22,88 @@ public class StacksController : ControllerBase
     }
     
     // GET
+    [HttpGet("get-all-stacks")]
+    public async Task<IActionResult> GetAllStacks()
+    {
+        if (GetUserId() is not { } userId) return Unauthorized();
+        
+        var stacks = await _dbContext.Stacks
+            .Where(stack => stack.UserId == userId)
+            .ToListAsync();
+        
+        var stacksDto = stacks.Select(StacksDto.FromEntity);
+
+        return Ok(stacksDto);
+    }
+
+    [HttpGet("get-stack/{id}")]
+    public async Task<IActionResult> GetStackById(int id)
+    {
+        if (GetUserId() is not { } userId) return Unauthorized();
+        
+        var stack = await _dbContext.Stacks
+            .FirstOrDefaultAsync(stack => stack.Id == id && stack.UserId == userId);
+
+        if (stack is null) return NotFound();
+
+        return Ok(StacksDto.FromEntity(stack));
+    }
     
     // POST
-    [HttpPost]
-    public async Task<IActionResult> CreateStack(StacksDTO stackDto)
+    [HttpPost("create-stack")]
+    public async Task<IActionResult> CreateStack(StacksDto stackDto)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        
-        if (!int.TryParse(userId, out var userIdInt))
-        {
-            return Unauthorized();
-        }
+        if (GetUserId() is not { } userId) return Unauthorized();
 
         var stack = new Stack
         {
             Name = stackDto.Name,
-            UserId = userIdInt
+            UserId = userId
         };
+
         _dbContext.Stacks.Add(stack);
         await _dbContext.SaveChangesAsync();
-        return Ok(stack);
+        
+        return CreatedAtAction(nameof(GetAllStacks), new { id = stack.Id }, StacksDto.FromEntity(stack));
+    }
+
+    // PUT
+    [HttpPut("update-stack/{id}")]
+    public async Task<IActionResult> UpdateStackById(int id, StacksDto stackDto)
+    {
+        if (GetUserId() is not { } userId) return Unauthorized();
+        
+        var stack = await _dbContext.Stacks
+            .FirstOrDefaultAsync(stack => stack.Id == id && stack.UserId == userId);
+        
+        if (stack is null) return NotFound();
+
+        stack.Name = stackDto.Name;
+        await _dbContext.SaveChangesAsync();
+
+        return Ok(StacksDto.FromEntity(stack));
+    }
+    
+    // DELETE
+    [HttpDelete("delete-stack/{id}")]
+    public async Task<IActionResult> DeleteStackById(int id)
+    {
+        if (GetUserId() is not { } userId) return Unauthorized();
+
+        var stack = await _dbContext.Stacks
+            .FirstOrDefaultAsync(stack => stack.Id == id && stack.UserId == userId);
+
+        if (stack is null) return NotFound();
+        
+        _dbContext.Stacks.Remove(stack);
+        await _dbContext.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    private int? GetUserId()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        return int.TryParse(userId, out var userIdInt) ? userIdInt : null;
     }
 }
