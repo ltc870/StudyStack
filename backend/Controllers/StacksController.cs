@@ -31,7 +31,7 @@ public class StacksController : ControllerBase
             .Where(stack => stack.UserId == userId)
             .ToListAsync();
         
-        var stacksDto = stacks.Select(StacksDto.FromEntity);
+        var stacksDto = stacks.Select(StackResponseDto.FromEntity);
 
         return Ok(stacksDto);
     }
@@ -46,12 +46,12 @@ public class StacksController : ControllerBase
 
         if (stack is null) return NotFound();
 
-        return Ok(StacksDto.FromEntity(stack));
+        return Ok(StackResponseDto.FromEntity(stack));
     }
     
     // POST
     [HttpPost("create-stack")]
-    public async Task<IActionResult> CreateStack(StacksDto stackDto)
+    public async Task<IActionResult> CreateStack(StackResponseDto stackDto)
     {
         if (GetUserId() is not { } userId) return Unauthorized();
 
@@ -64,12 +64,12 @@ public class StacksController : ControllerBase
         _dbContext.Stacks.Add(stack);
         await _dbContext.SaveChangesAsync();
         
-        return CreatedAtAction(nameof(GetAllStacks), new { id = stack.Id }, StacksDto.FromEntity(stack));
+        return CreatedAtAction(nameof(GetAllStacks), new { id = stack.Id }, StackResponseDto.FromEntity(stack));
     }
 
     // PUT
     [HttpPut("update-stack/{id}")]
-    public async Task<IActionResult> UpdateStackById(int id, StacksDto stackDto)
+    public async Task<IActionResult> UpdateStackById(int id, StackResponseDto stackDto)
     {
         if (GetUserId() is not { } userId) return Unauthorized();
         
@@ -81,7 +81,7 @@ public class StacksController : ControllerBase
         stack.Name = stackDto.Name;
         await _dbContext.SaveChangesAsync();
 
-        return Ok(StacksDto.FromEntity(stack));
+        return Ok(StackResponseDto.FromEntity(stack));
     }
     
     // DELETE
