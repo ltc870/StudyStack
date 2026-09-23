@@ -36,13 +36,13 @@ public class StacksController : ControllerBase
         return Ok(stacksDto);
     }
 
-    [HttpGet("get-stack/{id}")]
-    public async Task<IActionResult> GetStackById(int id)
+    [HttpGet("get-stack/{stackId}")]
+    public async Task<IActionResult> GetStackById(int stackId)
     {
         if (GetUserId() is not { } userId) return Unauthorized();
         
         var stack = await _dbContext.Stacks
-            .FirstOrDefaultAsync(stack => stack.Id == id && stack.UserId == userId);
+            .FirstOrDefaultAsync(stack => stack.Id == stackId && stack.UserId == userId);
 
         if (stack is null) return NotFound();
 
@@ -64,17 +64,17 @@ public class StacksController : ControllerBase
         _dbContext.Stacks.Add(stack);
         await _dbContext.SaveChangesAsync();
         
-        return CreatedAtAction(nameof(GetAllStacks), new { id = stack.Id }, StackResponseDto.FromEntity(stack));
+        return CreatedAtAction(nameof(GetAllStacks), new { stackId = stack.Id }, StackResponseDto.FromEntity(stack));
     }
 
     // PUT
-    [HttpPut("update-stack/{id}")]
-    public async Task<IActionResult> UpdateStackById(int id, StackResponseDto stackDto)
+    [HttpPut("update-stack/{stackId}")]
+    public async Task<IActionResult> UpdateStackById(int stackId, StackResponseDto stackDto)
     {
         if (GetUserId() is not { } userId) return Unauthorized();
         
         var stack = await _dbContext.Stacks
-            .FirstOrDefaultAsync(stack => stack.Id == id && stack.UserId == userId);
+            .FirstOrDefaultAsync(stack => stack.Id == stackId && stack.UserId == userId);
         
         if (stack is null) return NotFound();
 
@@ -85,13 +85,13 @@ public class StacksController : ControllerBase
     }
     
     // DELETE
-    [HttpDelete("delete-stack/{id}")]
-    public async Task<IActionResult> DeleteStackById(int id)
+    [HttpDelete("delete-stack/{stackId}")]
+    public async Task<IActionResult> DeleteStackById(int stackId)
     {
         if (GetUserId() is not { } userId) return Unauthorized();
 
         var stack = await _dbContext.Stacks
-            .FirstOrDefaultAsync(stack => stack.Id == id && stack.UserId == userId);
+            .FirstOrDefaultAsync(stack => stack.Id == stackId && stack.UserId == userId);
 
         if (stack is null) return NotFound();
         
