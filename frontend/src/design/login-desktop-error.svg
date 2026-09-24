@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <rect width="1280" height="800" fill="#F6F4EF"/>
+
+  <text x="640" y="250" text-anchor="middle" font-family="'Source Serif 4', Georgia, serif" font-size="46" font-weight="700" fill="#3E4C74">StudyStack</text>
+  <text x="640" y="286" text-anchor="middle" font-family="'Inter', sans-serif" font-size="16" fill="#6B675E">Focused practice for the concepts that stick.</text>
+
+  <text x="440" y="340" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#6B675E">USERNAME</text>
+  <rect x="440" y="350" width="400" height="48" rx="8" fill="#FFFFFF" stroke="#B15C3E" stroke-width="1.5"/>
+  <text x="456" y="374" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">lawrence</text>
+
+  <text x="440" y="418" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#6B675E">PASSWORD</text>
+  <rect x="440" y="428" width="400" height="48" rx="8" fill="#FFFFFF" stroke="#B15C3E" stroke-width="1.5"/>
+  <text x="456" y="452" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="16" letter-spacing="2" fill="#2A2924">••••••••</text>
+
+  <circle cx="452" cy="500" r="9" fill="none" stroke="#B15C3E" stroke-width="1.5"/>
+  <text x="452" y="500" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="700" fill="#B15C3E">!</text>
+  <text x="472" y="500" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#B15C3E">Incorrect username or password.</text>
+
+  <rect x="440" y="522" width="400" height="52" rx="8" fill="#3E4C74"/>
+  <text x="640" y="548" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="16" font-weight="600" fill="#FFFFFF">Log In</text>
+</svg>
