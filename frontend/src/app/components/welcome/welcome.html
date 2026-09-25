@@ -1,1 +1,27 @@
-<p>welcome works!</p>
+<div>
+    <h1 class="welcome-header">StudyStack</h1>
+    <p class="welcome-text">Focused practice for the concepts that stick!</p>
+</div>
+<form class="welcome-form-container">
+    <div class="username-container">
+        <label for="username" class="form-label">Username</label>
+        <input 
+            type="text" 
+            id="username" 
+            formControllerName="username" 
+            placeholder="Enter your username"
+            class="username-input form-input"
+        >
+    </div>
+    <div class="password-container">
+        <label for="password" class="form-label">Password</label>
+        <input 
+            type="text" 
+            id="password" 
+            formControllerName="password" 
+            placeholder="Enter your password"
+            class="password-input form-input"    
+        >
+    </div>
+    <button class="form-button">Log In</button>
+</form>

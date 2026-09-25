@@ -1,5 +1,6 @@
 // frontend/src/styles.scss
 :root {
+ // Color palette (light -- active in v1)
   --color-bg: #F6F4EF;
   --color-surface: #FFFFFF;
   --color-surface-tint: #FBFAF6;
@@ -12,10 +13,80 @@
   --color-warning: #B15C3E;
   --color-warning-hover: #96492F;
   --color-focus-ring: #7C8FC4;
+
+  // Typography -- font families
+  --font-family-heading: 'Source Serif 4', Georgia, serif;
+  --font-family-body: 'Inter', sans-serif;
+  --font-family-mono: 'JetBrains Mono', monospace;
+
+  // Typography -- type scale
+  --font-size-hero: 2.875rem;   // 46px, Welcome/Login wordmark only
+  --line-height-hero: 1.2;
+
+  --font-size-h1: 1.75rem;      // 28px
+  --line-height-h1: 1.3;
+
+  --font-size-h2: 1.25rem;      // 20px
+  --line-height-h2: 1.35;
+
+  --font-size-body: 1rem;       // 16px
+  --line-height-body: 1.5;
+
+  --font-size-meta: 0.875rem;   // 14px
+  --line-height-meta: 1.4;
+
+  --font-size-label: 0.6875rem; // 11px, all-caps field labels
+  --line-height-label: 1.3;
+
+  --font-size-code: 0.95rem;    // 15.2px
+  --line-height-code: 1.55;
+
+  // Spacing (8px base unit)
+  --space-1: 0.5rem;   // 8px
+  --space-2: 1rem;     // 16px
+  --space-3: 1.5rem;   // 24px
+  --space-4: 2rem;     // 32px
+
+  // Corner radius
+  --radius-default: 8px;   // cards, buttons, inputs
+  --radius-modal: 14px;    // card editor modal
+  --radius-pill: 999px;    // pill buttons (Flip, Add Cards) -- 999px reads as
+                            // "fully rounded" at any height, unlike the mockups'
+                            // literal 26px which only works at that exact button height
+}
+
+// Dark mode -- tokens defined for reference; not wired up to a theme
+// toggle in v1. Apply by adding data-theme="dark" to <html> or <body>
+// once dark mode is implemented.
+:root[data-theme='dark'] {
+  --color-bg: #1E1C18;
+  --color-surface: #262420;
+  --color-surface-tint: #2C2A25;
+  --color-border: #3D3A33;
+  --color-text-primary: #EDEAE2;
+  --color-text-secondary: #A8A399;
+  --color-primary: #7C8DC0;
+  --color-primary-hover: #94A3D2;
+  --color-accent: #7FA08D;
+  --color-warning: #D97854;
+  --color-warning-hover: #E8916D;
+  --color-focus-ring: #A8B8E8;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-text-primary);
   font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
 }

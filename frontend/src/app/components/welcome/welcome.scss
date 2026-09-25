@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
+
+.welcome-header {
+    color: var(--color-primary);
+    font-size: var(--font-size-hero);
+    font-family: (--font-family-heading);
+    text-align: center;
+}
+
+.welcome-text {
+    font-size: var(--font-size-body);
+    font-family: var(--font-family-body);
+    color: var(--color-text-secondary);
+    text-align: center;
+    font-weight: 300;
+}
+
+.form-label {
+    display: block;
+    font-size: .85rem;
+    margin-bottom: .25em;
+}
+
+.username-container {
+    margin-bottom: .25em;
+}
+
+.form-input {
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    padding: 1em 1em; 
+    width: 100%;
+}
+
+.form-input::hover,
+.form-input::focus {
+    color: var(--color-focus-ring);
+}
+
+.form-button {
+    display: block;
+    margin: 1em auto;
+    width: 100%;
+    font-weight: bold;
+    color: var(--color-surface);
+    background-color: var(--color-primary);
+    border: none;
+    padding: 1em;
+    border-radius: 10px;
+}
