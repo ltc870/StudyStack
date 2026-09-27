@@ -21,7 +21,7 @@ export class Welcome {
   authService = inject(AuthService)
 
   // Signals
-  isAuthenticated = toSignal(this.authService.isAuthenticated);
+  isAuthenticated = toSignal(this.authService.isAuthenticated$);
   isSubmitting = signal<boolean>(false);
   isCredentialError = signal<boolean>(false);
   errorMessage = signal<string | null>(null);

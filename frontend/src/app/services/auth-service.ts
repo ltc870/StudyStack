@@ -1,16 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, finalize, firstValueFrom, Observable } from 'rxjs';
 
 @Service()
 export class AuthService {
     private readonly http = inject(HttpClient)
     private accessToken: string | null = null;
     private readonly authState = new BehaviorSubject<boolean>(false);
-    readonly isAuthenticated = this.authState.asObservable();
+    readonly isAuthenticated$ = this.authState.asObservable();
     private readonly baseUrl = "https://localhost:7285";
     private readonly refreshEndpoint = "/api/Auth/refresh";
-    private readonly loginEndpoint = "/api/Auth/login"
+    private readonly loginEndpoint = "/api/Auth/login";
+    private readonly logoutEndpoint = "/api/Auth/logout";
 
     getAccessToken(): string | null {
         return this.accessToken;
@@ -53,5 +54,10 @@ export class AuthService {
         this.authState.next(true);  
     }
 
-    logout() {}
+    logout(): Observable<void> {
+        console.log("Trying to logout");
+        this.accessToken = null;
+        this.authState.next(false);
+        return this.http.post<any>(`${this.baseUrl}${this.logoutEndpoint}`, {});
+    }
 }

@@ -108,6 +108,10 @@
     border-color: var(--color-focus-ring);
 }
 
+.form-input.ng-invalid.ng-touched {
+    border-color: var(--color-warning);
+}
+
 .form-input.form-input-error,
 .form-input.form-input-error:hover {
     border-color: var(--color-warning);

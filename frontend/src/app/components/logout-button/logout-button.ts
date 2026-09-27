@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   imports: [],
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './logout-button.scss',
   templateUrl: './logout-button.html',
 })
-export class LogoutButton {}
+export class LogoutButton {
+  authState = inject(AuthService)
+
+  onLogout() {
+    this.authState.logout();
+  }
+}
