@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   imports: [],
@@ -8,9 +9,9 @@ import { AuthService } from '../../services/auth-service';
   templateUrl: './logout-button.html',
 })
 export class LogoutButton {
-  authState = inject(AuthService)
+  authService = inject(AuthService)
 
   onLogout() {
-    this.authState.logout();
+    this.authService.logout().subscribe();
   }
 }
