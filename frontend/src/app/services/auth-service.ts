@@ -3,7 +3,7 @@ import { inject, Service } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 
 @Service()
-export class Auth {
+export class AuthService {
     private readonly http = inject(HttpClient)
     private accessToken: string | null = null;
     private readonly authState = new BehaviorSubject<boolean>(false);
@@ -40,7 +40,7 @@ export class Auth {
         return this.authState.value;
     }
 
-    async login(credentials: { username: string; password: string }): Promise<void> {
+    async login(credentials: { username: string; password: string}): Promise<void> {
         const response = await firstValueFrom(
             this.http.post<TokenResponse>(
                 `${this.baseUrl}${this.loginEndpoint}`,

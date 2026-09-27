@@ -1,5 +1,5 @@
 .main-container {
-    width: clamp(375px, 90vw, 500px);
-    margin: 2em auto;
-    padding: 0 2em;
+    inline-size: min(100%, 500px);
+    margin: 0 auto;
+    padding: var(--space-4);
 }

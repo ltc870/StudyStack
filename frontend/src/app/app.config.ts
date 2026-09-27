@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideHttpClient } from '@angular/common/http';
-import { Auth } from './services/auth';
+import { AuthService } from './services/auth-service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
     }),
     provideHttpClient(),
     provideAppInitializer(() => {
-      const auth = inject(Auth);
+      const auth = inject(AuthService);
       return auth.initializeAuth();
     })
   ],
