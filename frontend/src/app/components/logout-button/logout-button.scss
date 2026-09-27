@@ -10,14 +10,16 @@
     border: 2px solid transparent;
     border-radius: var(--radius-default);
     transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
-    padding: .5em;
+    padding: var(--space-1);
 }
 
-.logout-button:hover,
+.logout-button:hover {
+    background-color: var(--color-text-primary);
+    cursor: pointer;
+}
+
 .logout-button:focus-visible {
-    background-color: var(--color-primary-hover);
     border-color: var(--color-focus-ring);
     outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
-    cursor: pointer;
 }

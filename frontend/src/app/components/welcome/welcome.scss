@@ -1,5 +1,5 @@
 .welcome-header-container {
-    margin-top: 4em;
+    margin-top: calc(var(--space-4) * 2);
 }
 
 .welcome-header {
@@ -26,14 +26,14 @@
 
 .welcome-button {
     color: var(--color-surface);
-    padding: 1em;
+    padding: var(--space-2);
     border-radius: var(--radius-default);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: var(--space-1);
     font-weight: bold;
-    margin-bottom: 1em;
+    margin-bottom: var(--space-2);
     width: 100%;
     border: 2px solid transparent;
     transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
@@ -41,59 +41,65 @@
 
 .icon-class {
     color: var(--color-surface);
+    font-size: 1rem;
 }
 
 .error-icon {
     color: var(--color-warning);
 }
 
-.plus-icon {
-    font-size: 1rem;
-}
-
 .create-button {
     background-color: var(--color-primary);
-    
-   
 }
 
 .study-button {
     background-color: var(--color-accent);
-   
 }
 
-.create-button:hover,
-.create-button:focus-visible {
+.create-button:hover {
     background-color: var(--color-primary-hover);
-    border-color: var(--color-focus-ring);
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: 2px;
     cursor: pointer;
 }
 
-.study-button:hover,
-.study-button:focus-visible {
-    background-color: var(--color-accent-hover);
+.create-button:focus-visible {
     border-color: var(--color-focus-ring);
     outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
+}
+
+.study-button:hover {
+    background-color: var(--color-accent-hover);
     cursor: pointer;
+}
+
+.study-button:focus-visible {
+    border-color: var(--color-focus-ring);
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
 }
 
 .form-label {
     display: block;
-    font-size: .85rem;
-    margin-bottom: .25em;
+    font-size: var(--font-size-label);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-1);
 }
 
 .username-container {
-    margin-bottom: .25em;
+    margin-bottom: var(--space-2);
+}
+
+.password-container {
+    margin-bottom: var(--space-2);
 }
 
 .form-input {
     border-radius: var(--radius-default);
     border: 1px solid var(--color-border);
-    padding: 1em 1em; 
+    padding: var(--space-2);
     width: 100%;
     transition: border-color 120ms ease, box-shadow 120ms ease;
 }
@@ -120,24 +126,26 @@
 
 .form-button {
     display: block;
-    margin: 1em auto;
+    margin: var(--space-2) auto;
     width: 100%;
     font-weight: bold;
     color: var(--color-surface);
     background-color: var(--color-primary);
     border: 2px solid transparent;
-    padding: 1em;
+    padding: var(--space-2);
     border-radius: var(--radius-default);
     transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease, color 120ms ease;
 }
 
-.form-button:hover,
-.form-button:focus-visible {
+.form-button:hover {
     background-color: var(--color-primary-hover);
+    cursor: pointer;
+}
+
+.form-button:focus-visible {
     border-color: var(--color-focus-ring);
     outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
-    cursor: pointer;
 }
 
 .form-button:disabled {
@@ -151,5 +159,5 @@
     color: var(--color-warning);
     display: flex;
     gap: var(--space-1);
-    margin-top: .75em;
+    margin-top: var(--space-2);
 }
