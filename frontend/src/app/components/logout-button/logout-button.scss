@@ -1,0 +1,23 @@
+.logout-button-container {
+    display: flex;
+    justify-content: end;
+}
+
+.logout-button {
+    color: var(--color-surface);
+    background-color: var(--color-primary);
+    font-weight: bold;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+    padding: .5em;
+}
+
+.logout-button:hover,
+.logout-button:focus-visible {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-focus-ring);
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+    cursor: pointer;
+}

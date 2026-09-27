@@ -6,9 +6,10 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { phosphorPlayFill, phosphorWarningCircleFill } from '@ng-icons/phosphor-icons/fill';
 import { phosphorPlusBold } from '@ng-icons/phosphor-icons/bold';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { LogoutButton } from '../logout-button/logout-button';
 
 @Component({
-  imports: [ReactiveFormsModule, NgIcon],
+  imports: [ReactiveFormsModule, NgIcon, LogoutButton],
   providers: [provideIcons({ phosphorPlayFill, phosphorWarningCircleFill, phosphorPlusBold })],
   selector: 'app-welcome',
   styleUrl: './welcome.scss',
