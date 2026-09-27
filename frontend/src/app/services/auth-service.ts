@@ -58,6 +58,6 @@ export class AuthService {
         console.log("Trying to logout");
         this.accessToken = null;
         this.authState.next(false);
-        return this.http.post<any>(`${this.baseUrl}${this.logoutEndpoint}`, {});
+        return this.http.post<any>(`${this.baseUrl}${this.logoutEndpoint}`, {}, {withCredentials: true});
     }
 }

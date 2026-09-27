@@ -1,4 +1,7 @@
-<app-logout-button></app-logout-button>
+@if (isAuthenticated())
+{
+    <app-logout-button></app-logout-button>
+}
 <div class="welcome-header-container">
     <h1 class="welcome-header">StudyStack</h1>
     <p class="welcome-text">Focused practice for the concepts that stick!</p>
