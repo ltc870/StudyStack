@@ -89,7 +89,7 @@ public class AuthController : ControllerBase
         // Read the raw refresh toke from the cookie
         var currentRefreshToken = Request.Cookies["refreshToken"];
         
-        // Validate if the cookie is present. I so, hash it, if not, early return
+        // Validate if the cookie is present. If so, hash it, if not, early return
         if (currentRefreshToken == null)
         {
             return Ok();
