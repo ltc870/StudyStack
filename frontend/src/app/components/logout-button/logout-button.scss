@@ -5,10 +5,10 @@
 
 .logout-button {
     color: var(--color-surface);
-    background-color: var(--color-primary);
+    background-color: var(--color-text-secondary);
     font-weight: bold;
     border: 2px solid transparent;
-    border-radius: 10px;
+    border-radius: var(--radius-default);
     transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
     padding: .5em;
 }
