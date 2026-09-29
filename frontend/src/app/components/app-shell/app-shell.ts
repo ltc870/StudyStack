@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   imports: [RouterOutlet, LogoutButton],
-  selector: 'app-app-shell',
+  selector: 'app-shell',
   styleUrl: './app-shell.scss',
   templateUrl: './app-shell.html',
 })

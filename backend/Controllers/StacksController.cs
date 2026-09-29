@@ -94,10 +94,10 @@ public class StacksController : ControllerBase
         var stack = await _dbContext.Stacks
             .FirstOrDefaultAsync(stack => stack.Id == stackId && stack.UserId == userId);
         
+        if (stack is null) return NotFound();
+        
         var cardCount = await _dbContext.Cards.CountAsync(card => card.StackId == stackId);
         
-        if (stack is null) return NotFound();
-
         stack.Name = stackDto.Name;
         await _dbContext.SaveChangesAsync();
 
