@@ -3,18 +3,14 @@
     <p class="welcome-text">Focused practice for the concepts that stick!</p>
 </div>
 <div class="welcome-body">
-    @if (isAuthenticated()) {
-        <div class="welcome-buttons-container">
-            <button class="create-button welcome-button">
-                <ng-icon name="phosphorPlusBold" class="icon-class plus-icon"></ng-icon>
-                <span class="create-button-text">Create</span>
-            </button>
-            <button class="study-button welcome-button">
-                <ng-icon name="phosphorPlayFill" class="icon-class play-icon"></ng-icon>
-                <span class="study-button-text">Study</span>
-            </button>
-        </div>
-    } @else {
-        <a routerLink="/login" class="login-button welcome-button">Log In</a>
-    }
+    <div class="welcome-buttons-container">
+        <button class="create-button welcome-button">
+            <ng-icon name="phosphorPlusBold" class="icon-class plus-icon"></ng-icon>
+            <span class="create-button-text">Create</span>
+        </button>
+        <button class="study-button welcome-button">
+            <ng-icon name="phosphorPlayFill" class="icon-class play-icon"></ng-icon>
+            <span class="study-button-text">Study</span>
+        </button>
+    </div>
 </div>

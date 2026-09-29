@@ -27,10 +27,6 @@ public class StacksController : ControllerBase
     {
         if (GetUserId() is not { } userId) return Unauthorized();
         
-        var stacks = await _dbContext.Stacks
-            .Where(stack => stack.UserId == userId)
-            .ToListAsync();
-        
         var stacksDto = await _dbContext.Stacks
             .Where(stack => stack.UserId == userId)
             .Select(stack => new StackResponseDto
