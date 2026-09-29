@@ -1,5 +1,7 @@
-<div class="logout-button-container">
-    <button class="logout-button" (click)="onLogout()">
-        <span class="logout-button-text">Logout</span>
-    </button>
-</div>
+@if (isAuthenticated()) {
+    <div class="logout-button-container">
+        <button class="logout-button" (click)="onLogout()">
+            <span class="logout-button-text">Logout</span>
+        </button>
+    </div>
+}

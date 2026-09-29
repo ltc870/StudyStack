@@ -1,4 +1,5 @@
 export interface Stack {
     id: number,
-    name: string
+    name: string,
+    cardCount: number,
 }

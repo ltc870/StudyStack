@@ -1,0 +1,116 @@
+.welcome-header-container {
+    margin-top: calc(var(--space-4) * 2);
+}
+
+.welcome-header {
+    color: var(--color-primary);
+    font-size: var(--font-size-hero);
+    font-family: var(--font-family-heading);
+    text-align: center;
+}
+
+.welcome-text {
+    font-size: var(--font-size-body);
+    font-family: var(--font-family-body);
+    color: var(--color-text-secondary);
+    text-align: center;
+    font-weight: 300;
+    margin-bottom: calc(var(--space-4) * 2);
+}
+
+.icon-class {
+    color: var(--color-surface);
+    font-size: 1rem;
+}
+
+.error-icon {
+    color: var(--color-warning);
+}
+
+.form-label {
+    display: block;
+    font-size: var(--font-size-label);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-1);
+}
+
+.username-container {
+    margin-bottom: var(--space-2);
+}
+
+.password-container {
+    margin-bottom: var(--space-2);
+}
+
+.form-input {
+    border-radius: var(--radius-default);
+    border: 1px solid var(--color-border);
+    padding: var(--space-2);
+    width: 100%;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.form-input:hover {
+    border-color: var(--color-focus-ring);
+}
+
+.form-input.ng-invalid.ng-touched {
+    border-color: var(--color-warning);
+}
+
+.form-input.form-input-error,
+.form-input.form-input-error:hover {
+    border-color: var(--color-warning);
+}
+
+.form-input:focus-visible {
+    border-color: var(--color-focus-ring);
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.form-input.form-input-error:focus-visible {
+    border-color: var(--color-warning);
+    outline-color: var(--color-warning);
+}
+
+.form-button {
+    display: block;
+    margin: var(--space-2) auto;
+    width: 100%;
+    font-weight: bold;
+    color: var(--color-surface);
+    background-color: var(--color-primary);
+    border: 2px solid transparent;
+    padding: var(--space-2);
+    border-radius: var(--radius-default);
+    transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease, color 120ms ease;
+}
+
+.form-button:hover {
+    background-color: var(--color-primary-hover);
+    cursor: pointer;
+}
+
+.form-button:focus-visible {
+    border-color: var(--color-focus-ring);
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.form-button:disabled {
+    background-color: var(--color-border);
+    color: var(--color-text-secondary);
+    cursor: not-allowed;
+}
+
+.login-error-container {
+    align-items: center;
+    color: var(--color-warning);
+    display: flex;
+    gap: var(--space-1);
+    margin-top: var(--space-2);
+}

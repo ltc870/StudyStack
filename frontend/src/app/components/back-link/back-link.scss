@@ -1,0 +1,15 @@
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-right: var(--space-2);
+    color: var(--color-text-primary);
+    cursor: pointer;
+}
+
+.back-link:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}

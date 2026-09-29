@@ -31,7 +31,15 @@ public class StacksController : ControllerBase
             .Where(stack => stack.UserId == userId)
             .ToListAsync();
         
-        var stacksDto = stacks.Select(StackResponseDto.FromEntity);
+        var stacksDto = await _dbContext.Stacks
+            .Where(stack => stack.UserId == userId)
+            .Select(stack => new StackResponseDto
+            {
+                Id = stack.Id,
+                Name = stack.Name,
+                CardCount = stack.Cards.Count
+            })
+            .ToListAsync();
 
         return Ok(stacksDto);
     }
@@ -41,12 +49,19 @@ public class StacksController : ControllerBase
     {
         if (GetUserId() is not { } userId) return Unauthorized();
         
-        var stack = await _dbContext.Stacks
-            .FirstOrDefaultAsync(stack => stack.Id == stackId && stack.UserId == userId);
+        var stackDto = await _dbContext.Stacks
+            .Where(stack => stack.Id == stackId && stack.UserId == userId)
+            .Select(stack => new StackResponseDto
+            {
+                Id = stack.Id,
+                Name = stack.Name,
+                CardCount = stack.Cards.Count
+            })
+            .FirstOrDefaultAsync();
 
-        if (stack is null) return NotFound();
+        if (stackDto is null) return NotFound();
 
-        return Ok(StackResponseDto.FromEntity(stack));
+        return Ok(stackDto);
     }
     
     // POST
@@ -64,7 +79,10 @@ public class StacksController : ControllerBase
         _dbContext.Stacks.Add(stack);
         await _dbContext.SaveChangesAsync();
         
-        return CreatedAtAction(nameof(GetAllStacks), new { stackId = stack.Id }, StackResponseDto.FromEntity(stack));
+        return CreatedAtAction(
+            nameof(GetAllStacks), 
+            new { stackId = stack.Id }, 
+            StackResponseDto.FromEntity(stack, cardCount: 0));
     }
 
     // PUT
@@ -76,12 +94,14 @@ public class StacksController : ControllerBase
         var stack = await _dbContext.Stacks
             .FirstOrDefaultAsync(stack => stack.Id == stackId && stack.UserId == userId);
         
+        var cardCount = await _dbContext.Cards.CountAsync(card => card.StackId == stackId);
+        
         if (stack is null) return NotFound();
 
         stack.Name = stackDto.Name;
         await _dbContext.SaveChangesAsync();
 
-        return Ok(StackResponseDto.FromEntity(stack));
+        return Ok(StackResponseDto.FromEntity(stack, cardCount));
     }
     
     // DELETE
