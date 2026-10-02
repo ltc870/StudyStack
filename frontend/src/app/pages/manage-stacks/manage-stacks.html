@@ -16,7 +16,7 @@
         </button>
     </div>
     <div class="stacks-container">
-        @for(stack of stacks(); track stack.id) {
+        @for(stack of filteredStacks(); track stack.id) {
             <div class="stack-card-container">
             <h3 class="stack-card-title">{{stack.name}}</h3>
             <span class="stack-card-count">{{stack.cardCount}} cards</span>

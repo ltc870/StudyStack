@@ -7,6 +7,7 @@ import { phosphorPlusBold } from '@ng-icons/phosphor-icons/bold';
 import { phosphorMagnifyingGlassLight } from '@ng-icons/phosphor-icons/light';
 import { phosphorPencilSimple } from '@ng-icons/phosphor-icons/regular';
 import { phosphorTrashBold } from '@ng-icons/phosphor-icons/bold';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   imports: [BackLink, NgIcon],
@@ -28,25 +29,29 @@ export class ManageStacks {
 
   // Signals
   mode = input<'manage' | 'study'>('manage');
-  stacks = signal<Stack[]>([]);
   isLoading = signal<boolean>(true);
   searchQuery = signal<string>('');
-  filteredStacks = computed(() => {
-    return this.stacks().some(stack => stack.name === this.searchQuery());
-  })
+  
   title = computed(() => this.mode() === 'manage' ? 'Manage Stacks' : 'Chosose a Stack');
 
-  loadStacks(){
-    this.stacksService.getAll()
-      .subscribe({
-        next: (data) => {
-          this.stacks.set(data);
-        },
-        error: (err) => {
-          console.error('Error loading stacks:', err);
-        }
-      })
-  }
+  stackResource = rxResource({
+    defaultValue: [],
+    stream: () =>  this.stacksService.getAll()
+  });
+
+  filteredStacks = computed<Stack[]>(() => {
+    const rawStacks = this.stackResource.value();
+    const query = this.searchQuery().toLowerCase().trim();
+
+    if (!query) {
+      return rawStacks
+    }
+
+    return rawStacks.filter(stack => stack.name.toLowerCase()
+      .includes(query)
+    )
+  })
+
 
   onRowClick(stack: Stack){}
 
