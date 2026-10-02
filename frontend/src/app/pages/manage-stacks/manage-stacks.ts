@@ -6,7 +6,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { phosphorPlusBold } from '@ng-icons/phosphor-icons/bold';
 import { phosphorMagnifyingGlassLight } from '@ng-icons/phosphor-icons/light';
 import { phosphorPencilSimple } from '@ng-icons/phosphor-icons/regular';
-import { phosphorTrash } from '@ng-icons/phosphor-icons/regular';
+import { phosphorTrashBold } from '@ng-icons/phosphor-icons/bold';
 
 @Component({
   imports: [BackLink, NgIcon],
@@ -15,7 +15,7 @@ import { phosphorTrash } from '@ng-icons/phosphor-icons/regular';
       phosphorPlusBold, 
       phosphorMagnifyingGlassLight,
       phosphorPencilSimple,
-      phosphorTrash 
+      phosphorTrashBold 
     }
   )],
   selector: 'app-manage-stacks',

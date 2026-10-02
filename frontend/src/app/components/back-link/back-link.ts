@@ -2,11 +2,11 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { phosphorCaretLeftThin } from '@ng-icons/phosphor-icons/thin';
+import { phosphorCaretLeftBold } from '@ng-icons/phosphor-icons/bold';
 
 @Component({
   imports: [NgIcon],
-  providers: [provideIcons({ phosphorCaretLeftThin })],
+  providers: [provideIcons({ phosphorCaretLeftBold })],
   selector: 'app-back-link',
   styleUrl: './back-link.scss',
   templateUrl: './back-link.html',
