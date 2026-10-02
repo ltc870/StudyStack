@@ -4,15 +4,17 @@
         <app-back-link></app-back-link>
         <h2 class="manage-stacks-header">Manage Stacks</h2>
     </div>
-    <div class="search-stacks-container">
-        <label for="search-stacks" class="search-input"></label>
-        <input type="text" class="search-stacks-input" id="search-stacks" placeholder="Search stacks...">
-        <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
+    <div class="toolbar-container">
+        <div class="search-stacks-container">
+            <label for="search-stacks" class="search-input"></label>
+            <input type="text" class="search-stacks-input" id="search-stacks" placeholder="Search stacks...">
+            <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
+        </div>
+        <button class="new-stack-button">
+            <ng-icon name="phosphorPlusBold" class="new-stack-icon"/>
+            <span class="new-stack-text">New Stack</span>
+        </button>
     </div>
-    <button class="new-stack-button">
-        <ng-icon name="phosphorPlusBold" class="new-stack-icon"/>
-        <span class="new-stack-text">New Stack</span>
-    </button>
     <div class="stacks-container">
         @for(stack of stacks(); track stack.id) {
             <div class="stack-card-container">

@@ -1,12 +1,10 @@
 .manage-stacks-container {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    grid-template-rows: repeat(4, auto);
+    display: flex;
+    flex-direction: column;
 }
 
 .header-container {
     width: 100%;
-    grid-column: 1 / -1;
     display: flex;
     align-items: center;
 }
@@ -18,46 +16,80 @@
     margin-left: -.25em;
 }
 
+.toolbar-container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+}
+
 .search-stacks-container {
-    grid-row: 2 / 3;
-    grid-column: 1 / -1;
-    width: 100%;
+    flex: 1;
     position: relative;
 }
 
 .search-icon {
     position: absolute;
-    left: 8px;
-    top: 14px;
+    left: var(--space-1);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-secondary);
 }
 
 .search-stacks-input {
     width: 100%;
-    padding: 1em 2em;
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
     border-radius: var(--radius-default);
-    border-color: var(--color-border);
     border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    transition: border-color 120ms ease, box-shadow 120ms ease;
 }
 
+.search-stacks-input::placeholder {
+    color: var(--color-text-secondary);
+}
+
+.search-stacks-input:hover {
+    border-color: var(--color-focus-ring);
+}
+
+.search-stacks-input:focus-visible {
+    border-color: var(--color-focus-ring);
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+// Mobile: a fixed circular FAB, matching mockups/manage-stacks-mobile.svg
 .new-stack-button {
-    height: 60px;
-    width: 60px;
-    border-radius: 100%;
+    position: fixed;
+    right: var(--space-3);
+    bottom: var(--space-3);
+    height: 56px;
+    width: 56px;
+    border-radius: var(--radius-pill);
     display: flex;
     justify-content: center;
     align-items: center;
-    justify-self: end;
-    outline: none;
     background-color: var(--color-primary);
     border: none;
     cursor: pointer;
-    grid-row: 4 / 5;
-    grid-column: 2 / 3;
-    margin-top: 12em;
+    transition: background-color 120ms ease;
+}
+
+.new-stack-button:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.new-stack-button:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
 }
 
 .new-stack-icon {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: var(--color-surface);
 }
 
@@ -65,14 +97,41 @@
     display: none;
 }
 
+// Desktop: an inline pill button with a visible label, sitting next to the
+// search input, matching mockups/manage-stacks-desktop.svg. No breakpoint
+// convention existed yet anywhere else in the app, so 768px is a judgment
+// call -- change it if you land on a different standard breakpoint.
+@media (min-width: 768px) {
+    .new-stack-button {
+        position: static;
+        height: auto;
+        width: auto;
+        gap: var(--space-1);
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .new-stack-icon {
+        font-size: 1.1rem;
+    }
+
+    .new-stack-text {
+        display: inline;
+        color: var(--color-surface);
+        font-family: var(--font-family-body);
+        font-weight: 600;
+    }
+}
+
 .stacks-container {
-    grid-column: 1 / -1;
     margin-top: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
 }
 
 .stack-card-container {
     display: grid;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: 1fr auto;
     grid-template-rows: repeat(2, auto);
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
@@ -105,6 +164,15 @@
     border: none;
     cursor: pointer;
     font-size: 1.25rem;
+}
+
+.edit-delete-buttons:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.edit-stack-button {
+    color: var(--color-text-secondary);
 }
 
 .delete-stack-button {
