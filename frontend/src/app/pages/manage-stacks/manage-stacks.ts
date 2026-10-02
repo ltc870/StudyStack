@@ -2,9 +2,22 @@ import { Component, computed, inject, input, signal } from '@angular/core';
 import { BackLink } from '../../components/back-link/back-link';
 import { StacksService } from '../../services/stacks-service';
 import { Stack } from '../../models/stack';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { phosphorPlusBold } from '@ng-icons/phosphor-icons/bold';
+import { phosphorMagnifyingGlassLight } from '@ng-icons/phosphor-icons/light';
+import { phosphorPencilSimple } from '@ng-icons/phosphor-icons/regular';
+import { phosphorTrash } from '@ng-icons/phosphor-icons/regular';
 
 @Component({
-  imports: [BackLink],
+  imports: [BackLink, NgIcon],
+  providers: [provideIcons(
+    {
+      phosphorPlusBold, 
+      phosphorMagnifyingGlassLight,
+      phosphorPencilSimple,
+      phosphorTrash 
+    }
+  )],
   selector: 'app-manage-stacks',
   styleUrl: './manage-stacks.scss',
   templateUrl: './manage-stacks.html',

@@ -1,2 +1,26 @@
-<p>manage-stacks works!</p>
-<app-back-link></app-back-link>
+
+<div class="manage-stacks-container">
+    <div class="header-container">
+        <app-back-link></app-back-link>
+        <h2 class="manage-stacks-header">Manage Stacks</h2>
+    </div>
+    <div class="search-stacks-container">
+        <label for="search-stacks" class="search-input"></label>
+        <input type="text" class="search-stacks-input" id="search-stacks" placeholder="Search stacks...">
+        <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
+    </div>
+    <button class="new-stack-button">
+        <ng-icon name="phosphorPlusBold" class="new-stack-icon"/>
+        <span class="new-stack-text">New Stack</span>
+    </button>
+    <div class="stacks-container">
+        <div class="stack-card-container">
+            <h3 class="stack-card-title">C# Fundamentals</h3>
+            <span class="stack-card-count">24 cards</span>
+            <div class="edit-delete-container">
+                <ng-icon name="phosphorPencilSimple" />
+                <ng-icon name="phosphorTrash" />
+            </div>
+        </div>
+    </div>
+</div>
