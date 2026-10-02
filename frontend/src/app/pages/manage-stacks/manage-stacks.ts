@@ -36,7 +36,17 @@ export class ManageStacks {
   })
   title = computed(() => this.mode() === 'manage' ? 'Manage Stacks' : 'Chosose a Stack');
 
-  loadStacks(){}
+  loadStacks(){
+    this.stacksService.getAll()
+      .subscribe({
+        next: (data) => {
+          this.stacks.set(data);
+        },
+        error: (err) => {
+          console.error('Error loading stacks:', err);
+        }
+      })
+  }
 
   onRowClick(stack: Stack){}
 
