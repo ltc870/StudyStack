@@ -71,7 +71,7 @@ export class ManageStacks {
 
   onRowClick(stack: Stack){
     if (stack === null) return undefined;
-    
+
     if(this.mode() === 'manage') {
       this.router.navigateByUrl(`/stacks/${stack.id}/cards`);
     } else {
@@ -81,7 +81,13 @@ export class ManageStacks {
 
   onNewStackClick(){}
 
-  onEditClick(stack: Stack){}
+  onEditClick(stack: Stack, event: Event){
+    event.stopPropagation();
+    console.log("edit clicked!!")
+  }
 
-  onDeleteClick(stack: Stack){}
+  onDeleteClick(stack: Stack, event: Event){
+    event.stopPropagation();
+    console.log("delete clicked!!")
+  }
 }
