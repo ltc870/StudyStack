@@ -29,10 +29,9 @@ export class ManageStacks {
 
   // Signals
   mode = input<'manage' | 'study'>('manage');
-  isLoading = signal<boolean>(true);
   searchQuery = signal<string>('');
   
-  title = computed(() => this.mode() === 'manage' ? 'Manage Stacks' : 'Chosose a Stack');
+  title = computed(() => this.mode() === 'manage' ? 'Manage Stacks' : 'Choose a Stack');
 
   stackResource = rxResource({
     defaultValue: [],
