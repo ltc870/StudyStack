@@ -52,6 +52,11 @@ export class ManageStacks {
     )
   })
 
+  updateText(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchQuery.set(input.value);
+  }
+
 
   onRowClick(stack: Stack){}
 

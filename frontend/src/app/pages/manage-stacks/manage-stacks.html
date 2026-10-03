@@ -7,7 +7,11 @@
     <div class="toolbar-container">
         <div class="search-stacks-container">
             <label for="search-stacks" class="search-input"></label>
-            <input type="text" class="search-stacks-input" id="search-stacks" placeholder="Search stacks...">
+            <input 
+                (input)="updateText($event)" 
+                type="text" class="search-stacks-input" 
+                id="search-stacks" placeholder="Search stacks..."
+            >
             <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
         </div>
         <button class="new-stack-button">
