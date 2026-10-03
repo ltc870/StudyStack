@@ -21,18 +21,18 @@
     </div>
     <div class="stacks-container">
         @for(stack of filteredStacks(); track stack.id) {
-            <div class="stack-card-container">
-            <h3 class="stack-card-title">{{stack.name}}</h3>
-            <span class="stack-card-count">{{stack.cardCount}} cards</span>
-            <div class="edit-delete-container">
-                <button class="edit-stack-button edit-delete-buttons">
-                    <ng-icon name="phosphorPencilSimple" class="edit-stack-icon"/>
-                </button>
-                <button class="delete-stack-button edit-delete-buttons">
-                    <ng-icon name="phosphorTrashBold" class="delete-stack-icon"/>
-                </button>
+            <div class="stack-card-container" (click)="onRowClick(stack)">
+                <h3 class="stack-card-title">{{stack.name}}</h3>
+                <span class="stack-card-count">{{stack.cardCount}} cards</span>
+                <div class="edit-delete-container">
+                    <button class="edit-stack-button edit-delete-buttons">
+                        <ng-icon name="phosphorPencilSimple" class="edit-stack-icon"/>
+                    </button>
+                    <button class="delete-stack-button edit-delete-buttons">
+                        <ng-icon name="phosphorTrashBold" class="delete-stack-icon"/>
+                    </button>
+                </div>
             </div>
-        </div>
         }
         
     </div>

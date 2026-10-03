@@ -8,6 +8,7 @@ import { phosphorMagnifyingGlassLight } from '@ng-icons/phosphor-icons/light';
 import { phosphorPencilSimple } from '@ng-icons/phosphor-icons/regular';
 import { phosphorTrashBold } from '@ng-icons/phosphor-icons/bold';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 
 @Component({
   imports: [BackLink, NgIcon],
@@ -26,6 +27,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 export class ManageStacks {
   // Dependency Injection
   stacksService = inject(StacksService);
+  private readonly router = inject(Router);
 
   // Signals
   mode = input<'manage' | 'study'>('manage');
@@ -51,13 +53,31 @@ export class ManageStacks {
     )
   })
 
+  selectedId = signal<number | null>(null);
+
+  selectedStack = computed(() => {
+    const stackList = this.stackResource.value() ?? [];
+    const id = this.selectedId();
+    return stackList.find(stack => stack.id === id);
+  })
+
+
+  // Helper functions
   updateText(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchQuery.set(input.value);
   }
 
 
-  onRowClick(stack: Stack){}
+  onRowClick(stack: Stack){
+    if (stack === null) return undefined;
+    
+    if(this.mode() === 'manage') {
+      this.router.navigateByUrl(`/stacks/${stack.id}/cards`);
+    } else {
+      this.router.navigateByUrl(`/study/${stack.id}`);
+    }
+  }
 
   onNewStackClick(){}
 
