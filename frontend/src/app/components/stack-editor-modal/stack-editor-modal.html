@@ -5,10 +5,10 @@
             <ng-icon name="remixCloseFill" class="close-icon" />
         </button>
         <label for="stack-name-input" class="stack-name-input-label">STACK NAME</label>
-        <input (input)="name()" type="text" id="stack-name-input" class="stack-name-input" placeholder="e.g. C# Fundamentals">
+        <input [value]="name()" (input)="setName($event)" type="text" id="stack-name-input" class="stack-name-input" placeholder="e.g. C# Fundamentals">
         <div class="cancel-save-buttons-container">
             <button class="cancel-button" (click)="cancel.emit()">Cancel</button>
-            <button class="save-button" [disabled]="canSave()" (click)="save.emit(name())">Save</button>
+            <button class="save-button" [disabled]="!canSave()" (click)="save.emit(name())">Save</button>
         </div>
     </div>
 </div>
