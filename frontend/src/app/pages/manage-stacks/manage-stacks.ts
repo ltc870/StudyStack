@@ -10,9 +10,10 @@ import { phosphorTrashBold } from '@ng-icons/phosphor-icons/bold';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { StackEditorModal } from '../../components/stack-editor-modal/stack-editor-modal';
+import { DeleteConfirmationModal } from '../../components/delete-confirmation-modal/delete-confirmation-modal';
 
 @Component({
-  imports: [BackLink, NgIcon, StackEditorModal],
+  imports: [BackLink, NgIcon, StackEditorModal, DeleteConfirmationModal],
   providers: [provideIcons(
     {
       phosphorPlusBold, 
@@ -33,13 +34,18 @@ export class ManageStacks {
   // Signals
   mode = input<'manage' | 'study'>('manage');
   searchQuery = signal<string>('');
-  
+  deleteTarget = signal<Stack | null>(null)
+  selectedId = signal<number | null>(null);
+  editorState = signal<{mode: 'create' | 'rename'; stack: Stack | null} | null>(null)
+
+  // Computed Signals
   title = computed(() => this.mode() === 'manage' ? 'Manage Stacks' : 'Choose a Stack');
 
-  stackResource = rxResource({
-    defaultValue: [],
-    stream: () =>  this.stacksService.getAll()
-  });
+  selectedStack = computed(() => {
+    const stackList = this.stackResource.value() ?? [];
+    const id = this.selectedId();
+    return stackList.find(stack => stack.id === id);
+  })
 
   filteredStacks = computed<Stack[]>(() => {
     const rawStacks = this.stackResource.value();
@@ -54,23 +60,17 @@ export class ManageStacks {
     )
   })
 
-  selectedId = signal<number | null>(null);
-
-  editorState = signal<{mode: 'create' | 'rename'; stack: Stack | null} | null>(null)
-
-  selectedStack = computed(() => {
-    const stackList = this.stackResource.value() ?? [];
-    const id = this.selectedId();
-    return stackList.find(stack => stack.id === id);
-  })
-
+  // HTTP
+  stackResource = rxResource({
+    defaultValue: [],
+    stream: () =>  this.stacksService.getAll()
+  });
 
   // Helper functions
   updateText(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchQuery.set(input.value);
   }
-
 
   onRowClick(stack: Stack){
     if(this.mode() === 'manage') {
@@ -118,6 +118,20 @@ export class ManageStacks {
 
   onDeleteClick(stack: Stack, event: Event){
     event.stopPropagation();
-    console.log("delete clicked!!")
+    this.deleteTarget.set(stack);
+  }
+
+  onDeleteConfirmed() {
+    const stackId = this.deleteTarget()?.id!;
+    this.stacksService.deleteStackById(stackId).subscribe({
+      next: (response) => {
+        console.log("Delete successful: ", response);
+        this.deleteTarget.set(null);
+        this.stackResource.reload();
+      },
+      error: (err) => {
+          console.log("Failed to delete Stack: ", err);
+        }
+    })
   }
 }

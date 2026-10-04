@@ -1,1 +1,13 @@
-<p>delete-confirmation-modal works!</p>
+<div class="modal-backdrop" (click)="cancelled.emit()">
+    <div class="delete-stack-modal-container" (click)="$event.stopPropagation()">
+       <div class="container-header">
+            <ng-icon name="phosphorTrashBold" class="delete-stack-icon"/>
+            <span class="delete-modal-title">{{title()}}</span>
+       </div>
+        <p class="delete-modal-warning">{{deleteWarning()}}</p>
+        <div class="cancel-delete-buttons-container">
+            <button class="cancel-button" (click)="cancelled.emit()">Cancel</button>
+            <button class="delete-button" (click)="confirmed.emit()">Delete</button>
+        </div>
+    </div>
+</div>

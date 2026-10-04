@@ -49,4 +49,13 @@
         />
     }
     
+    @if (deleteTarget()) {
+        <app-delete-confirmation-modal 
+            title="Delete stack?"
+            [itemLabel]="deleteTarget()!.name"
+            [cascadeWarning]="'and all ' + deleteTarget()!.cardCount + ' of its cards'"
+            (confirmed)="onDeleteConfirmed()"
+            (cancelled)="deleteTarget.set(null)"
+        />
+    }
 </div>
