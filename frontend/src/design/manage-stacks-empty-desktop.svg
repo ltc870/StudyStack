@@ -2,11 +2,12 @@
   <rect width="1280" height="800" fill="#F6F4EF"/>
   <rect x="0" y="0" width="1280" height="64" fill="#FFFFFF"/>
   <line x1="0" y1="64" x2="1280" y2="64" stroke="#E3DFD5"/>
-  <text x="32" y="32" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="18" font-weight="600" fill="#3E4C74">StudyStack</text>
-  <circle cx="1248" cy="32" r="18" fill="#3E4C74"/>
-  <text x="1248" y="32" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">LC</text>
+  <text x="48" y="32" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="18" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <circle cx="1214" cy="32" r="18" fill="#3E4C74"/>
+  <text x="1214" y="32" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">LC</text>
 
-  <text x="48" y="112" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">Manage Stacks</text>
+  <path d="M56,104 L48,112 L56,120" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="112" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">Manage Stacks</text>
 
   <circle cx="640" cy="326" r="40" fill="#3E4C74"/>
   <g transform="translate(640,326)" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round">

@@ -2,9 +2,9 @@
   <rect width="1280" height="800" fill="#F6F4EF"/>
   <rect x="0" y="0" width="1280" height="64" fill="#FFFFFF"/>
   <line x1="0" y1="64" x2="1280" y2="64" stroke="#E3DFD5"/>
-  <text x="32" y="32" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="18" font-weight="600" fill="#3E4C74">StudyStack</text>
-  <circle cx="1248" cy="32" r="18" fill="#3E4C74"/>
-  <text x="1248" y="32" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">LC</text>
+  <text x="48" y="32" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="18" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <circle cx="1214" cy="32" r="18" fill="#3E4C74"/>
+  <text x="1214" y="32" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">LC</text>
 
   <path d="M56,104 L48,112 L56,120" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="72" y="112" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">Manage Stacks</text>
@@ -21,60 +21,60 @@
   </g>
   <text x="1090" y="108" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">New Stack</text>
 
-  <rect x="48" y="160" width="378" height="140" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
-  <text x="68" y="196" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">C# Fundamentals</text>
-  <text x="68" y="222" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">24 cards</text>
-  <g transform="translate(366,188) rotate(45)" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="48" y="160" width="378" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="68" y="200" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <text x="68" y="226" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">24 cards</text>
+  <g transform="translate(366,208) rotate(45)" stroke-linecap="round" stroke-linejoin="round">
     <rect x="-2" y="-8" width="4" height="12" rx="1" fill="none" stroke="#6B675E" stroke-width="1.5"/>
     <path d="M-2,4 L0,9 L2,4 Z" fill="#6B675E"/>
     <line x1="-2" y1="-3" x2="2" y2="-3" stroke="#6B675E" stroke-width="1.5"/>
   </g>
-  <g transform="translate(398,188)">
+  <g transform="translate(398,208)">
     <rect x="-7" y="-6" width="14" height="3" rx="1" fill="#B15C3E"/>
     <rect x="-5" y="-2" width="10" height="14" rx="2" fill="none" stroke="#B15C3E" stroke-width="1.5"/>
     <line x1="-2" y1="1" x2="-2" y2="9" stroke="#B15C3E" stroke-width="1.5"/>
     <line x1="2" y1="1" x2="2" y2="9" stroke="#B15C3E" stroke-width="1.5"/>
   </g>
 
-  <rect x="450" y="160" width="378" height="140" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
-  <text x="470" y="196" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">EF Core Patterns</text>
-  <text x="470" y="222" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">12 cards</text>
-  <g transform="translate(768,188) rotate(45)" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="451" y="160" width="378" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="471" y="200" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">EF Core Patterns</text>
+  <text x="471" y="226" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">12 cards</text>
+  <g transform="translate(769,208) rotate(45)" stroke-linecap="round" stroke-linejoin="round">
     <rect x="-2" y="-8" width="4" height="12" rx="1" fill="none" stroke="#6B675E" stroke-width="1.5"/>
     <path d="M-2,4 L0,9 L2,4 Z" fill="#6B675E"/>
     <line x1="-2" y1="-3" x2="2" y2="-3" stroke="#6B675E" stroke-width="1.5"/>
   </g>
-  <g transform="translate(800,188)">
+  <g transform="translate(801,208)">
     <rect x="-7" y="-6" width="14" height="3" rx="1" fill="#B15C3E"/>
     <rect x="-5" y="-2" width="10" height="14" rx="2" fill="none" stroke="#B15C3E" stroke-width="1.5"/>
     <line x1="-2" y1="1" x2="-2" y2="9" stroke="#B15C3E" stroke-width="1.5"/>
     <line x1="2" y1="1" x2="2" y2="9" stroke="#B15C3E" stroke-width="1.5"/>
   </g>
 
-  <rect x="852" y="160" width="378" height="140" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
-  <text x="872" y="196" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">Async/Await Deep Dive</text>
-  <text x="872" y="222" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">8 cards</text>
-  <g transform="translate(1170,188) rotate(45)" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="854" y="160" width="378" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="874" y="200" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">Async/Await Deep Dive</text>
+  <text x="874" y="226" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">8 cards</text>
+  <g transform="translate(1172,208) rotate(45)" stroke-linecap="round" stroke-linejoin="round">
     <rect x="-2" y="-8" width="4" height="12" rx="1" fill="none" stroke="#6B675E" stroke-width="1.5"/>
     <path d="M-2,4 L0,9 L2,4 Z" fill="#6B675E"/>
     <line x1="-2" y1="-3" x2="2" y2="-3" stroke="#6B675E" stroke-width="1.5"/>
   </g>
-  <g transform="translate(1202,188)">
+  <g transform="translate(1204,208)">
     <rect x="-7" y="-6" width="14" height="3" rx="1" fill="#B15C3E"/>
     <rect x="-5" y="-2" width="10" height="14" rx="2" fill="none" stroke="#B15C3E" stroke-width="1.5"/>
     <line x1="-2" y1="1" x2="-2" y2="9" stroke="#B15C3E" stroke-width="1.5"/>
     <line x1="2" y1="1" x2="2" y2="9" stroke="#B15C3E" stroke-width="1.5"/>
   </g>
 
-  <rect x="48" y="324" width="378" height="140" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
-  <text x="68" y="360" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">Design Patterns</text>
-  <text x="68" y="386" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">31 cards</text>
-  <g transform="translate(366,352) rotate(45)" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="48" y="280" width="378" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="68" y="320" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">Design Patterns</text>
+  <text x="68" y="346" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">31 cards</text>
+  <g transform="translate(366,328) rotate(45)" stroke-linecap="round" stroke-linejoin="round">
     <rect x="-2" y="-8" width="4" height="12" rx="1" fill="none" stroke="#6B675E" stroke-width="1.5"/>
     <path d="M-2,4 L0,9 L2,4 Z" fill="#6B675E"/>
     <line x1="-2" y1="-3" x2="2" y2="-3" stroke="#6B675E" stroke-width="1.5"/>
   </g>
-  <g transform="translate(398,352)">
+  <g transform="translate(398,328)">
     <rect x="-7" y="-6" width="14" height="3" rx="1" fill="#B15C3E"/>
     <rect x="-5" y="-2" width="10" height="14" rx="2" fill="none" stroke="#B15C3E" stroke-width="1.5"/>
     <line x1="-2" y1="1" x2="-2" y2="9" stroke="#B15C3E" stroke-width="1.5"/>
