@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 768 1024">
+  <rect width="768" height="1024" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="768" height="60" fill="#FFFFFF"/>
+  <line x1="0" y1="60" x2="768" y2="60" stroke="#E3DFD5"/>
+  <text x="32" y="30" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="20" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <circle cx="718" cy="30" r="18" fill="#3E4C74"/>
+  <text x="718" y="30" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">LC</text>
+  <path d="M44,92 L34,102 L44,112" fill="none" stroke="#2A2924" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="60" y="108" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">Choose a Stack</text>
+  <rect x="32" y="140" width="704" height="48" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <circle cx="56" cy="164" r="6" fill="none" stroke="#6B675E" stroke-width="1.8"/>
+  <line x1="61" y1="169" x2="67" y2="175" stroke="#6B675E" stroke-width="1.8" stroke-linecap="round"/>
+  <text x="78" y="164" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="16" fill="#6B675E">Search stacks...</text>
+  <rect x="32" y="212" width="704" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="52" y="254" font-family="'Inter', sans-serif" font-size="20" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <text x="52" y="280" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">24 cards</text>
+  <rect x="32" y="324" width="704" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="52" y="366" font-family="'Inter', sans-serif" font-size="20" font-weight="600" fill="#2A2924">EF Core Patterns</text>
+  <text x="52" y="392" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">12 cards</text>
+  <rect x="32" y="436" width="704" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="52" y="478" font-family="'Inter', sans-serif" font-size="20" font-weight="600" fill="#2A2924">Async/Await Deep Dive</text>
+  <text x="52" y="504" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">8 cards</text>
+  <rect x="32" y="548" width="704" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="52" y="590" font-family="'Inter', sans-serif" font-size="20" font-weight="600" fill="#2A2924">Design Patterns</text>
+  <text x="52" y="616" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">31 cards</text>
+</svg>

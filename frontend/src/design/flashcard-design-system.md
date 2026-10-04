@@ -1,4 +1,4 @@
-#  Flashcard Study PWA -- Design System
+# Flashcard Study PWA -- Design System
 
 ## Table of Contents
 - [Design Goal](#design-goal)
@@ -7,6 +7,7 @@
 - [Typography](#typography)
 - [Typography Rationale](#typography-rationale)
 - [Spacing and Surface Treatment](#spacing-and-surface-treatment)
+- [Responsive Breakpoints](#responsive-breakpoints)
 - [Application Across the Four Screens](#application-across-the-four-screens)
 - [Dark Mode Palette](#dark-mode-palette)
 - [CSS Custom Properties Reference](#css-custom-properties-reference)
@@ -75,7 +76,22 @@ Type scale (rem, assuming 16px root):
 - Base spacing unit: 8px, scaling in multiples (8/16/24/32) for padding and gaps -- keeps rhythm consistent across list rows, cards, and modals.
 - Surfaces use a 1px `--color-border` outline rather than heavy drop shadows -- shadows read as "floating UI chrome"; flat outlines on a warm background read as calmer and more page-like.
 - Corner radius: 8px on cards, buttons, and inputs -- soft enough to feel approachable, not so round it feels playful/game-like. Two intentional exceptions: pill-shaped buttons (Flip, Add Cards) use a fully rounded radius (26px, i.e. half their height), and the card editor modal uses a slightly larger 14px to distinguish a floating dialog from the flatter page chrome beneath it.
-- Modal presentation is identical at every breakpoint: a centered dialog over a darkened backdrop (`rgba(0,0,0,0.45)`), never a full-screen sheet on mobile. This applies uniformly to the card editor, the stack editor, and the delete-confirmation dialog, so a user never has to relearn how a floating panel behaves just because the screen is narrower. Width is intentionally left as a judgment call per modal (whatever comfortably fits its content at a given breakpoint) rather than a fixed token -- same as the general margin/padding convention elsewhere in this system.
+- Modal presentation is identical at every breakpoint: a centered dialog over a darkened backdrop (`rgba(0,0,0,0.45)`), never a full-screen sheet on mobile. This applies uniformly to the card editor, the stack editor, and the delete-confirmation dialog, so a user never has to relearn how a floating panel behaves just because the screen is narrower. Width is intentionally left as a judgment call per modal (whatever comfortably fits its content at a given breakpoint) rather than a fixed token -- same as the general margin/padding convention elsewhere in this system. Inside every dialog, the footer buttons sit on the same inner padding as the dialog's content (the Save/Delete button never touches the dialog's right edge).
+
+## Responsive Breakpoints
+
+Three layouts, each with a full set of static mockups (`*-mobile.svg`, `*-tablet.svg`, `*-desktop.svg`). Reference canvas sizes are for the mockups only; the real breakpoints are wherever the layout stops fitting.
+
+| Layout | Reference canvas | Structure | Key measurements |
+|---|---|---|---|
+| Mobile | 390 x 844 | Single column; floating "+" button (FAB) for New Stack / New Card | 48px nav; 20px gutters; 76px list rows |
+| Tablet | 768 x 1024 | Same single-column structure as mobile, scaled up -- nothing is rearranged | 60px nav; 32px gutters (704px content width); 96px list rows; FAB stays; modals 480px wide (stack editor, delete) and 560px wide (card editor); Study tray drawer 380px |
+| Desktop | 1280 x 800 | Multi-column: stack grid is 3 columns, "New Stack" / "New Card" move into the toolbar next to search, Study tray is a persistent left panel | 64px nav; 48px gutter on both the nav and the page content, left and right; stack cards 96px tall with 25px gaps; card rows full width |
+
+Rules that hold at every size:
+- The nav's wordmark and avatar line up with the page content's left and right edges, so there's one consistent gutter per layout (48px on desktop).
+- Right-aligned meta text ("Card 3 of 24", "0 cards") ends on the content's right edge, not floating inside it.
+- Tablet is a deliberate "larger mobile": it never adopts the desktop grid or toolbar, so a tablet user sees the same flow as a phone user with roomier sizing.
 
 ## Application Across the Four Screens
 
@@ -87,7 +103,7 @@ Type scale (rem, assuming 16px root):
 
 **Study**: **MVP note (Oct 2026)**: the card tray described later in this section is deferred post-MVP (see the roadmap's V1 vs. Later table). V1 ships with Next/Previous buttons in its place -- styled at a deliberately low visual weight (`--color-text-secondary`, in the same spirit as the `BackLink` chevron) so they read as plain navigation and don't compete with the Flip button's primary color. Switching cards -- via Next/Previous in v1, via the tray once it's built -- always returns to the question side, matching the stated interaction model. The main card area is the largest, calmest surface in the app regardless of which navigation is present -- generous padding, `--color-surface` background, question or answer text centered or left-aligned depending on length. The Flip button is the single primary-colored action on the screen, deliberately not competing with anything else. The empty-stack state replaces the card area with a simple prompt ("This stack has no cards yet") and an accent-colored "Add Cards" action linking to Manage Cards -- calm rather than alarming, since an empty stack isn't an error state.
 
-*Post-MVP*: the tray (left side, toggleable, `--color-surface-tint` background) lists cards in the open stack, with the active card indicated using `--color-accent`. The existing tray mockups (`study-tray-open-desktop/mobile`, `study-tray-closed-desktop/mobile`) remain valid for when this gets built -- nothing about the tray's design changes, it's just sequenced later than the rest of the MVP.
+*Post-MVP*: the tray (left side, toggleable, `--color-surface-tint` background) lists cards in the open stack, with the active card indicated using `--color-accent`. The existing tray mockups (`study-tray-open-desktop/tablet/mobile`, `study-tray-closed-desktop/tablet/mobile`) remain valid for when this gets built -- nothing about the tray's design changes, it's just sequenced later than the rest of the MVP.
 
 ## Dark Mode Palette
 
