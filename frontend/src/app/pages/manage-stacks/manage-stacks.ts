@@ -89,16 +89,16 @@ export class ManageStacks {
       this.stacksService.createStack(name).subscribe({
         next: (response) => {
           console.log("Submission successful: ", response)
+          this.editorState.set(null);
+          this.stackResource.reload();
         },
         error: (err) => {
           console.log("Failed to create new Stack: ", err);
-          this.editorState.set(null);
-          this.stackResource.reload();
         }
       });
     } else {
       const stack = this.editorState()!.stack!;
-      this.stacksService.updateStackById(stack.id, stack.name).subscribe({
+      this.stacksService.updateStackById(stack.id, name).subscribe({
         next: (response) => {
           console.log("Update successful: ", response);
           this.editorState.set(null);

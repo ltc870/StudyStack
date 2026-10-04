@@ -14,7 +14,7 @@ export class StackEditorModal {
   // Signals
   mode = input<'create' | 'rename'>('create');
   stack = input<Stack | null>(null);
-  name = signal<string>('');
+  name = signal(this.stack()?.name ?? '');
   canSave = computed(() => this.name().trim().length > 0);
   title = computed(() => this.mode() === 'create' ? 'New Stack' : 'Rename Stack')
   save = output<string>();
@@ -24,5 +24,11 @@ export class StackEditorModal {
   setName(event: Event) {
     const input = event.target as HTMLInputElement
     this.name.set(input.value);
+  }
+
+  onEnter() {
+    if (this.canSave()) {
+      this.save.emit(this.name());
+    }
   }
 }
