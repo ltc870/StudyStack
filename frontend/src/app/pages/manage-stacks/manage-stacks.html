@@ -15,7 +15,7 @@
             <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
         </div>
         @if (mode() === 'manage') {
-            <button class="new-stack-button">
+            <button class="new-stack-button" (click)="onNewStackClick()">
                 <ng-icon name="phosphorPlusBold" class="new-stack-icon"/>
                 <span class="new-stack-text">New Stack</span>
             </button>
@@ -40,4 +40,13 @@
             </div>    
         }
     </div>
+    @if (editorState()) {
+        <app-stack-editor-modal 
+            [mode]="editorState()!.mode"
+            [stack]="editorState()!.stack"
+            /* (save)="onEditorSave($event)" */
+            (cancel)="editorState.set(null)"
+        />
+    }
+    
 </div>

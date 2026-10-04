@@ -9,9 +9,10 @@ import { phosphorPencilSimple } from '@ng-icons/phosphor-icons/regular';
 import { phosphorTrashBold } from '@ng-icons/phosphor-icons/bold';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { StackEditorModal } from '../../components/stack-editor-modal/stack-editor-modal';
 
 @Component({
-  imports: [BackLink, NgIcon],
+  imports: [BackLink, NgIcon, StackEditorModal],
   providers: [provideIcons(
     {
       phosphorPlusBold, 
@@ -55,6 +56,8 @@ export class ManageStacks {
 
   selectedId = signal<number | null>(null);
 
+  editorState = signal<{mode: 'create' | 'rename'; stack: Stack | null} | null>(null)
+
   selectedStack = computed(() => {
     const stackList = this.stackResource.value() ?? [];
     const id = this.selectedId();
@@ -77,11 +80,17 @@ export class ManageStacks {
     }
   }
 
-  onNewStackClick(){}
+  onNewStackClick(){
+    this.editorState.set({ mode: 'create', stack: null })
+  }
+
+  onEditorSave(event: Event) {
+    event.stopPropagation();
+  }
 
   onEditClick(stack: Stack, event: Event){
     event.stopPropagation();
-    console.log("edit clicked!!")
+    this.editorState.set({mode: 'rename', stack});
   }
 
   onDeleteClick(stack: Stack, event: Event){
