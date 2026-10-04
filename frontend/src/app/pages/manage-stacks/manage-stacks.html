@@ -44,7 +44,7 @@
         <app-stack-editor-modal 
             [mode]="editorState()!.mode"
             [stack]="editorState()!.stack"
-            /* (save)="onEditorSave($event)" */
+            (save)="onEditorSave($event)" 
             (cancel)="editorState.set(null)"
         />
     }

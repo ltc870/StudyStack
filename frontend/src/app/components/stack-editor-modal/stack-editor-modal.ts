@@ -15,7 +15,6 @@ export class StackEditorModal {
   mode = input<'create' | 'rename'>('create');
   stack = input<Stack | null>(null);
   name = signal(this.stack()?.name ?? '');
-  closed = output<void>();
   canSave = computed(() => this.name().trim().length > 0);
   title = computed(() => this.mode() === 'create' ? 'New Stack' : 'Rename Stack')
   save = output<string>();

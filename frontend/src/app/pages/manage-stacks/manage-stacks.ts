@@ -84,8 +84,31 @@ export class ManageStacks {
     this.editorState.set({ mode: 'create', stack: null })
   }
 
-  onEditorSave(event: Event) {
-    event.stopPropagation();
+  onEditorSave(name: string) {
+    if (this.editorState()?.mode === 'create') {
+      this.stacksService.createStack(name).subscribe({
+        next: (response) => {
+          console.log("Submission successful: ", response)
+          this.editorState.set(null);
+          this.stackResource.reload();
+        },
+        error: (err) => {
+          console.log("Failed to create new Stack: ", err);
+        }
+      });
+    } else {
+      const stack = this.editorState()!.stack!;
+      this.stacksService.updateStackById(stack.id, stack.name).subscribe({
+        next: (response) => {
+          console.log("Update successful: ", response);
+          this.editorState.set(null);
+          this.stackResource.reload();
+        },
+        error: (err) => {
+          console.log("Failed to update Stack: ", err);
+        }
+      })
+    }
   }
 
   onEditClick(stack: Stack, event: Event){

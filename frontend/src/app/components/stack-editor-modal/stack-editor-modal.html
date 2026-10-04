@@ -1,14 +1,14 @@
-<div class="modal-backgrop">
-    <div class="stack-editor-modal-container">
+<div class="modal-backdrop" (click)="cancel.emit()">
+    <div class="stack-editor-modal-container" (click)="$event.stopPropagation()">
         <h2 class="modal-title">{{title()}}</h2>
-        <button class="modal-close-button">
+        <button class="modal-close-button" (click)="cancel.emit()">
             <ng-icon name="remixCloseFill" class="close-icon" />
         </button>
         <label for="stack-name-input" class="stack-name-input-label">STACK NAME</label>
-        <input type="text" id="stack-name-input" class="stack-name-input" placeholder="e.g. C# Fundamentals">
+        <input (input)="name()" type="text" id="stack-name-input" class="stack-name-input" placeholder="e.g. C# Fundamentals">
         <div class="cancel-save-buttons-container">
-            <button class="cancel-button">Cancel</button>
-            <button class="save-button">Save</button>
+            <button class="cancel-button" (click)="cancel.emit()">Cancel</button>
+            <button class="save-button" [disabled]="canSave()" (click)="save.emit(name())">Save</button>
         </div>
     </div>
 </div>
