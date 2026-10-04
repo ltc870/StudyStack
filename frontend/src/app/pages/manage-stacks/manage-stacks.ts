@@ -70,8 +70,6 @@ export class ManageStacks {
 
 
   onRowClick(stack: Stack){
-    if (stack === null) return undefined;
-
     if(this.mode() === 'manage') {
       this.router.navigateByUrl(`/stacks/${stack.id}/cards`);
     } else {

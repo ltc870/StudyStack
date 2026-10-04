@@ -14,26 +14,30 @@
             >
             <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
         </div>
-        <button class="new-stack-button">
-            <ng-icon name="phosphorPlusBold" class="new-stack-icon"/>
-            <span class="new-stack-text">New Stack</span>
-        </button>
+        @if (mode() === 'manage') {
+            <button class="new-stack-button">
+                <ng-icon name="phosphorPlusBold" class="new-stack-icon"/>
+                <span class="new-stack-text">New Stack</span>
+            </button>
+        }
     </div>
     <div class="stacks-container">
         @for(stack of filteredStacks(); track stack.id) {
             <div class="stack-card-container" (click)="onRowClick(stack)">
                 <h3 class="stack-card-title">{{stack.name}}</h3>
                 <span class="stack-card-count">{{stack.cardCount}} cards</span>
-                <div class="edit-delete-container">
-                    <button class="edit-stack-button edit-delete-buttons" (click)="onEditClick(stack, $event)">
-                        <ng-icon name="phosphorPencilSimple" class="edit-stack-icon"/>
-                    </button>
-                    <button class="delete-stack-button edit-delete-buttons" (click)="onDeleteClick(stack, $event)">
-                        <ng-icon name="phosphorTrashBold" class="delete-stack-icon"/>
-                    </button>
-                </div>
-            </div>
+
+                @if (mode() === 'manage') {
+                    <div class="edit-delete-container">
+                        <button class="edit-stack-button edit-delete-buttons" (click)="onEditClick(stack, $event)">
+                            <ng-icon name="phosphorPencilSimple" class="edit-stack-icon"/>
+                        </button>
+                        <button class="delete-stack-button edit-delete-buttons" (click)="onDeleteClick(stack, $event)">
+                            <ng-icon name="phosphorTrashBold" class="delete-stack-icon"/>
+                        </button>
+                    </div>
+                }
+            </div>    
         }
-        
     </div>
 </div>
