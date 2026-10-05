@@ -19,14 +19,10 @@ export class DeleteConfirmationModal {
   cascadeWarning = input<string | null>(null);
 
   deleteWarning = computed(() => {
-    if (this.cascadeWarning() === null) {
-      return `This will permanently delete ${this.itemLabel()}.` +
-      ` and all 24 of its cards. This cannot be undone.`
-    } else {
-      return `This will permanently delete ${this.itemLabel()}.` +
-      ` This cannot be do undone.`
-    }
-  })
+     const cascade = this.cascadeWarning();
+     const extra = cascade ? ` ${cascade}` : '';
+     return `This will permanently delete ${this.itemLabel()}${extra}. This cannot be undone.`;
+   });
 
   confirmed = output<void>();
   cancelled = output<void>();

@@ -1,4 +1,4 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, input, linkedSignal, output, signal } from '@angular/core';
 import { Stack } from '../../models/stack';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { remixCloseFill } from '@ng-icons/remixicon';
@@ -14,7 +14,7 @@ export class StackEditorModal {
   // Signals
   mode = input<'create' | 'rename'>('create');
   stack = input<Stack | null>(null);
-  name = signal(this.stack()?.name ?? '');
+  name = linkedSignal(() => this.stack()?.name ?? '');
   canSave = computed(() => this.name().trim().length > 0);
   title = computed(() => this.mode() === 'create' ? 'New Stack' : 'Rename Stack')
   save = output<string>();

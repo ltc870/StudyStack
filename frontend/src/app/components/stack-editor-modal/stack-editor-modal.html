@@ -16,7 +16,7 @@
         />
         <div class="cancel-save-buttons-container">
             <button class="cancel-button" (click)="cancel.emit()">Cancel</button>
-            <button class="save-button" [disabled]="!canSave()" (click)="save.emit(name())" (keydown)="save.emit(name())">Save</button>
+            <button class="save-button" [disabled]="!canSave()" (click)="save.emit(name())">Save</button>
         </div>
     </div>
 </div>

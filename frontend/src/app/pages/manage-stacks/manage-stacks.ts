@@ -35,17 +35,10 @@ export class ManageStacks {
   mode = input<'manage' | 'study'>('manage');
   searchQuery = signal<string>('');
   deleteTarget = signal<Stack | null>(null)
-  selectedId = signal<number | null>(null);
   editorState = signal<{mode: 'create' | 'rename'; stack: Stack | null} | null>(null)
 
   // Computed Signals
   title = computed(() => this.mode() === 'manage' ? 'Manage Stacks' : 'Choose a Stack');
-
-  selectedStack = computed(() => {
-    const stackList = this.stackResource.value() ?? [];
-    const id = this.selectedId();
-    return stackList.find(stack => stack.id === id);
-  })
 
   filteredStacks = computed<Stack[]>(() => {
     const rawStacks = this.stackResource.value();
