@@ -8,6 +8,7 @@
 - [Typography Rationale](#typography-rationale)
 - [Spacing and Surface Treatment](#spacing-and-surface-treatment)
 - [Responsive Breakpoints](#responsive-breakpoints)
+  - [Media Queries and Layout Tokens](#media-queries-and-layout-tokens)
 - [Application Across the Four Screens](#application-across-the-four-screens)
 - [Dark Mode Palette](#dark-mode-palette)
 - [CSS Custom Properties Reference](#css-custom-properties-reference)
@@ -68,7 +69,7 @@ Type scale (rem, assuming 16px root):
 - **A serif for headings, sans-serif for everything else**: this pairing (serif headings over a humanist sans body) is a deliberate nod to academic/library typography -- the kind of type hierarchy on a textbook title page or a lecture handout -- without going full serif-everywhere, which would hurt legibility in dense UI like stack lists and forms. It's a small cue, but it's the difference between "generic SaaS app" and "study tool."
 - **Inter for body/UI**: chosen for screen legibility at small sizes and a large, well-hinted character set, so it holds up in dense list views (stack names, card counts, search results) as well as it does in buttons.
 - **JetBrains Mono for code, with ligatures off**: since question/answer content will often contain actual code, a monospace option matters for alignment and readability of symbols. JetBrains Mono is a solid, widely-available choice for this. Ligatures are explicitly disabled (`font-variant-ligatures: none` and `font-feature-settings: "liga" 0, "calt" 0` on the code font class) so that `->`, `!=`, `=>`, and similar operators render as the literal characters typed rather than as combined glyphs -- consistent with keeping code text unambiguous and copy-paste-safe, and matching your own no-ligatures preference for code elsewhere.
-- **Monospace is optional, not forced**: not every card is code -- some may be plain-language Q&A. The font toggle lives in the Study screen so it's a per-session reading preference rather than a global content format decision.
+- **Monospace is optional, not forced, and saved per card**: not every card is code -- some may be plain-language Q&A, and a single stack can mix both. So monospace is a property of each card, set with the "Monospace font" toggle in the card editor and stored on the card (`isMonospace`, off by default). The toggle also switches the editor's two textareas to the monospace font as you type, so what you write looks like what you'll study. The Study screen renders a card's question and answer in the monospace font whenever that card's setting is on; there is no separate Study-screen toggle.
 - **The hero wordmark is its own tier, not the h1**: the "StudyStack" title on Welcome/Login is a brand mark, not a screen title -- it doesn't compete with `--font-size-h1` because it isn't playing the same role. Earlier drafts of the mockups didn't document this size at all, which read as an inconsistency (the "heading" token looking smaller than other text on the page) even though the two were never meant to be the same thing. Adding `--font-size-hero` as its own named token resolves that: the hierarchy is now explicit -- hero (46px, Welcome/Login only) > h1 (28px, screen titles) > h2 (20px) > body (16px) > meta (14px) > label (11px).
 
 ## Spacing and Surface Treatment
@@ -76,30 +77,75 @@ Type scale (rem, assuming 16px root):
 - Base spacing unit: 8px, scaling in multiples (8/16/24/32) for padding and gaps -- keeps rhythm consistent across list rows, cards, and modals.
 - Surfaces use a 1px `--color-border` outline rather than heavy drop shadows -- shadows read as "floating UI chrome"; flat outlines on a warm background read as calmer and more page-like.
 - Corner radius: 8px on cards, buttons, and inputs -- soft enough to feel approachable, not so round it feels playful/game-like. Two intentional exceptions: pill-shaped buttons (Flip, Add Cards) use a fully rounded radius (26px, i.e. half their height), and the card editor modal uses a slightly larger 14px to distinguish a floating dialog from the flatter page chrome beneath it.
-- Modal presentation is identical at every breakpoint: a centered dialog over a darkened backdrop (`rgba(0,0,0,0.45)`), never a full-screen sheet on mobile. This applies uniformly to the card editor, the stack editor, and the delete-confirmation dialog, so a user never has to relearn how a floating panel behaves just because the screen is narrower. Width is intentionally left as a judgment call per modal (whatever comfortably fits its content at a given breakpoint) rather than a fixed token -- same as the general margin/padding convention elsewhere in this system. Inside every dialog, the footer buttons sit on the same inner padding as the dialog's content (the Save/Delete button never touches the dialog's right edge).
+- Modal presentation is identical at every breakpoint: a centered dialog over a darkened backdrop (`rgba(0,0,0,0.45)`), never a full-screen sheet on mobile. This applies uniformly to the card editor, the stack editor, and the delete-confirmation dialog, so a user never has to relearn how a floating panel behaves just because the screen is narrower. The two small dialogs, the stack editor and the delete confirmation, always share one width and one inner padding, driven by the `--modal-width` and `--modal-padding` tokens (see [Responsive Breakpoints](#responsive-breakpoints)): 350px / 480px / 560px wide, 24px / 32px / 32px padding at mobile / tablet / desktop. The card editor holds more content and is the one exception: it sets its own, larger width (560px tablet, 640px desktop). Inside every dialog, the footer buttons sit on the same inner padding as the dialog's content (the Save/Delete button never touches the dialog's right edge).
 
 ## Responsive Breakpoints
 
-Three layouts, each with a full set of static mockups (`*-mobile.svg`, `*-tablet.svg`, `*-desktop.svg`). Reference canvas sizes are for the mockups only; the real breakpoints are wherever the layout stops fitting.
+Three layouts, each with a full set of static mockups (`*-mobile.svg`, `*-tablet.svg`, `*-desktop.svg`). The reference canvas sizes below are for the mockups; the actual media queries are listed under [Media Queries and Layout Tokens](#media-queries-and-layout-tokens).
 
 | Layout | Reference canvas | Structure | Key measurements |
 |---|---|---|---|
-| Mobile | 390 x 844 | Single column; floating "+" button (FAB) for New Stack / New Card | 48px nav; 20px gutters; 76px list rows |
-| Tablet | 768 x 1024 | Same single-column structure as mobile, scaled up -- nothing is rearranged | 60px nav; 32px gutters (704px content width); 96px list rows; FAB stays; modals 480px wide (stack editor, delete) and 560px wide (card editor); Study tray drawer 380px |
-| Desktop | 1280 x 800 | Multi-column: stack grid is 3 columns, "New Stack" / "New Card" move into the toolbar next to search, Study tray is a persistent left panel | 64px nav; 48px gutter on both the nav and the page content, left and right; stack cards 96px tall with 25px gaps; card rows full width |
+| Mobile | 390 x 844 | Single column; floating "+" button (FAB) for New Stack / New Card | 48px nav; 20px gutters; 76px list rows; modals 350px wide, 24px padding |
+| Tablet | 768 x 1024 | Same single-column structure as mobile, scaled up -- nothing is rearranged | 60px nav; 32px gutters (704px content width); 96px list rows; FAB stays; modals 480px wide (stack editor, delete) and 560px wide (card editor), 32px padding; Study tray drawer 380px |
+| Desktop | 1280 x 800 | Multi-column: stack grid is 3 columns, "New Stack" / "New Card" move into the toolbar next to search, Study tray is a persistent left panel | 64px nav; 48px gutter on both the nav and the page content, left and right (content tops out at 1184px); stack cards 96px tall with 24px gaps; card rows full width; modals 560px wide (stack editor, delete) and 640px wide (card editor), 32px padding |
 
 Rules that hold at every size:
 - The nav's wordmark and avatar line up with the page content's left and right edges, so there's one consistent gutter per layout (48px on desktop).
 - Right-aligned meta text ("Card 3 of 24", "0 cards") ends on the content's right edge, not floating inside it.
 - Tablet is a deliberate "larger mobile": it never adopts the desktop grid or toolbar, so a tablet user sees the same flow as a phone user with roomier sizing.
+- The stack editor and delete-confirmation dialogs are always the same width as each other (see the modal rule under Spacing and Surface Treatment).
+- Short windows (a phone in landscape, dev tools docked) must not push primary content below the fold. On Welcome, the vertical spacing around the wordmark and tagline scales with viewport height (`vh`) instead of using fixed pixel margins, so the Manage and Study buttons stay visible without scrolling.
+
+### Media Queries and Layout Tokens
+
+Implementation is mobile-first: the unprefixed styles are the mobile layout, and the tablet and desktop queries only add overrides.
+
+| Layout | Query | Notes |
+|---|---|---|
+| Mobile | none (base styles) | Below 768px |
+| Tablet | `min-width: 768px` | Same layout as mobile, scaled up |
+| Desktop | `min-width: 1024px` | Multi-column; inline "New" button; side-by-side Welcome buttons |
+
+Both queries match on a desktop-sized screen, so within a stylesheet always write the tablet block before the desktop block (the later rule wins). The queries live once, as mixins in a shared partial, `src/scss/_breakpoints.scss`; each component stylesheet pulls them in with `@use '../../../scss/breakpoints' as bp;` and writes `@include bp.tablet { ... }` or `@include bp.desktop { ... }`:
+
+```scss
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+
+@mixin tablet {
+  @media (min-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $bp-desktop) {
+    @content;
+  }
+}
+```
+
+In `styles.scss`, the `@use` line must come before the Google Fonts `@import url(...)`; the compiled CSS still places the font import first.
+
+Shared layout tokens are set in `styles.scss` and changed inside the same two queries:
+
+| Token | Mobile | Tablet | Desktop | Used by |
+|---|---|---|---|---|
+| `--page-gutter` | 1.25rem (20px) | 2rem (32px) | 3rem (48px) | Side gutter |
+| `--page-max` | 1184px | 1184px | 1184px | Widest content (1280 - 2 x 48) |
+| `--page-inset` | `max(--page-gutter, (100% - --page-max) / 2)` | same | same | `.app-header` and `.main-container` side padding, so the nav lines up with the page content at every size |
+| `--modal-width` | 350px | 480px | 560px | Stack editor and delete-confirmation dialogs |
+| `--modal-padding` | 1.5rem (24px) | 2rem (32px) | 2rem (32px) | Stack editor and delete-confirmation dialogs |
+
+`.modal-backdrop` (fixed, full-screen, `rgba(0, 0, 0, .45)`, centered content, `z-index: 100`) is global in `styles.scss` and shared by every dialog, rather than repeated in each modal's stylesheet.
 
 ## Application Across the Four Screens
 
-**Welcome**: centered, minimal layout on `--color-bg`. The hero wordmark anchors the top. When logged out, the screen shows a username/password form in place of the Create/Study buttons -- same minimal, uncluttered layout, just swapping the content below the tagline. A failed login shows an inline error message (in `--color-warning`) above the submit button; the input borders also switch to `--color-warning` only when the failure is a credentials problem (401), not when the server is unreachable, so the two failure modes stay visually distinct. On success, the form is replaced by the two clearly weighted actions -- "Create" as a primary-colored button, "Study" as an accent-colored button -- with generous whitespace around them. This is the calmest screen in the app; it should feel like opening a notebook, not landing on a dashboard.
+**Welcome**: centered, minimal layout on `--color-bg`. The hero wordmark anchors the top. When logged out, the screen shows a username/password form in place of the Create/Study buttons -- same minimal, uncluttered layout, just swapping the content below the tagline. A failed login shows an inline error message (in `--color-warning`) above the submit button; the input borders also switch to `--color-warning` only when the failure is a credentials problem (401), not when the server is unreachable, so the two failure modes stay visually distinct. On success, the form is replaced by the two clearly weighted actions -- "Create" as a primary-colored button, "Study" as an accent-colored button -- with generous whitespace around them. On desktop (1024px and up) the two buttons sit side by side, 200px wide each; on mobile and tablet they stack. This is the calmest screen in the app; it should feel like opening a notebook, not landing on a dashboard.
 
-**Manage Stacks**: stack list rendered as `--color-surface` rows with `--color-border` dividers on the `--color-bg` page background. Search input at the top, filtering the list live. "New Stack" as a primary button. Each row's delete icon uses `--color-warning`, and the confirmation dialog reuses that same warning color on its destructive button so the visual language stays consistent between the row-level and confirmation-level warning. **Confirmed, from Phase 2 routing decisions**: since "Study" now routes into this same screen in a `study`-mode variant (rather than a separate picker screen -- see the roadmap's Phase 2 notes), the empty-list state needs to cover a user with zero stacks at all, not just an empty search result. Empty state: a centered plus icon (reusing the same mark as the "New Stack" button) with an "Add a Stack!" prompt beneath it, in `--color-primary` to match "New Stack"'s button color -- mirroring the Study screen's own empty-stack pattern (centered icon + prompt + accent-colored action) but in the primary hue since stack creation, not studying, is the equivalent single action here. Not yet built; flagged for whenever Manage Stacks itself gets built out.
+**Manage Stacks**: stack list rendered as `--color-surface` rows with `--color-border` dividers on the `--color-bg` page background. Search input at the top, filtering the list live. "New Stack" as a primary button. Each row's delete icon uses `--color-warning`, and the confirmation dialog reuses that same warning color on its destructive button so the visual language stays consistent between the row-level and confirmation-level warning. **Confirmed, from Phase 2 routing decisions**: since "Study" now routes into this same screen in a `study`-mode variant (rather than a separate picker screen -- see the roadmap's Phase 2 notes), the empty-list state needs to cover a user with zero stacks at all, not just an empty search result. Empty state (built): a centered plus icon in a `--color-primary` circle (the same mark as the "New Stack" button), a "No stacks yet" heading, the line "Create your first stack to start adding cards.", and a pill-shaped "Add a Stack!" button in `--color-primary` -- mirroring the Study screen's own empty-stack pattern (centered icon + prompt + action) but in the primary hue, since stack creation, not studying, is the equivalent single action here. The button opens the same stack editor as "New Stack", in both Manage and Choose a Stack modes. While there are no stacks the search box is hidden, the floating "+" button stays on mobile and tablet, and the desktop toolbar's "New Stack" button is hidden (the empty state's own button replaces it). The empty state only appears once loading has finished with no error, so it never flashes while stacks are still being fetched. No-matches state (built): when stacks exist but the search filters them all out, the list is replaced by a centered line, `No stacks match "<search text>".`, in `--color-text-secondary`; the search box and New Stack button stay in place. On desktop the screen title, search box (300px; the full 504px slot in Choose a Stack mode) and "New Stack" button (180px) share one row, with the stacks in a three-column grid below.
 
-**Manage Cards**: same list treatment as Manage Stacks, scoped to the open stack (stack name shown as an h2). Card editor uses two multi-line textareas (question, answer) on `--color-surface-tint` backgrounds to visually separate "input" from "chrome," with a monospace toggle available in the editor. Delete-with-confirmation follows the same warning-color pattern as stacks.
+**Manage Cards**: same list treatment as Manage Stacks, scoped to the open stack (stack name shown as an h2). Card editor uses two multi-line textareas (question, answer) on `--color-surface-tint` backgrounds to visually separate "input" from "chrome," with a "Monospace font" toggle in the editor (an accent-colored switch, saved with the card -- see Typography Rationale). The list shows each card's question as the row title with a one-line answer preview beneath it, and an edit and a delete icon on the right; on desktop the rows run the full content width, one per line, and the page title carries the card count ("C# Fundamentals (24 cards)"), while mobile and tablet show the count on a second line under the title. Delete-with-confirmation follows the same warning-color pattern as stacks. Empty states mirror Manage Stacks: with no cards, the search box is hidden and the screen shows a centered plus icon, "No cards yet", the line "Add your first card to start studying this stack.", and a pill-shaped "Add a Card!" button in `--color-primary` (the floating "+" stays on mobile and tablet, and the desktop toolbar's "New Card" button is hidden); when the search matches nothing, the list is replaced by `No cards match "<search text>".` in `--color-text-secondary`, with the search box and New Card button left in place. Mockups: `manage-cards-empty-*.svg` and `manage-cards-no-matches-*.svg` (desktop, tablet, mobile).
 
 **Study**: **MVP note (Oct 2026)**: the card tray described later in this section is deferred post-MVP (see the roadmap's V1 vs. Later table). V1 ships with Next/Previous buttons in its place -- styled at a deliberately low visual weight (`--color-text-secondary`, in the same spirit as the `BackLink` chevron) so they read as plain navigation and don't compete with the Flip button's primary color. Switching cards -- via Next/Previous in v1, via the tray once it's built -- always returns to the question side, matching the stated interaction model. The main card area is the largest, calmest surface in the app regardless of which navigation is present -- generous padding, `--color-surface` background, question or answer text centered or left-aligned depending on length. The Flip button is the single primary-colored action on the screen, deliberately not competing with anything else. The empty-stack state replaces the card area with a simple prompt ("This stack has no cards yet") and an accent-colored "Add Cards" action linking to Manage Cards -- calm rather than alarming, since an empty stack isn't an error state.
 
@@ -197,7 +243,8 @@ Each property below has a comment underneath it naming the specific elements it 
   // All buttons, labels, list items, and form fields
 
   --font-family-mono: 'JetBrains Mono', monospace;
-  // Question/answer content when the Study screen's monospace toggle is on
+  // Question/answer content of any card whose monospace setting is on
+  // (set in the card editor; used in the editor's textareas and in Study)
 
   // Typography -- type scale
   --font-size-hero: 2.875rem;   // 46px -- Welcome/Login wordmark only
@@ -233,6 +280,14 @@ Each property below has a comment underneath it naming the specific elements it 
   --radius-pill: 999px;    // pill buttons (Flip, Add Cards) -- 999px reads as
                             // "fully rounded" at any height, unlike the mockups'
                             // literal 26px which only works at that exact button height
+
+  // Layout -- changed at the tablet (768px) and desktop (1024px) breakpoints
+  --page-gutter: 1.25rem;   // 20px mobile; 2rem (32px) tablet; 3rem (48px) desktop
+  --page-max: 1184px;       // widest page content
+  --page-inset: max(var(--page-gutter), (100% - var(--page-max)) / 2);
+                            // side padding shared by .app-header and .main-container
+  --modal-width: 350px;     // 480px tablet; 560px desktop (stack editor, delete)
+  --modal-padding: 1.5rem;  // 24px mobile; 2rem (32px) tablet and desktop
 }
 
 // Dark mode -- tokens defined for reference; not wired up to a theme
