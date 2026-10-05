@@ -157,6 +157,71 @@
     color: var(--color-warning);
 }
 
+// Empty state: the user has no stacks at all
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: clamp(var(--space-4), 14vh, 6rem);
+}
+
+.empty-state-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 72px;
+    block-size: 72px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-3);
+}
+
+.empty-state-title {
+    margin: 0 0 var(--space-1);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h2);
+    color: var(--color-text-primary);
+}
+
+.empty-state-text {
+    margin: 0 0 var(--space-3);
+    font-size: var(--font-size-meta);
+    color: var(--color-text-secondary);
+}
+
+.empty-state-button {
+    block-size: 48px;
+    padding: 0 var(--space-4);
+    border: none;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    font-family: var(--font-family-body);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+}
+
+.empty-state-button:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.empty-state-button:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+// No-matches state: stacks exist, but the search filters them all out
+.no-matches-text {
+    margin: clamp(var(--space-4), 14vh, 6rem) 0 0;
+    text-align: center;
+    color: var(--color-text-secondary);
+}
+
 // Tablet: the mobile layout, scaled up (still a single column and the FAB)
 @include bp.tablet {
     .manage-stacks-header {
@@ -187,18 +252,83 @@
         font-size: 0.9375rem;
         color: var(--color-text-secondary);
     }
+
+    .empty-state-icon {
+        inline-size: 80px;
+        block-size: 80px;
+        font-size: 1.75rem;
+    }
+
+    .empty-state-title {
+        font-size: 1.5rem;
+    }
+
+    .empty-state-text {
+        font-size: var(--font-size-body);
+    }
+
+    .empty-state-button {
+        block-size: 52px;
+        font-size: var(--font-size-body);
+    }
+
+    .no-matches-text {
+        font-size: 1.0625rem;
+    }
 }
 
-// Desktop: three-column grid of stacks, and an inline "New Stack" pill
-// next to the search input
+// Desktop: the title, search and "New Stack" button share one row, and the
+// stacks sit in a three-column grid. The container becomes a two-column grid:
+// the title on the left, the toolbar in a fixed 504px slot on the right (300px
+// search + 24px gap + 180px button). In study mode there is no button, so the
+// search simply fills the whole slot.
 @include bp.desktop {
+    .manage-stacks-container {
+        display: grid;
+        grid-template-columns: 1fr 504px;
+        align-items: center;
+    }
+
+    .header-container {
+        grid-column: 1;
+        grid-row: 1;
+        margin-top: var(--space-3);
+    }
+
+    .manage-stacks-header {
+        margin-block: 0;
+    }
+
+    .toolbar-container {
+        grid-column: 2;
+        grid-row: 1;
+        margin-top: var(--space-3);
+        gap: var(--space-3);
+    }
+
+    .search-stacks-input {
+        padding-block: 0.6875rem;
+        font-size: var(--font-size-meta);
+    }
+
+    .stacks-container,
+    .empty-state,
+    .no-matches-text {
+        grid-column: 1 / -1;
+    }
+
     .new-stack-button {
         position: static;
         height: auto;
-        width: auto;
-        gap: var(--space-1);
-        padding: var(--space-2) var(--space-3);
+        width: 180px;
         flex: none;
+        gap: var(--space-1);
+        padding: 0.6875rem var(--space-3);
+    }
+
+    // With no stacks, the empty state's own button replaces this one
+    .new-stack-button--empty {
+        display: none;
     }
 
     .new-stack-icon {
@@ -216,9 +346,11 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: var(--space-3);
+        margin-top: var(--space-4);
     }
 
     .stack-card-container {
+        min-block-size: 96px;
         padding: var(--space-2) var(--space-3);
     }
 
@@ -228,5 +360,24 @@
 
     .stack-card-count {
         font-size: var(--font-size-meta);
+    }
+
+    .empty-state-icon {
+        inline-size: 80px;
+        block-size: 80px;
+    }
+
+    .empty-state-title {
+        font-size: 1.625rem;
+    }
+
+    .empty-state-text {
+        font-size: var(--font-size-body);
+    }
+
+    .empty-state-button {
+        block-size: 52px;
+        padding: 0 var(--space-4);
+        font-size: var(--font-size-body);
     }
 }

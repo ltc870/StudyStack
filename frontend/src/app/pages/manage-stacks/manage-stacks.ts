@@ -53,6 +53,19 @@ export class ManageStacks {
     )
   })
 
+  hasNoStacks = computed(() =>
+    !this.stackResource.isLoading() &&
+    !this.stackResource.error() &&
+    this.stackResource.value().length === 0
+  );
+
+  noMatches = computed(() =>
+    !this.stackResource.isLoading() &&
+    !this.stackResource.error() &&
+    this.stackResource.value().length > 0 &&
+    this.filteredStacks().length === 0
+  );
+
   // HTTP
   stackResource = rxResource({
     defaultValue: [],
