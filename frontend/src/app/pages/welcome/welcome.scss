@@ -1,32 +1,38 @@
+@use '../../../scss/breakpoints' as bp;
+
 .welcome-header-container {
-    margin-top: calc(var(--space-2) * 2);
+    margin-top: clamp(var(--space-2), 14vh, 10rem);
 }
 
 .welcome-header {
     color: var(--color-primary);
-    font-size: var(--font-size-hero);
+    font-size: 2.125rem;
     font-family: var(--font-family-heading);
     text-align: center;
+    margin: 0 0 var(--space-2);
 }
 
 .welcome-text {
-    font-size: var(--font-size-body);
+    font-size: 0.875rem;
     font-family: var(--font-family-body);
     color: var(--color-text-secondary);
     text-align: center;
     font-weight: 300;
-    margin-bottom: calc(var(--space-4) * 2);
+    margin: 0 0 clamp(var(--space-2), 8vh, 4rem);
 }
 
 .welcome-buttons-container {
     display: flex;
-    flex-direction: column;   
+    flex-direction: column;
     align-items: center;
+    inline-size: min(100%, 280px);
+    margin-inline: auto;
 }
 
 .welcome-button {
     color: var(--color-surface);
-    padding: var(--space-2);
+    padding: 0 var(--space-2);
+    min-block-size: 52px;
     border-radius: var(--radius-default);
     display: flex;
     align-items: center;
@@ -88,4 +94,51 @@
     border-color: var(--color-focus-ring);
     outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
+}
+
+// Tablet: the mobile layout, scaled up
+@include bp.tablet {
+    .welcome-header {
+        font-size: 3rem;
+    }
+
+    .welcome-text {
+        font-size: 1.125rem;
+        margin-bottom: clamp(var(--space-2), 8vh, 5rem);
+    }
+
+    .welcome-buttons-container {
+        inline-size: min(100%, 360px);
+    }
+
+    .welcome-button {
+        min-block-size: 60px;
+        font-size: 1.125rem;
+    }
+}
+
+// Desktop: Manage and Study sit side by side
+@include bp.desktop {
+    .welcome-header {
+        font-size: var(--font-size-hero);
+    }
+
+    .welcome-text {
+        font-size: var(--font-size-body);
+        margin-bottom: clamp(var(--space-2), 8vh, 4rem);
+    }
+
+    .welcome-buttons-container {
+        flex-direction: row;
+        justify-content: center;
+        gap: var(--space-3);
+        inline-size: auto;
+    }
+
+    .welcome-button {
+        inline-size: 200px;
+        min-block-size: 56px;
+        margin-bottom: 0;
+        font-size: var(--font-size-body);
+    }
 }

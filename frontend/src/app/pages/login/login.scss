@@ -1,21 +1,29 @@
+@use '../../../scss/breakpoints' as bp;
+
 .welcome-header-container {
-    margin-top: calc(var(--space-4) * 2);
+    margin-top: clamp(var(--space-4), 20vh, 14rem);
 }
 
 .welcome-header {
     color: var(--color-primary);
-    font-size: var(--font-size-hero);
+    font-size: 2rem;
     font-family: var(--font-family-heading);
     text-align: center;
+    margin: 0 0 var(--space-2);
 }
 
 .welcome-text {
-    font-size: var(--font-size-body);
+    font-size: 0.875rem;
     font-family: var(--font-family-body);
     color: var(--color-text-secondary);
     text-align: center;
     font-weight: 300;
-    margin-bottom: calc(var(--space-4) * 2);
+    margin: 0 0 calc(var(--space-4) * 2);
+}
+
+.welcome-form-container {
+    inline-size: 100%;
+    margin-inline: auto;
 }
 
 .icon-class {
@@ -48,7 +56,9 @@
 .form-input {
     border-radius: var(--radius-default);
     border: 1px solid var(--color-border);
-    padding: var(--space-2);
+    padding: 0 var(--space-2);
+    block-size: 48px;
+    font-size: 0.9375rem;
     width: 100%;
     transition: border-color 120ms ease, box-shadow 120ms ease;
 }
@@ -81,11 +91,13 @@
     display: block;
     margin: var(--space-2) auto;
     width: 100%;
+    block-size: 52px;
     font-weight: bold;
+    font-size: var(--font-size-body);
     color: var(--color-surface);
     background-color: var(--color-primary);
     border: 2px solid transparent;
-    padding: var(--space-2);
+    padding: 0 var(--space-2);
     border-radius: var(--radius-default);
     transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease, color 120ms ease;
 }
@@ -113,4 +125,58 @@
     display: flex;
     gap: var(--space-1);
     margin-top: var(--space-2);
+}
+
+// Tablet: the mobile layout, scaled up
+@include bp.tablet {
+    .welcome-header {
+        font-size: 2.75rem;
+    }
+
+    .welcome-text {
+        font-size: 1.125rem;
+    }
+
+    .welcome-form-container {
+        inline-size: 440px;
+    }
+
+    .form-label {
+        font-size: 0.75rem;
+    }
+
+    .form-input {
+        block-size: 56px;
+        font-size: var(--font-size-body);
+    }
+
+    .form-button {
+        block-size: 56px;
+        font-size: 1.0625rem;
+    }
+}
+
+// Desktop: hero wordmark size, narrower form
+@include bp.desktop {
+    .welcome-header {
+        font-size: var(--font-size-hero);
+    }
+
+    .welcome-text {
+        font-size: var(--font-size-body);
+    }
+
+    .welcome-form-container {
+        inline-size: 400px;
+    }
+
+    .form-input {
+        block-size: 48px;
+        font-size: 0.9375rem;
+    }
+
+    .form-button {
+        block-size: 52px;
+        font-size: var(--font-size-body);
+    }
 }

@@ -1,3 +1,4 @@
+@use './scss/breakpoints' as bp;
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
 
 // frontend/src/styles.scss
@@ -77,6 +78,32 @@
   --color-focus-ring: #A8B8E8;
 }
 
+// Shared page gutter, used by .app-header and .main-container so the nav
+// lines up with the content at every size. Gutter is 20 / 32 / 48px
+// (mobile / tablet / desktop); content tops out at 1184px (1280 - 2 * 48).
+:root {
+  --page-gutter: 1.25rem;
+  --page-max: 1184px;
+  --page-inset: max(var(--page-gutter), (100% - var(--page-max)) / 2);
+  --modal-width: 350px;
+  --modal-padding: var(--space-3);
+}
+
+@include bp.tablet {
+  :root {
+    --page-gutter: 2rem;
+    --modal-width: 480px;
+    --modal-padding: var(--space-4);
+  }
+}
+
+@include bp.desktop {
+  :root {
+    --page-gutter: 3rem;
+    --modal-width: 560px;
+  }
+}
+
 html {
     box-sizing: border-box;
 }
@@ -96,8 +123,27 @@ body {
 }
 
 .main-container {
-    inline-size: min(100%, 500px);
-    margin: 0 auto;
-    padding: var(--space-4);
-    padding-top: 0;
+    padding-block: 0 var(--space-4);
+    padding-inline: var(--page-inset);
+}
+
+// Shared by the stack editor and delete confirmation modals
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
 }

@@ -1,11 +1,17 @@
+// The host element would otherwise be an empty flex item of its parent
+:host {
+    display: contents;
+}
+
 .stack-editor-modal-container {
     background-color: var(--color-surface);
-    padding: var(--space-2);
+    padding: var(--modal-padding);
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
     border-radius: var(--radius-modal);
     border: 1px solid var(--color-border);
+    inline-size: min(calc(100% - var(--space-4)), var(--modal-width));
 }
 
 .modal-title {
@@ -23,11 +29,13 @@
     align-self: flex-start;
     font-size: var(--font-size-body);
     cursor: pointer;
-    color: var(--color-text-secondary); 
+    color: var(--color-text-secondary);
 }
 
 .stack-name-input-label {
+    grid-column: 1 / -1;
     align-self: flex-end;
+    margin-bottom: var(--space-1);
     font-family: var(--font-family-body);
     font-size: var(--font-size-meta);
     color: var(--color-text-secondary);
@@ -39,12 +47,17 @@
     border-radius: var(--radius-default);
     border: 1px solid var(--color-border);
     padding: var(--space-2);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
 }
 
 .cancel-save-buttons-container {
-    margin-top: 4em;
-    grid-column: 2 / 3;
+    margin-top: var(--space-4);
+    grid-column: 1 / -1;
     justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
 }
 
 .cancel-button {
@@ -52,6 +65,7 @@
     border: none;
     cursor: pointer;
     color: var(--color-text-secondary);
+    padding: var(--space-1) var(--space-2);
 }
 
 .save-button {
@@ -65,12 +79,24 @@
     cursor: pointer;
 }
 
-.modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, .45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
+.save-button:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+}
+
+.save-button:focus-visible {
+    border-color: var(--color-focus-ring);
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.save-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.modal-close-button:focus-visible,
+.cancel-button:focus-visible,
+.stack-name-input:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
 }

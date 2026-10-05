@@ -1,49 +1,48 @@
-.modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, .45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
+// The host element would otherwise be an empty flex item of its parent
+:host {
+    display: contents;
 }
 
 .delete-stack-modal-container {
     background-color: var(--color-surface);
-    padding: var(--space-3);
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    padding: var(--modal-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
     border-radius: var(--radius-modal);
     border: 1px solid var(--color-border);
-    width: 85.5%;
+    inline-size: min(calc(100% - var(--space-4)), var(--modal-width));
 }
 
 .container-header {
-    grid-column: 1 / 2;
     display: flex;
     align-items: center;
-    margin-bottom: var(--space-1);
+    gap: var(--space-1);
 }
 
 .delete-stack-icon {
     font-size: 2rem;
     color: var(--color-warning);
-    margin-right: var(--space-1);
 }
 
 .delete-modal-title {
-    margin-top: 0;
-    margin-bottom: var(--space-1);
     font-family: var(--font-family-heading);
     font-size: var(--font-size-h2);
     font-weight: bold;
 }
 
 .delete-modal-warning {
-    grid-row: 2 / 3;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0;
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-body);
+}
+
+.cancel-delete-buttons-container {
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-top: var(--space-1);
 }
 
 .cancel-button {
@@ -51,13 +50,7 @@
     border: none;
     cursor: pointer;
     color: var(--color-text-secondary);
-}
-
-.cancel-delete-buttons-container {
-    grid-row: 3 / 4;
-    grid-column: 2 / 3;
-    align-self: end;
-    justify-self: end;
+    padding: var(--space-1) var(--space-2);
 }
 
 .delete-button {
@@ -69,4 +62,15 @@
     transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
     padding: var(--space-1) var(--space-2);
     cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: var(--color-warning-hover);
+}
+
+.delete-button:focus-visible,
+.cancel-button:focus-visible {
+    border-color: var(--color-focus-ring);
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
 }

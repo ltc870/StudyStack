@@ -1,7 +1,7 @@
 <div class="modal-backdrop" (click)="cancel.emit()">
     <div class="stack-editor-modal-container" (click)="$event.stopPropagation()">
         <h2 class="modal-title">{{title()}}</h2>
-        <button class="modal-close-button" (click)="cancel.emit()">
+        <button aria-label="Close" class="modal-close-button" (click)="cancel.emit()">
             <ng-icon name="remixCloseFill" class="close-icon" />
         </button>
         <label for="stack-name-input" class="stack-name-input-label">STACK NAME</label>

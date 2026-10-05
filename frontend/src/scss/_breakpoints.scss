@@ -1,0 +1,23 @@
+// Breakpoints from the design system's "Responsive Breakpoints" section.
+// Mobile is the unprefixed base (mobile-first); tablet and desktop only add overrides.
+//
+//   mobile:  < 768px     single column, floating "+" button
+//   tablet:  >= 768px    same layout as mobile, scaled up
+//   desktop: >= 1024px   multi-column, inline "New" button in the toolbar
+//
+// Always write the tablet block before the desktop block in a file, since both
+// queries match on a desktop-sized screen and the later rule wins.
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+
+@mixin tablet {
+  @media (min-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $bp-desktop) {
+    @content;
+  }
+}

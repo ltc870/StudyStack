@@ -1,3 +1,5 @@
+@use '../../../scss/breakpoints' as bp;
+
 .manage-stacks-container {
     display: flex;
     flex-direction: column;
@@ -62,7 +64,7 @@
     outline-offset: 2px;
 }
 
-// Mobile: a fixed circular FAB, matching mockups/manage-stacks-mobile.svg
+// Mobile and tablet: a fixed circular FAB
 .new-stack-button {
     position: fixed;
     right: var(--space-3);
@@ -95,31 +97,6 @@
 
 .new-stack-text {
     display: none;
-}
-
-// Desktop: an inline pill button with a visible label, sitting next to the
-// search input, matching mockups/manage-stacks-desktop.svg. No breakpoint
-// convention existed yet anywhere else in the app, so 768px is a judgment
-// call -- change it if you land on a different standard breakpoint.
-@media (min-width: 768px) {
-    .new-stack-button {
-        position: static;
-        height: auto;
-        width: auto;
-        gap: var(--space-1);
-        padding: var(--space-2) var(--space-3);
-    }
-
-    .new-stack-icon {
-        font-size: 1.1rem;
-    }
-
-    .new-stack-text {
-        display: inline;
-        color: var(--color-surface);
-        font-family: var(--font-family-body);
-        font-weight: 600;
-    }
 }
 
 .stacks-container {
@@ -156,7 +133,7 @@
     grid-column: 2 / 3;
     grid-row: 1 / 3;
     justify-self: end;
-    align-self: center; 
+    align-self: center;
     margin-top: var(--space-2);
 }
 
@@ -178,4 +155,78 @@
 
 .delete-stack-button {
     color: var(--color-warning);
+}
+
+// Tablet: the mobile layout, scaled up (still a single column and the FAB)
+@include bp.tablet {
+    .manage-stacks-header {
+        margin-top: var(--space-3);
+    }
+
+    .toolbar-container {
+        margin-top: var(--space-3);
+    }
+
+    .search-stacks-input {
+        padding-block: 0.875rem;
+    }
+
+    .stacks-container {
+        margin-top: var(--space-3);
+    }
+
+    .stack-card-container {
+        padding: var(--space-3) var(--space-3);
+    }
+
+    .stack-card-title {
+        font-size: 1.25rem;
+    }
+
+    .stack-card-count {
+        font-size: 0.9375rem;
+        color: var(--color-text-secondary);
+    }
+}
+
+// Desktop: three-column grid of stacks, and an inline "New Stack" pill
+// next to the search input
+@include bp.desktop {
+    .new-stack-button {
+        position: static;
+        height: auto;
+        width: auto;
+        gap: var(--space-1);
+        padding: var(--space-2) var(--space-3);
+        flex: none;
+    }
+
+    .new-stack-icon {
+        font-size: 1.1rem;
+    }
+
+    .new-stack-text {
+        display: inline;
+        color: var(--color-surface);
+        font-family: var(--font-family-body);
+        font-weight: 600;
+    }
+
+    .stacks-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-3);
+    }
+
+    .stack-card-container {
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .stack-card-title {
+        font-size: 1.125rem;
+    }
+
+    .stack-card-count {
+        font-size: var(--font-size-meta);
+    }
 }
