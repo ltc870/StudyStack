@@ -104,7 +104,10 @@ public class CardsController : ControllerBase
             card.Answer = cardUpdateDto.Answer;
         }
 
-        card.IsMonospace = cardUpdateDto.IsMonospace;
+        if (cardUpdateDto.IsMonospace != null)
+        {
+            card.IsMonospace = cardUpdateDto.IsMonospace.Value;
+        }
 
         // Save changes made
         await _dbContext.SaveChangesAsync();
