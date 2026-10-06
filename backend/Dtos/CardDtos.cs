@@ -7,12 +7,14 @@ public class CardRequestDto
     public int StackId { get; set; }
     public string Question { get; set; } = string.Empty;
     public string Answer { get; set; } = string.Empty;
+    public bool IsMonospace { get; set; } = false;
 }
 
 public class CardUpdateDto
 {
     public string? Question { get; set; }
     public string? Answer { get; set; }
+    public bool IsMonospace { get; set; } = false;
 }
 
 public class CardResponseDto
@@ -21,6 +23,7 @@ public class CardResponseDto
     public int StackId { get; set; }
     public string Question { get; set; } = string.Empty;
     public string Answer { get; set; } = string.Empty;
+    public bool IsMonospace { get; set; } = false;
 
     public static CardResponseDto FromEntity(Card card) => new()
     {
@@ -28,5 +31,6 @@ public class CardResponseDto
         StackId = card.StackId,
         Question = card.Question,
         Answer = card.Answer,
+        IsMonospace = card.IsMonospace
     };
 }

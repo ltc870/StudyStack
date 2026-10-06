@@ -66,7 +66,8 @@ public class CardsController : ControllerBase
         {
             Answer = cardRequestDto.Answer,
             Question = cardRequestDto.Question,
-            StackId = stack.Id
+            StackId = stack.Id,
+            IsMonospace = cardRequestDto.IsMonospace
         };
         
         // Save and return the newly created card
