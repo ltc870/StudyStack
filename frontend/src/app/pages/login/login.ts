@@ -30,8 +30,8 @@ export class Login {
     password: new FormControl<string>('', {
       validators: [Validators.required],
       nonNullable: true,
-    })
-  })
+    }),
+  });
 
   clearCredentialError() {
     if (!this.isCredentialError()) {
@@ -50,7 +50,7 @@ export class Login {
       return;
     }
 
-    const credentials = this.loginForm.value as {username: string, password: string}
+    const credentials = this.loginForm.value as { username: string; password: string };
 
     this.isSubmitting.set(true);
 
@@ -58,15 +58,14 @@ export class Login {
       await this.authService.login(credentials);
       this.router.navigateByUrl('/welcome');
     } catch (error) {
-     if (error instanceof HttpErrorResponse && error.status === 401) {
-      this.isCredentialError.set(true);
-      this.errorMessage.set("Incorrect username or password");
-     } else {
-      this.errorMessage.set("Unable to reach the server");
-     }
+      if (error instanceof HttpErrorResponse && error.status === 401) {
+        this.isCredentialError.set(true);
+        this.errorMessage.set('Incorrect username or password');
+      } else {
+        this.errorMessage.set('Unable to reach the server');
+      }
     } finally {
       this.isSubmitting.set(false);
     }
   }
 }
-

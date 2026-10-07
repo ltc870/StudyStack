@@ -5,15 +5,15 @@ import { Card } from '../models/card';
 
 @Service()
 export class CardsService {
-    // Dependency Injection
-    private http = inject(HttpClient);
+  // Dependency Injection
+  private http = inject(HttpClient);
 
-    // Endpoints
-    private readonly baseUrl = "https://localhost:7285";
-    private readonly getAllCardsByStackEndpoint = "/api/Cards/get-cards-by-stack/";
+  // Endpoints
+  private readonly baseUrl = 'https://localhost:7285';
+  private readonly getAllCardsByStackEndpoint = '/api/Cards/get-cards-by-stack/';
 
-    // GET
-    getAllCardsByStack(stackId: number): Observable<Card[]> {
-        return this.http.get<Card[]>(`${this.baseUrl}${this.getAllCardsByStackEndpoint}${stackId}`);
-    }
+  // GET
+  getAllCardsByStack(stackId: number): Observable<Card[]> {
+    return this.http.get<Card[]>(`${this.baseUrl}${this.getAllCardsByStackEndpoint}${stackId}`);
+  }
 }

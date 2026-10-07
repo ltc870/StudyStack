@@ -1,81 +1,93 @@
 <div class="manage-stacks-container">
-    <div class="header-container">
-        <app-back-link></app-back-link>
-        <h2 class="manage-stacks-header">{{title()}}</h2>
-    </div>
-    <div class="toolbar-container">
-        @if (!hasNoStacks()) {
-            <div class="search-stacks-container">
-                <label for="search-stacks" class="search-input"></label>
-                <input 
-                    (input)="updateText($event)" 
-                    type="text" class="search-stacks-input" 
-                    id="search-stacks" placeholder="Search stacks..."
-                >
-                <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
-            </div>
-        }
-        @if (mode() === 'manage') {
-            <button 
-                class="new-stack-button" 
-                [class.new-stack-button--empty]="hasNoStacks()"
-                (click)="onNewStackClick()"
-            >
-                <ng-icon name="phosphorPlusBold" class="new-stack-icon"/>
-                <span class="new-stack-text">New Stack</span>
-            </button>
-        }
-    </div>
-
-    @if (hasNoStacks()) {
-        <div class="empty-state">
-            <div class="empty-state-icon">
-                <ng-icon name="phosphorPlusBold" />
-            </div>
-            <h3 class="empty-state-title">No stacks yet</h3>
-            <p class="empty-state-text">Create your first stack to start adding cards.</p>
-            <button class="empty-state-button" (click)="onNewStackClick()">Add a Stack!</button>
-        </div>
-    } @else if (noMatches()) {
-        <p class="no-matches-text">No stacks match &ldquo;{{searchQuery().trim()}}&rdquo;.</p>
-    } @else {
-        <div class="stacks-container">
-            @for(stack of filteredStacks(); track stack.id) {
-                <div class="stack-card-container" (click)="onRowClick(stack)">
-                    <h3 class="stack-card-title">{{stack.name}}</h3>
-                    <span class="stack-card-count">{{stack.cardCount}} {{stack.cardCount === 1 ? 'card' : 'cards'}}</span>
-
-                    @if (mode() === 'manage') {
-                        <div class="edit-delete-container">
-                            <button class="edit-stack-button edit-delete-buttons" aria-label="Rename stack" (click)="onEditClick(stack, $event)">
-                                <ng-icon name="phosphorPencilSimple" class="edit-stack-icon"/>
-                            </button>
-                            <button class="delete-stack-button edit-delete-buttons" aria-label="Delete stack" (click)="onDeleteClick(stack, $event)">
-                                <ng-icon name="phosphorTrashBold" class="delete-stack-icon"/>
-                            </button>
-                        </div>
-                    }
-                </div>
-            }
-        </div>
-    }
-
-    @if (editorState()) {
-        <app-stack-editor-modal 
-            [mode]="editorState()!.mode"
-            [stack]="editorState()!.stack"
-            (save)="onEditorSave($event)" 
-            (cancel)="editorState.set(null)"
+  <div class="header-container">
+    <app-back-link></app-back-link>
+    <h2 class="manage-stacks-header">{{ title() }}</h2>
+  </div>
+  <div class="toolbar-container">
+    @if (!hasNoStacks()) {
+      <div class="search-stacks-container">
+        <label for="search-stacks" class="search-input"></label>
+        <input
+          (input)="updateText($event)"
+          type="text"
+          class="search-stacks-input"
+          id="search-stacks"
+          placeholder="Search stacks..."
         />
+        <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
+      </div>
     }
-    
-    @if (deleteTarget()) {
-        <app-delete-confirmation-modal 
-            title="Delete stack?"
-            [itemLabel]="deleteTarget()!.name"
-            [cascadeWarning]="'and all ' + deleteTarget()!.cardCount + ' of its cards'"
-            (confirmed)="onDeleteConfirmed()"
-            (cancelled)="deleteTarget.set(null)"
-        />
+    @if (mode() === 'manage') {
+      <button
+        class="new-stack-button"
+        [class.new-stack-button--empty]="hasNoStacks()"
+        (click)="onNewStackClick()"
+      >
+        <ng-icon name="phosphorPlusBold" class="new-stack-icon" />
+        <span class="new-stack-text">New Stack</span>
+      </button>
     }
+  </div>
+
+  @if (hasNoStacks()) {
+    <div class="empty-state">
+      <div class="empty-state-icon">
+        <ng-icon name="phosphorPlusBold" />
+      </div>
+      <h3 class="empty-state-title">No stacks yet</h3>
+      <p class="empty-state-text">Create your first stack to start adding cards.</p>
+      <button class="empty-state-button" (click)="onNewStackClick()">Add a Stack!</button>
+    </div>
+  } @else if (noMatches()) {
+    <p class="no-matches-text">No stacks match &ldquo;{{ searchQuery().trim() }}&rdquo;.</p>
+  } @else {
+    <div class="stacks-container">
+      @for (stack of filteredStacks(); track stack.id) {
+        <div class="stack-card-container" (click)="onRowClick(stack)">
+          <h3 class="stack-card-title">{{ stack.name }}</h3>
+          <span class="stack-card-count"
+            >{{ stack.cardCount }} {{ stack.cardCount === 1 ? 'card' : 'cards' }}</span
+          >
+
+          @if (mode() === 'manage') {
+            <div class="edit-delete-container">
+              <button
+                class="edit-stack-button edit-delete-buttons"
+                aria-label="Rename stack"
+                (click)="onEditClick(stack, $event)"
+              >
+                <ng-icon name="phosphorPencilSimple" class="edit-stack-icon" />
+              </button>
+              <button
+                class="delete-stack-button edit-delete-buttons"
+                aria-label="Delete stack"
+                (click)="onDeleteClick(stack, $event)"
+              >
+                <ng-icon name="phosphorTrashBold" class="delete-stack-icon" />
+              </button>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  @if (editorState()) {
+    <app-stack-editor-modal
+      [mode]="editorState()!.mode"
+      [stack]="editorState()!.stack"
+      (save)="onEditorSave($event)"
+      (cancel)="editorState.set(null)"
+    />
+  }
+
+  @if (deleteTarget()) {
+    <app-delete-confirmation-modal
+      title="Delete stack?"
+      [itemLabel]="deleteTarget()!.name"
+      [cascadeWarning]="'and all ' + deleteTarget()!.cardCount + ' of its cards'"
+      (confirmed)="onDeleteConfirmed()"
+      (cancelled)="deleteTarget.set(null)"
+    />
+  }
 </div>

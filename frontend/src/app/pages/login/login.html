@@ -1,42 +1,41 @@
 <main class="main-container">
-    <div class="welcome-header-container">
-        <h1 class="welcome-header">StudyStack</h1>
-        <p class="welcome-text">Focused practice for the concepts that stick!</p>
-    </div>
-    <div class="welcome-body">
-        <form [formGroup]="loginForm" class="welcome-form-container" (ngSubmit)="onSubmit()">
-            <div class="username-container">
-                <label for="username" class="form-label">Username</label>
-                <input
-                    type="text"
-                    id="username"
-                    formControlName="username"
-                    placeholder="Enter your username"
-                    
-                    class="username-input form-input"
-                    [class.form-input-error]="isCredentialError()"
-                    (input)="clearCredentialError()"
-                >
-            </div>
-            <div class="password-container">
-                <label for="password" class="form-label">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    formControlName="password"
-                    placeholder="Enter your password"
-                    class="password-input form-input"
-                    [class.form-input-error]="isCredentialError()"
-                    (input)="clearCredentialError()"
-                >
-            </div>
-            @if (errorMessage(); as msg) {
-                <div class="login-error-container">
-                    <ng-icon name="phosphorWarningCircleFill" class="icon-class error-icon"></ng-icon>
-                    <span>{{msg}}</span>
-                </div>
-            }
-            <button type="submit" class="form-button" [disabled]="isSubmitting()">Log In</button>
-        </form>
-    </div>
+  <div class="welcome-header-container">
+    <h1 class="welcome-header">StudyStack</h1>
+    <p class="welcome-text">Focused practice for the concepts that stick!</p>
+  </div>
+  <div class="welcome-body">
+    <form [formGroup]="loginForm" class="welcome-form-container" (ngSubmit)="onSubmit()">
+      <div class="username-container">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          placeholder="Enter your username"
+          class="username-input form-input"
+          [class.form-input-error]="isCredentialError()"
+          (input)="clearCredentialError()"
+        />
+      </div>
+      <div class="password-container">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          class="password-input form-input"
+          [class.form-input-error]="isCredentialError()"
+          (input)="clearCredentialError()"
+        />
+      </div>
+      @if (errorMessage(); as msg) {
+        <div class="login-error-container">
+          <ng-icon name="phosphorWarningCircleFill" class="icon-class error-icon"></ng-icon>
+          <span>{{ msg }}</span>
+        </div>
+      }
+      <button type="submit" class="form-button" [disabled]="isSubmitting()">Log In</button>
+    </form>
+  </div>
 </main>

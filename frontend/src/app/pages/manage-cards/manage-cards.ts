@@ -17,9 +17,8 @@ export class ManageCards {
   cardsService = inject(CardsService);
 
   // Signals
-  stackId = input.required<number, unknown>({transform: numberAttribute});
+  stackId = input.required<number, unknown>({ transform: numberAttribute });
   searchQuery = signal<string>('');
-
 
   // Computed Signals
   filteredCards = computed<Card[]>(() => {
@@ -31,40 +30,42 @@ export class ManageCards {
       return rawCards;
     }
 
-    return rawCards.filter(card => card.question.toLowerCase().includes(query) 
-                                || card.answer.toLowerCase().includes(query));
-  })
+    return rawCards.filter(
+      (card) =>
+        card.question.toLowerCase().includes(query) || card.answer.toLowerCase().includes(query),
+    );
+  });
 
-  hasNoCards = computed(() =>
-    !this.cardResource.isLoading() &&
-    this.cardResource.hasValue() &&
-    this.cardResource.value().length === 0
-  )
+  hasNoCards = computed(
+    () =>
+      !this.cardResource.isLoading() &&
+      this.cardResource.hasValue() &&
+      this.cardResource.value().length === 0,
+  );
 
-  noMatches = computed(() => 
-    !this.cardResource.isLoading() &&
-    this.cardResource.hasValue() &&
-    this.cardResource.value().length > 0 &&
-    this.filteredCards().length === 0
-  )
+  noMatches = computed(
+    () =>
+      !this.cardResource.isLoading() &&
+      this.cardResource.hasValue() &&
+      this.cardResource.value().length > 0 &&
+      this.filteredCards().length === 0,
+  );
 
   // HTTP
   stackResource = rxResource({
     params: () => this.stackId(),
-    stream: ({params}) =>  this.stacksService.getStackById(params),
+    stream: ({ params }) => this.stacksService.getStackById(params),
   });
 
   cardResource = rxResource({
     defaultValue: [],
     params: () => this.stackId(),
-    stream: ({params}) => this.cardsService.getAllCardsByStack(params),
-  })
+    stream: ({ params }) => this.cardsService.getAllCardsByStack(params),
+  });
 
   // Helper functions
   updateText(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchQuery.set(input.value);
   }
-
-  
 }

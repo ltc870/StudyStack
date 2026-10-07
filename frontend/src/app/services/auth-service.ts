@@ -5,60 +5,61 @@ import { TokenResponse } from '../models/tokenresponse';
 
 @Service()
 export class AuthService {
-    private readonly http = inject(HttpClient)
-    private accessToken: string | null = null;
-    private readonly authState = new BehaviorSubject<boolean>(false);
-    readonly isAuthenticated$ = this.authState.asObservable();
-    private readonly baseUrl = "https://localhost:7285";
-    private readonly refreshEndpoint = "/api/Auth/refresh";
-    private readonly loginEndpoint = "/api/Auth/login";
-    private readonly logoutEndpoint = "/api/Auth/logout";
+  private readonly http = inject(HttpClient);
+  private accessToken: string | null = null;
+  private readonly authState = new BehaviorSubject<boolean>(false);
+  readonly isAuthenticated$ = this.authState.asObservable();
+  private readonly baseUrl = 'https://localhost:7285';
+  private readonly refreshEndpoint = '/api/Auth/refresh';
+  private readonly loginEndpoint = '/api/Auth/login';
+  private readonly logoutEndpoint = '/api/Auth/logout';
 
-    getAccessToken(): string | null {
-        return this.accessToken;
+  getAccessToken(): string | null {
+    return this.accessToken;
+  }
+
+  // Add authentication methods here, e.g., login, logout, checkAuthStatus
+  async initializeAuth(): Promise<void> {
+    try {
+      const response = await firstValueFrom(
+        this.http.post<TokenResponse>(
+          `${this.baseUrl}${this.refreshEndpoint}`,
+          {},
+          { withCredentials: true },
+        ),
+      );
+
+      this.accessToken = response.token;
+      this.authState.next(true);
+    } catch {
+      this.accessToken = null;
+      this.authState.next(false);
     }
+  }
 
-    // Add authentication methods here, e.g., login, logout, checkAuthStatus
-    async initializeAuth(): Promise<void> {
-        try{
-            const response = await firstValueFrom(
-                this.http.post<TokenResponse>(
-                    `${this.baseUrl}${this.refreshEndpoint}`,
-                    {}, 
-                    {withCredentials: true}
-                )
-            );
+  get isLoggedIn(): boolean {
+    return this.authState.value;
+  }
 
-            this.accessToken = response.token;
-            this.authState.next(true);
-        }catch {
-            this.accessToken = null;
-            this.authState.next(false);
-        }
-        
-    }
+  async login(credentials: { username: string; password: string }): Promise<void> {
+    const response = await firstValueFrom(
+      this.http.post<TokenResponse>(`${this.baseUrl}${this.loginEndpoint}`, credentials, {
+        withCredentials: true,
+      }),
+    );
 
-    get isLoggedIn(): boolean {
-        return this.authState.value;
-    }
+    this.accessToken = response.token;
+    this.authState.next(true);
+  }
 
-    async login(credentials: { username: string; password: string}): Promise<void> {
-        const response = await firstValueFrom(
-            this.http.post<TokenResponse>(
-                `${this.baseUrl}${this.loginEndpoint}`,
-                credentials,
-                {withCredentials: true}
-            )
-        );
-
-        this.accessToken = response.token;
-        this.authState.next(true);  
-    }
-
-    logout(): Observable<void> {
-        console.log("Trying to logout");
-        this.accessToken = null;
-        this.authState.next(false);
-        return this.http.post<any>(`${this.baseUrl}${this.logoutEndpoint}`, {}, {withCredentials: true});
-    }
+  logout(): Observable<void> {
+    console.log('Trying to logout');
+    this.accessToken = null;
+    this.authState.next(false);
+    return this.http.post<any>(
+      `${this.baseUrl}${this.logoutEndpoint}`,
+      {},
+      { withCredentials: true },
+    );
+  }
 }

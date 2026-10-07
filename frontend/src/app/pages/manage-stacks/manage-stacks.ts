@@ -14,14 +14,14 @@ import { DeleteConfirmationModal } from '../../components/delete-confirmation-mo
 
 @Component({
   imports: [BackLink, NgIcon, StackEditorModal, DeleteConfirmationModal],
-  providers: [provideIcons(
-    {
-      phosphorPlusBold, 
+  providers: [
+    provideIcons({
+      phosphorPlusBold,
       phosphorMagnifyingGlassLight,
       phosphorPencilSimple,
-      phosphorTrashBold 
-    }
-  )],
+      phosphorTrashBold,
+    }),
+  ],
   selector: 'app-manage-stacks',
   styleUrl: './manage-stacks.scss',
   templateUrl: './manage-stacks.html',
@@ -34,42 +34,42 @@ export class ManageStacks {
   // Signals
   mode = input<'manage' | 'study'>('manage');
   searchQuery = signal<string>('');
-  deleteTarget = signal<Stack | null>(null)
-  editorState = signal<{mode: 'create' | 'rename'; stack: Stack | null} | null>(null)
+  deleteTarget = signal<Stack | null>(null);
+  editorState = signal<{ mode: 'create' | 'rename'; stack: Stack | null } | null>(null);
 
   // Computed Signals
-  title = computed(() => this.mode() === 'manage' ? 'Manage Stacks' : 'Choose a Stack');
+  title = computed(() => (this.mode() === 'manage' ? 'Manage Stacks' : 'Choose a Stack'));
 
   filteredStacks = computed<Stack[]>(() => {
     const rawStacks = this.stackResource.value();
     const query = this.searchQuery().toLowerCase().trim();
 
     if (!query) {
-      return rawStacks
+      return rawStacks;
     }
 
-    return rawStacks.filter(stack => stack.name.toLowerCase()
-      .includes(query)
-    )
-  })
+    return rawStacks.filter((stack) => stack.name.toLowerCase().includes(query));
+  });
 
-  hasNoStacks = computed(() =>
-    !this.stackResource.isLoading() &&
-    !this.stackResource.error() &&
-    this.stackResource.value().length === 0
+  hasNoStacks = computed(
+    () =>
+      !this.stackResource.isLoading() &&
+      !this.stackResource.error() &&
+      this.stackResource.value().length === 0,
   );
 
-  noMatches = computed(() =>
-    !this.stackResource.isLoading() &&
-    !this.stackResource.error() &&
-    this.stackResource.value().length > 0 &&
-    this.filteredStacks().length === 0
+  noMatches = computed(
+    () =>
+      !this.stackResource.isLoading() &&
+      !this.stackResource.error() &&
+      this.stackResource.value().length > 0 &&
+      this.filteredStacks().length === 0,
   );
 
   // HTTP
   stackResource = rxResource({
     defaultValue: [],
-    stream: () =>  this.stacksService.getAll()
+    stream: () => this.stacksService.getAll(),
   });
 
   // Helper functions
@@ -78,51 +78,51 @@ export class ManageStacks {
     this.searchQuery.set(input.value);
   }
 
-  onRowClick(stack: Stack){
-    if(this.mode() === 'manage') {
+  onRowClick(stack: Stack) {
+    if (this.mode() === 'manage') {
       this.router.navigateByUrl(`/stacks/${stack.id}/cards`);
     } else {
       this.router.navigateByUrl(`/study/${stack.id}`);
     }
   }
 
-  onNewStackClick(){
-    this.editorState.set({ mode: 'create', stack: null })
+  onNewStackClick() {
+    this.editorState.set({ mode: 'create', stack: null });
   }
 
   onEditorSave(name: string) {
     if (this.editorState()?.mode === 'create') {
       this.stacksService.createStack(name).subscribe({
         next: (response) => {
-          console.log("Submission successful: ", response)
+          console.log('Submission successful: ', response);
           this.editorState.set(null);
           this.stackResource.reload();
         },
         error: (err) => {
-          console.log("Failed to create new Stack: ", err);
-        }
+          console.log('Failed to create new Stack: ', err);
+        },
       });
     } else {
       const stack = this.editorState()!.stack!;
       this.stacksService.updateStackById(stack.id, name).subscribe({
         next: (response) => {
-          console.log("Update successful: ", response);
+          console.log('Update successful: ', response);
           this.editorState.set(null);
           this.stackResource.reload();
         },
         error: (err) => {
-          console.log("Failed to update Stack: ", err);
-        }
-      })
+          console.log('Failed to update Stack: ', err);
+        },
+      });
     }
   }
 
-  onEditClick(stack: Stack, event: Event){
+  onEditClick(stack: Stack, event: Event) {
     event.stopPropagation();
-    this.editorState.set({mode: 'rename', stack});
+    this.editorState.set({ mode: 'rename', stack });
   }
 
-  onDeleteClick(stack: Stack, event: Event){
+  onDeleteClick(stack: Stack, event: Event) {
     event.stopPropagation();
     this.deleteTarget.set(stack);
   }
@@ -131,13 +131,13 @@ export class ManageStacks {
     const stackId = this.deleteTarget()?.id!;
     this.stacksService.deleteStackById(stackId).subscribe({
       next: (response) => {
-        console.log("Delete successful: ", response);
+        console.log('Delete successful: ', response);
         this.deleteTarget.set(null);
         this.stackResource.reload();
       },
       error: (err) => {
-          console.log("Failed to delete Stack: ", err);
-        }
-    })
+        console.log('Failed to delete Stack: ', err);
+      },
+    });
   }
 }
