@@ -1,0 +1,473 @@
+@use '../../../scss/breakpoints' as bp;
+
+// Mobile (base): single column, card count on its own line under the title,
+// and a floating "+" button. Mirrors manage-stacks.scss so the two screens
+// share one rhythm.
+.manage-cards-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.manage-cards-header {
+    min-width: 0;
+    margin-top: var(--space-2);
+    margin-bottom: 0;
+    margin-left: -.25em;
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h1);
+    line-height: var(--line-height-h1);
+    overflow-wrap: anywhere;
+}
+
+// The count lives inside the h2 so it lines up under the title on mobile and
+// tablet; on desktop it sits inline, wrapped in parentheses (see below)
+.card-count {
+    display: block;
+    font-family: var(--font-family-body);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: var(--line-height-meta);
+    color: var(--color-text-secondary);
+}
+
+.toolbar-container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+}
+
+.search-cards-container {
+    flex: 1;
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: var(--space-1);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-secondary);
+}
+
+.search-cards-input {
+    width: 100%;
+    padding: 0.625rem var(--space-2) 0.625rem var(--space-4);
+    border-radius: var(--radius-default);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-meta);
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.search-cards-input::placeholder {
+    color: var(--color-text-secondary);
+}
+
+.search-cards-input:hover {
+    border-color: var(--color-focus-ring);
+}
+
+.search-cards-input:focus-visible {
+    border-color: var(--color-focus-ring);
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+// Mobile and tablet: a fixed circular FAB
+.new-card-button {
+    position: fixed;
+    right: var(--space-3);
+    bottom: var(--space-3);
+    height: 56px;
+    width: 56px;
+    border-radius: var(--radius-pill);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-primary);
+    border: none;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+}
+
+.new-card-button:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.new-card-button:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.new-card-icon {
+    font-size: 1.5rem;
+    color: var(--color-surface);
+}
+
+.new-card-text {
+    display: none;
+}
+
+// Card list: one full-width row per card
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: var(--space-2);
+    // Keeps the last row clear of the floating "+" button
+    padding-bottom: 72px;
+}
+
+.card-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: 76px;
+    padding: var(--space-1) var(--space-2);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-default);
+}
+
+// min-width: 0 lets the text column shrink, so the ellipsis can kick in
+.card-row-text {
+    min-width: 0;
+}
+
+// Both lines are cut to one line with an ellipsis; the full text is in the
+// card editor and on the Study screen
+.card-row-question,
+.card-row-answer {
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.card-row-question {
+    font-family: var(--font-family-body);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: var(--line-height-body);
+    color: var(--color-text-primary);
+}
+
+.card-row-answer {
+    margin-top: 0.25rem;
+    font-size: 0.8125rem;
+    line-height: var(--line-height-meta);
+    color: var(--color-text-secondary);
+}
+
+.edit-delete-container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.edit-delete-buttons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    background: none;
+    border: none;
+    border-radius: var(--radius-default);
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+
+.edit-delete-buttons:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.edit-card-button {
+    color: var(--color-text-secondary);
+}
+
+.delete-card-button {
+    color: var(--color-warning);
+}
+
+// Empty state: the stack has no cards at all
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: clamp(var(--space-4), 14vh, 6rem);
+    padding-bottom: 6rem;
+}
+
+.empty-state-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 72px;
+    block-size: 72px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-3);
+}
+
+.empty-state-title {
+    margin: 0 0 var(--space-1);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h2);
+    color: var(--color-text-primary);
+}
+
+.empty-state-text {
+    margin: 0 0 var(--space-3);
+    font-size: var(--font-size-meta);
+    color: var(--color-text-secondary);
+}
+
+.empty-state-button {
+    block-size: 48px;
+    padding: 0 var(--space-4);
+    border: none;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    font-family: var(--font-family-body);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+}
+
+.empty-state-button:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.empty-state-button:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+// No-matches state: cards exist, but the search filters them all out
+.no-matches-text {
+    margin: clamp(var(--space-4), 14vh, 6rem) 0 0;
+    text-align: center;
+    color: var(--color-text-secondary);
+    overflow-wrap: anywhere;
+}
+
+// Tablet: the mobile layout, scaled up (still a single column and the FAB)
+@include bp.tablet {
+    .manage-cards-header {
+        margin-top: var(--space-3);
+    }
+
+    .card-count {
+        font-size: 0.9375rem;
+    }
+
+    .toolbar-container {
+        margin-top: var(--space-3);
+    }
+
+    .search-cards-input {
+        padding-block: 0.875rem;
+        font-size: var(--font-size-body);
+    }
+
+    .new-card-button {
+        right: var(--space-4);
+        bottom: var(--space-4);
+        height: 64px;
+        width: 64px;
+    }
+
+    .new-card-icon {
+        font-size: 1.75rem;
+    }
+
+    .cards-container {
+        gap: var(--space-2);
+        margin-top: var(--space-3);
+        padding-bottom: 88px;
+    }
+
+    .card-row {
+        min-block-size: 96px;
+        padding: var(--space-2) 1.25rem;
+        border-radius: 10px;
+    }
+
+    .card-row-question {
+        font-size: 1.1875rem;
+    }
+
+    .card-row-answer {
+        margin-top: 0.375rem;
+        font-size: 0.9375rem;
+    }
+
+    .empty-state {
+        padding-bottom: 7rem;
+    }
+
+    .empty-state-icon {
+        inline-size: 80px;
+        block-size: 80px;
+        font-size: 1.75rem;
+    }
+
+    .empty-state-title {
+        font-size: 1.5rem;
+    }
+
+    .empty-state-text {
+        font-size: var(--font-size-body);
+    }
+
+    .empty-state-button {
+        block-size: 52px;
+        font-size: var(--font-size-body);
+    }
+
+    .no-matches-text {
+        font-size: 1.0625rem;
+    }
+}
+
+// Desktop: the title (with its count inline), search and "New Card" button
+// share one row, like Manage Stacks. The container becomes a two-column grid:
+// the title on the left, the toolbar in a fixed 504px slot on the right
+// (300px search + 24px gap + 180px button). The card rows run the full width.
+@include bp.desktop {
+    .manage-cards-container {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 504px;
+        align-items: center;
+        column-gap: var(--space-3);
+    }
+
+    .header-container {
+        grid-column: 1;
+        grid-row: 1;
+        margin-top: var(--space-3);
+    }
+
+    .manage-cards-header {
+        margin-block: 0;
+    }
+
+    // "C# Fundamentals (24 cards)"
+    .card-count {
+        display: inline;
+        margin-left: var(--space-1);
+        font-size: var(--font-size-meta);
+        white-space: nowrap;
+    }
+
+    .card-count::before {
+        content: '(';
+    }
+
+    .card-count::after {
+        content: ')';
+    }
+
+    .toolbar-container {
+        grid-column: 2;
+        grid-row: 1;
+        justify-content: flex-end;
+        margin-top: var(--space-3);
+        gap: var(--space-3);
+    }
+
+    .search-cards-input {
+        padding-block: 0.6875rem;
+        font-size: var(--font-size-meta);
+    }
+
+    .cards-container,
+    .empty-state,
+    .no-matches-text {
+        grid-column: 1 / -1;
+    }
+
+    .new-card-button {
+        position: static;
+        height: auto;
+        width: 180px;
+        flex: none;
+        gap: var(--space-1);
+        padding: 0.6875rem var(--space-3);
+        border-radius: var(--radius-default);
+    }
+
+    // With no cards, the empty state's own button replaces this one
+    .new-card-button--empty {
+        display: none;
+    }
+
+    .new-card-icon {
+        font-size: 1.1rem;
+    }
+
+    .new-card-text {
+        display: inline;
+        color: var(--color-surface);
+        font-family: var(--font-family-body);
+        font-weight: 600;
+    }
+
+    .cards-container {
+        margin-top: var(--space-4);
+        padding-bottom: 0;
+    }
+
+    .card-row {
+        min-block-size: 88px;
+        padding: var(--space-2) var(--space-3);
+        gap: var(--space-3);
+    }
+
+    .card-row-question {
+        font-size: 1.0625rem;
+    }
+
+    .card-row-answer {
+        font-size: var(--font-size-meta);
+    }
+
+    .empty-state {
+        padding-bottom: clamp(var(--space-4), 10vh, 5rem);
+    }
+
+    .empty-state-icon {
+        inline-size: 80px;
+        block-size: 80px;
+    }
+
+    .empty-state-title {
+        font-size: 1.625rem;
+    }
+
+    .empty-state-text {
+        font-size: var(--font-size-body);
+    }
+
+    .empty-state-button {
+        block-size: 52px;
+        padding: 0 var(--space-4);
+        font-size: var(--font-size-body);
+    }
+}

@@ -6,8 +6,8 @@
   <div class="toolbar-container">
     @if (!hasNoStacks()) {
       <div class="search-stacks-container">
-        <label for="search-stacks" class="search-input"></label>
         <input
+          aria-label="Search stacks"
           (input)="updateText($event)"
           type="text"
           class="search-stacks-input"

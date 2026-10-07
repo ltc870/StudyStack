@@ -33,6 +33,10 @@ export class ManageCards {
   searchQuery = signal<string>('');
 
   // Computed Signals
+  cardCount = computed(() => {
+    return this.stackResource.value()?.cardCount;
+  });
+
   filteredCards = computed<Card[]>(() => {
     if (!this.cardResource.hasValue()) return [];
     const rawCards = this.cardResource.value();
