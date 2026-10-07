@@ -56,7 +56,7 @@
             <button
               class="edit-card-button edit-delete-buttons"
               aria-label="Edit card"
-              (click)="onEditClick(card, $event)"
+              (click)="onEditClick(card)"
             >
               <ng-icon name="phosphorPencilSimple" class="edit-card-icon" />
             </button>
@@ -67,13 +67,13 @@
         </div>
       }
     </div>
-    @if (editorState()) {
-      <app-card-editor-modal
-        [mode]="editorState()!.mode"
-        [card]="editorState()!.card"
-        (save)="onEditorSave($event)"
-        (cancel)="editorState.set(null)"
-      />
-    }
+  }
+  @if (editorState()) {
+    <app-card-editor-modal
+      [mode]="editorState()!.mode"
+      [card]="editorState()!.card"
+      (save)="onEditorSave($event)"
+      (cancel)="editorState.set(null)"
+    />
   }
 </div>

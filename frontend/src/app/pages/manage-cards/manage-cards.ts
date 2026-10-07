@@ -92,8 +92,7 @@ export class ManageCards {
     this.editorState.set({ mode: 'create', card: null });
   }
 
-  onEditClick(card: Card, event: Event) {
-    event.stopPropagation();
+  onEditClick(card: Card) {
     this.editorState.set({ mode: 'edit', card });
   }
 
@@ -115,7 +114,7 @@ export class ManageCards {
         next: (response) => {
           console.log('Update successful: ', response);
           this.editorState.set(null);
-          this.stackResource.reload();
+          this.cardResource.reload();
         },
         error: (err) => {
           console.log('Failed to update Stack: ', err);
