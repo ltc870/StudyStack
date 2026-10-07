@@ -10,10 +10,10 @@ export class CardsService {
 
     // Endpoints
     private readonly baseUrl = "https://localhost:7285";
-    private readonly GetAllCardsByStackEndpoint = "/api/Cards/get-cards-by-stack/";
+    private readonly getAllCardsByStackEndpoint = "/api/Cards/get-cards-by-stack/";
 
     // GET
     getAllCardsByStack(stackId: number): Observable<Card[]> {
-        return this.http.get<Card[]>(`${this.baseUrl}${this.GetAllCardsByStackEndpoint}${stackId}`);
+        return this.http.get<Card[]>(`${this.baseUrl}${this.getAllCardsByStackEndpoint}${stackId}`);
     }
 }

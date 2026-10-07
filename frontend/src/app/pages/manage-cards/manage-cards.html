@@ -2,7 +2,7 @@
 <app-back-link></app-back-link>
 <p>Stack id: {{ stackId() }}</p>
 @if (stackResource.hasValue()) {
-    <p>Stack Name: {{stackResource.value()?.name}}</p>
+    <p>Stack Name: {{stackResource.value().name}}</p>
 }
 
 <input type="text" (input)="updateText($event)">
