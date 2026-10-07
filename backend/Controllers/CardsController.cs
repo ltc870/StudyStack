@@ -73,7 +73,7 @@ public class CardsController : ControllerBase
         // Save and return the newly created card
         _dbContext.Cards.Add(card);
         await _dbContext.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetAllCardsByStack), new { stackId = stack.Id }, CardResponseDto.FromEntity(card));
+        return Ok(CardResponseDto.FromEntity((card)));
     }
     
     // Update
