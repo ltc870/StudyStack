@@ -1,0 +1,251 @@
+@use '../../../scss/breakpoints' as bp;
+
+// The host element would otherwise be an empty grid/flex item of its parent
+:host {
+    display: contents;
+}
+
+// The card editor is the one dialog that does not use --modal-width: it holds
+// two textareas, so it is wider (350 / 560 / 640px). Padding still comes from
+// the shared --modal-padding token (24 / 32 / 32px).
+.card-editor-modal-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    inline-size: min(calc(100% - var(--space-4)), 350px);
+    // Short windows (a phone in landscape): the dialog scrolls inside itself
+    // instead of running off the screen
+    max-block-size: calc(100dvh - var(--space-4));
+    overflow-y: auto;
+    padding: var(--modal-padding);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-modal);
+}
+
+.modal-title {
+    margin: 0;
+    font-family: var(--font-family-heading);
+    font-size: 1.1875rem;
+    line-height: var(--line-height-h2);
+    color: var(--color-text-primary);
+}
+
+.modal-close-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    background: none;
+    border: none;
+    border-radius: var(--radius-default);
+    font-size: var(--font-size-body);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+// QUESTION / ANSWER
+.card-editor-label {
+    grid-column: 1 / -1;
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-1);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-label);
+    line-height: var(--line-height-label);
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    color: var(--color-text-secondary);
+}
+
+.card-editor-textarea {
+    grid-column: 1 / -1;
+    display: block;
+    inline-size: 100%;
+    block-size: 110px;
+    min-block-size: 80px;
+    resize: vertical;
+    padding: 0.75rem var(--space-2);
+    background-color: var(--color-surface-tint);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-default);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+    // Even in the body font, card text is often code: Inter's contextual
+    // alternates would otherwise draw => and -> as arrow glyphs
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "calt" 0;
+    transition: border-color 120ms ease;
+}
+
+.card-editor-textarea:hover {
+    border-color: var(--color-focus-ring);
+}
+
+// Monospace on: the textareas switch to the code font as you type, so what you
+// write looks like what you will study. Ligatures are already off on the base
+// rule above, so -> and != stay literal in both fonts.
+.card-editor-textarea--mono {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-code);
+    line-height: var(--line-height-code);
+    tab-size: 4;
+}
+
+// "Monospace font" switch. The real checkbox stays in the page (keyboard and
+// screen readers use it) but is visually hidden; the track span draws the switch.
+.mono-toggle {
+    grid-column: 1 / -1;
+    justify-self: start;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: var(--space-3);
+    cursor: pointer;
+}
+
+.mono-toggle-input {
+    position: absolute;
+    opacity: 0;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: 0;
+}
+
+.mono-toggle-track {
+    position: relative;
+    flex: none;
+    inline-size: 40px;
+    block-size: 22px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-border);
+    transition: background-color 120ms ease;
+}
+
+// The knob
+.mono-toggle-track::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    inline-size: 16px;
+    block-size: 16px;
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    transition: transform 120ms ease;
+}
+
+.mono-toggle-input:checked + .mono-toggle-track {
+    background-color: var(--color-accent);
+}
+
+.mono-toggle-input:checked + .mono-toggle-track::after {
+    transform: translateX(18px);
+}
+
+.mono-toggle-input:focus-visible + .mono-toggle-track {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.mono-toggle-text {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-meta);
+    color: var(--color-text-primary);
+}
+
+// Footer: Cancel + Save, right-aligned on the dialog's inner padding
+.cancel-save-buttons-container {
+    grid-column: 1 / -1;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-top: var(--space-4);
+}
+
+.cancel-button {
+    padding: 0.625rem var(--space-2);
+    background: none;
+    border: none;
+    border-radius: var(--radius-default);
+    font-family: var(--font-family-body);
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+.save-button {
+    min-inline-size: 84px;
+    padding: 0.625rem var(--space-3);
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: var(--radius-default);
+    font-family: var(--font-family-body);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-surface);
+    cursor: pointer;
+    transition: background-color 120ms ease;
+}
+
+.save-button:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+}
+
+.save-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.modal-close-button:focus-visible,
+.cancel-button:focus-visible,
+.save-button:focus-visible,
+.card-editor-textarea:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.card-editor-textarea:focus-visible {
+    border-color: var(--color-focus-ring);
+}
+
+// Tablet: 560px wide, taller textareas, slightly larger type
+@include bp.tablet {
+    .card-editor-modal-container {
+        inline-size: min(calc(100% - var(--space-4)), 560px);
+    }
+
+    .modal-title {
+        font-size: 1.375rem;
+    }
+
+    .card-editor-label {
+        font-size: 0.75rem;
+    }
+
+    .card-editor-textarea {
+        block-size: 130px;
+    }
+
+    .save-button {
+        min-inline-size: 96px;
+    }
+}
+
+// Desktop: 640px wide; the dialog is wider, so the textareas can be shorter
+@include bp.desktop {
+    .card-editor-modal-container {
+        inline-size: min(calc(100% - var(--space-4)), 640px);
+    }
+
+    .card-editor-label {
+        font-size: var(--font-size-label);
+    }
+
+    .card-editor-textarea {
+        block-size: 100px;
+    }
+}
