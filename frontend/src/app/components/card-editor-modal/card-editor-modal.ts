@@ -28,12 +28,12 @@ export class CardEditorModal {
 
   // Helper Functions
   setQuestion(event: Event) {
-    const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLTextAreaElement;
     this.question.set(input.value);
   }
 
   setAnswer(event: Event) {
-    const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLTextAreaElement;
     this.answer.set(input.value);
   }
 
