@@ -1,2 +1,24 @@
 <p>manage-cards works!</p>
 <app-back-link></app-back-link>
+<p>Stack id: {{ stackId() }}</p>
+@if (stackResource.hasValue()) {
+    <p>Stack Name: {{stackResource.value()?.name}}</p>
+}
+
+<input type="text" (input)="updateText($event)">
+
+
+
+@if (hasNoCards()) {
+    <p>No cards to show</p>
+} @else if (noMatches()) {
+    <p>No cards match</p>
+} @else {
+        @for(card of filteredCards(); track card.id) {
+        <p>Question: {{card.question}}</p>
+        <p>Answer: {{card.answer}}</p>
+    }
+}
+
+
+
