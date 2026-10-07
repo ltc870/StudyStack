@@ -14,7 +14,7 @@ public class CardUpdateDto
 {
     public string? Question { get; set; }
     public string? Answer { get; set; }
-    public bool? IsMonospace { get; set; } = false;
+    public bool? IsMonospace { get; set; }
 }
 
 public class CardResponseDto
