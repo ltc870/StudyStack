@@ -12,7 +12,7 @@ export class CardsService {
   private readonly baseUrl = 'https://localhost:7285';
   private readonly getAllCardsByStackEndpoint = '/api/Cards/get-cards-by-stack/';
   private readonly createCardEndpoint = '/api/Cards/create-card';
-  private readonly updateCardByIdEndpoint = 'api/Cards/update-card/';
+  private readonly updateCardByIdEndpoint = '/api/Cards/update-card/';
 
   // GET
   getAllCardsByStack(stackId: number): Observable<Card[]> {
@@ -21,11 +21,11 @@ export class CardsService {
 
   // POST
   createCard(card: CardCreateRequest): Observable<Card> {
-    return this.http.post<Card>(`${this.baseUrl}${this.createCardEndpoint}`, { card });
+    return this.http.post<Card>(`${this.baseUrl}${this.createCardEndpoint}`, card);
   }
 
   // PUT
   updateCardById(cardId: number, card: CardUpdateRequest): Observable<Card> {
-    return this.http.put<Card>(`${this.baseUrl}${this.updateCardByIdEndpoint}${cardId}`, { card });
+    return this.http.put<Card>(`${this.baseUrl}${this.updateCardByIdEndpoint}${cardId}`, card);
   }
 }

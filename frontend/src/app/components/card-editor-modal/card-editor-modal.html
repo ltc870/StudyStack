@@ -1,0 +1,43 @@
+<div class="modal-backdrop" (click)="cancel.emit()">
+  <div class="card-editor-modal-container" (click)="$event.stopPropagation()">
+    <h2 class="modal-title">{{ title() }}</h2>
+    <button class="modal-close-button" aria-label="Close" (click)="cancel.emit()">
+      <ng-icon name="remixCloseFill" class="close-icon" />
+    </button>
+    <label for="card-question" class="card-editor-label">QUESTION</label>
+    <textarea
+      name="card-question"
+      id="card-question"
+      class="card-editor-textarea"
+      [value]="question()"
+      [spellcheck]="!isMonospace()"
+      (input)="setQuestion($event)"
+      [class.card-editor-textarea--mono]="isMonospace()"
+    ></textarea>
+    <label for="card-answer" class="card-editor-label">ANSWER</label>
+    <textarea
+      name="card-answer"
+      id="card-answer"
+      class="card-editor-textarea"
+      [value]="answer()"
+      [spellcheck]="!isMonospace()"
+      (input)="setAnswer($event)"
+      [class.card-editor-textarea--mono]="isMonospace()"
+    ></textarea>
+    <label class="mono-toggle">
+      <input
+        type="checkbox"
+        role="switch"
+        class="mono-toggle-input"
+        [checked]="isMonospace()"
+        (change)="setIsMonospace($event)"
+      />
+      <span class="mono-toggle-track"></span>
+      <span class="mono-toggle-text">Monospace font</span>
+    </label>
+    <div class="cancel-save-buttons-container">
+      <button class="cancel-button" (click)="cancel.emit()">Cancel</button>
+      <button class="save-button" [disabled]="!canSave()" (click)="onSave()">Save</button>
+    </div>
+  </div>
+</div>

@@ -8,9 +8,10 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { phosphorPlusBold, phosphorTrashBold } from '@ng-icons/phosphor-icons/bold';
 import { phosphorMagnifyingGlassLight } from '@ng-icons/phosphor-icons/light';
 import { phosphorPencilSimple } from '@ng-icons/phosphor-icons/regular';
+import { CardEditorModal } from '../../components/card-editor-modal/card-editor-modal';
 
 @Component({
-  imports: [BackLink, NgIcon],
+  imports: [BackLink, NgIcon, CardEditorModal],
   providers: [
     provideIcons({
       phosphorPlusBold,
