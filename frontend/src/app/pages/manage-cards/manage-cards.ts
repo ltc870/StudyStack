@@ -4,9 +4,21 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { StacksService } from '../../services/stacks-service';
 import { CardsService } from '../../services/cards-service';
 import { Card } from '../../models/card';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { phosphorPlusBold, phosphorTrashBold } from '@ng-icons/phosphor-icons/bold';
+import { phosphorMagnifyingGlassLight } from '@ng-icons/phosphor-icons/light';
+import { phosphorPencilSimple } from '@ng-icons/phosphor-icons/regular';
 
 @Component({
-  imports: [BackLink],
+  imports: [BackLink, NgIcon],
+  providers: [
+    provideIcons({
+      phosphorPlusBold,
+      phosphorMagnifyingGlassLight,
+      phosphorPencilSimple,
+      phosphorTrashBold,
+    }),
+  ],
   selector: 'app-manage-cards',
   styleUrl: './manage-cards.scss',
   templateUrl: './manage-cards.html',

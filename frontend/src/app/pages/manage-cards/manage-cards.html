@@ -1,20 +1,66 @@
 <div class="manage-cards-container">
-  <app-back-link></app-back-link>
-  <p>Stack id: {{ stackId() }}</p>
-  @if (stackResource.hasValue()) {
-    <p>Stack Name: {{ stackResource.value().name }}</p>
-  }
+  <div class="manage-cards-header-container">
+    <app-back-link></app-back-link>
+    @if (stackResource.hasValue()) {
+      <h2 class="header-cards-header">{{ stackResource.value().name }}</h2>
+      <span class="card-count"
+        >({{ stackResource.value().cardCount
+        }}{{
+          stackResource.value().cardCount > 1 || stackResource.value().cardCount === 0
+            ? 'Cards'
+            : 'Card'
+        }})</span
+      >
+    }
+  </div>
 
-  <input type="text" (input)="updateText($event)" />
+  <div class="toolbar-container">
+    @if (!hasNoCards()) {
+      <div class="search-cards-container">
+        <label for="search-cards"></label>
+        <input
+          id="search-cards"
+          class="search-cards-input"
+          type="text"
+          (input)="updateText($event)"
+          placeholder="Search cards..."
+        />
+        <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
+        <button class="new-card-button" [class.new-card-button--empty]="hasNoCards()">
+          <ng-icon name="phosphorPlusBold" class="new-stack-icon" />
+          <span class="new-card-text">New Card</span>
+        </button>
+      </div>
+    }
+  </div>
 
   @if (hasNoCards()) {
-    <p>No cards to show</p>
+    <div class="empty-state">
+      <div class="empty-state-icon">
+        <ng-icon name="phosphorPlusBold" />
+      </div>
+      <h3 class="empty-state-title">No cards yet</h3>
+      <p class="empty-state-text">Add your first card to start studying this stack.</p>
+      <button class="empty-state-button">Add a Card!</button>
+    </div>
   } @else if (noMatches()) {
-    <p>No cards match</p>
+    <p class="no-matches-text">No cards match &ldquo;{{ searchQuery().trim() }}&rdquo;.</p>
   } @else {
-    @for (card of filteredCards(); track card.id) {
-      <p>Question: {{ card.question }}</p>
-      <p>Answer: {{ card.answer }}</p>
-    }
+    <div class="cards-container">
+      @for (card of filteredCards(); track card.id) {
+        <div class="card-row">
+          <h3 class="card-row-question">Question: {{ card.question }}</h3>
+          <p class="card-row-answer">Answer: {{ card.answer }}</p>
+        </div>
+        <div class="edit-delete-container">
+          <button class="edit-card-button edit-delete-buttons" aria-label="Edit card">
+            <ng-icon name="phosphorPencilSimple" class="edit-stack-icon" />
+          </button>
+          <button class="delete-card-button edit-delete-buttons" aria-label="Delete card">
+            <ng-icon name="phosphorTrashBold" class="delete-stack-icon" />
+          </button>
+        </div>
+      }
+    </div>
   }
 </div>
