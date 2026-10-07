@@ -3,7 +3,7 @@ import { BackLink } from '../../components/back-link/back-link';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { StacksService } from '../../services/stacks-service';
 import { CardsService } from '../../services/cards-service';
-import { Card } from '../../models/card';
+import { Card, CardCreateRequest } from '../../models/card';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { phosphorPlusBold, phosphorTrashBold } from '@ng-icons/phosphor-icons/bold';
 import { phosphorMagnifyingGlassLight } from '@ng-icons/phosphor-icons/light';
@@ -32,6 +32,7 @@ export class ManageCards {
   // Signals
   stackId = input.required<number, unknown>({ transform: numberAttribute });
   searchQuery = signal<string>('');
+  editorState = signal<{ mode: 'create' | 'edit'; card: Card | null } | null>(null);
 
   // Computed Signals
   cardCount = computed(() => {
@@ -85,5 +86,41 @@ export class ManageCards {
   updateText(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchQuery.set(input.value);
+  }
+
+  onNewCardClick() {
+    this.editorState.set({ mode: 'create', card: null });
+  }
+
+  onEditClick(card: Card, event: Event) {
+    event.stopPropagation();
+    this.editorState.set({ mode: 'edit', card });
+  }
+
+  onEditorSave(value: Omit<CardCreateRequest, 'stackId'>) {
+    if (this.editorState()?.mode === 'create') {
+      this.cardsService.createCard({ stackId: this.stackId(), ...value }).subscribe({
+        next: (response) => {
+          console.log('Submission successful: ', response);
+          this.editorState.set(null);
+          this.cardResource.reload();
+        },
+        error: (err) => {
+          console.log('Failed to create new card: ', err);
+        },
+      });
+    } else {
+      const card = this.editorState()!.card!;
+      this.cardsService.updateCardById(card.id, value).subscribe({
+        next: (response) => {
+          console.log('Update successful: ', response);
+          this.editorState.set(null);
+          this.stackResource.reload();
+        },
+        error: (err) => {
+          console.log('Failed to update Stack: ', err);
+        },
+      });
+    }
   }
 }

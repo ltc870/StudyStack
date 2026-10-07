@@ -23,7 +23,11 @@
         <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
       </div>
     }
-    <button class="new-card-button" [class.new-card-button--empty]="hasNoCards()">
+    <button
+      class="new-card-button"
+      [class.new-card-button--empty]="hasNoCards()"
+      (click)="onNewCardClick()"
+    >
       <ng-icon name="phosphorPlusBold" class="new-card-icon" />
       <span class="new-card-text">New Card</span>
     </button>
@@ -36,7 +40,7 @@
       </div>
       <h3 class="empty-state-title">No cards yet</h3>
       <p class="empty-state-text">Add your first card to start studying this stack.</p>
-      <button class="empty-state-button">Add a Card!</button>
+      <button class="empty-state-button" (click)="onNewCardClick()">Add a Card!</button>
     </div>
   } @else if (noMatches()) {
     <p class="no-matches-text">No cards match &ldquo;{{ searchQuery().trim() }}&rdquo;.</p>
@@ -49,7 +53,11 @@
             <p class="card-row-answer">{{ card.answer }}</p>
           </div>
           <div class="edit-delete-container">
-            <button class="edit-card-button edit-delete-buttons" aria-label="Edit card">
+            <button
+              class="edit-card-button edit-delete-buttons"
+              aria-label="Edit card"
+              (click)="onEditClick(card, $event)"
+            >
               <ng-icon name="phosphorPencilSimple" class="edit-card-icon" />
             </button>
             <button class="delete-card-button edit-delete-buttons" aria-label="Delete card">
@@ -59,6 +67,13 @@
         </div>
       }
     </div>
-    <app-card-editor-modal />
+    @if (editorState()) {
+      <app-card-editor-modal
+        [mode]="editorState()!.mode"
+        [card]="editorState()!.card"
+        (save)="onEditorSave($event)"
+        (cancel)="editorState.set(null)"
+      />
+    }
   }
 </div>
