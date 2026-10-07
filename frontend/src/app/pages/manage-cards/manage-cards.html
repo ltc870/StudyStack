@@ -2,7 +2,7 @@
   <div class="header-container">
     <app-back-link></app-back-link>
     @if (stackResource.hasValue()) {
-      <h2 class="header-cards-header">
+      <h2 class="manage-cards-header">
         {{ stackResource.value().name }}
         <span class="card-count">{{ cardCount() }} {{ cardCount() === 1 ? 'card' : 'cards' }}</span>
       </h2>

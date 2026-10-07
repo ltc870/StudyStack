@@ -34,7 +34,8 @@ export class ManageCards {
 
   // Computed Signals
   cardCount = computed(() => {
-    return this.stackResource.value()?.cardCount;
+    if (!this.cardResource.hasValue()) return 0;
+    return this.cardResource.value().length;
   });
 
   filteredCards = computed<Card[]>(() => {
