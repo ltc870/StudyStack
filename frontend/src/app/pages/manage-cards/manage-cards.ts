@@ -9,9 +9,10 @@ import { phosphorPlusBold, phosphorTrashBold } from '@ng-icons/phosphor-icons/bo
 import { phosphorMagnifyingGlassLight } from '@ng-icons/phosphor-icons/light';
 import { phosphorPencilSimple } from '@ng-icons/phosphor-icons/regular';
 import { CardEditorModal } from '../../components/card-editor-modal/card-editor-modal';
+import { DeleteConfirmationModal } from '../../components/delete-confirmation-modal/delete-confirmation-modal';
 
 @Component({
-  imports: [BackLink, NgIcon, CardEditorModal],
+  imports: [BackLink, NgIcon, CardEditorModal, DeleteConfirmationModal],
   providers: [
     provideIcons({
       phosphorPlusBold,
@@ -33,6 +34,7 @@ export class ManageCards {
   stackId = input.required<number, unknown>({ transform: numberAttribute });
   searchQuery = signal<string>('');
   editorState = signal<{ mode: 'create' | 'edit'; card: Card | null } | null>(null);
+  deleteTarget = signal<Card | null>(null);
 
   // Computed Signals
   cardCount = computed(() => {
@@ -121,5 +123,23 @@ export class ManageCards {
         },
       });
     }
+  }
+
+  onDeleteClick(card: Card) {
+    this.deleteTarget.set(card);
+  }
+
+  onDeleteConfirmed() {
+    const cardId = this.deleteTarget()?.id!;
+    this.cardsService.deleteCardById(cardId).subscribe({
+      next: (response) => {
+        console.log('Delete successful: ', response);
+        this.deleteTarget.set(null);
+        this.cardResource.reload();
+      },
+      error: (err) => {
+        console.log('Failed to delete Card: ', err);
+      },
+    });
   }
 }

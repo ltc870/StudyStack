@@ -60,7 +60,11 @@
             >
               <ng-icon name="phosphorPencilSimple" class="edit-card-icon" />
             </button>
-            <button class="delete-card-button edit-delete-buttons" aria-label="Delete card">
+            <button
+              class="delete-card-button edit-delete-buttons"
+              aria-label="Delete card"
+              (click)="onDeleteClick(card)"
+            >
               <ng-icon name="phosphorTrashBold" class="delete-card-icon" />
             </button>
           </div>
@@ -74,6 +78,15 @@
       [card]="editorState()!.card"
       (save)="onEditorSave($event)"
       (cancel)="editorState.set(null)"
+    />
+  }
+
+  @if (deleteTarget()) {
+    <app-delete-confirmation-modal
+      title="Delete card?"
+      [itemLabel]="'this card'"
+      (confirmed)="onDeleteConfirmed()"
+      (cancelled)="deleteTarget.set(null)"
     />
   }
 </div>
