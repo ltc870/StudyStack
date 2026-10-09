@@ -5,7 +5,7 @@
       <h2 class="study-header">{{ stackResource.value()?.name }}</h2>
     }
     @if (currentCard()) {
-      <p class="card-position">{{ currentIndex() + 1 }} of {{ cardCount() }}</p>
+      <p class="card-position">Card {{ currentIndex() + 1 }} of {{ cardCount() }}</p>
     }
   </div>
   @if (currentCard(); as card) {
@@ -13,13 +13,17 @@
       <p class="study-card-label">{{ isFlipped() ? 'ANSWER' : 'QUESTION' }}</p>
       <p class="study-card-text">{{ isFlipped() ? card.answer : card.question }}</p>
       @if (!isFlipped()) {
-        <p class="study-card-hint">Tap FLIP to reveal the answer</p>
+        <p class="study-card-hint">Tap Flip to reveal the answer</p>
       }
     </div>
     <div class="study-controls">
-      <button type="button" (click)="previous()" [disabled]="!hasPrevious()">Previous</button>
-      <button type="button" (click)="flip()">Flip</button>
-      <button type="button" (click)="next()" [disabled]="!hasNext()">Next</button>
+      <button class="nav-button" type="button" (click)="previous()" [disabled]="!hasPrevious()">
+        <ng-icon name="phosphorCaretLeft" />
+      </button>
+      <button class="flip-button" type="button" (click)="flip()">Flip</button>
+      <button class="nav-button" type="button" (click)="next()" [disabled]="!hasNext()">
+        <ng-icon name="phosphorCaretRight" />
+      </button>
     </div>
   }
 </div>
