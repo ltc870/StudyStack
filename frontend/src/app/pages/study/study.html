@@ -1,2 +1,9 @@
 <p>study works!</p>
 <app-back-link></app-back-link>
+@if (stackResource.hasValue()) {
+  <p>{{ stackResource.value()?.name }}</p>
+}
+
+@if (cardResource.hasValue()) {
+  <p>{{ cardResource.value().length }}</p>
+}
