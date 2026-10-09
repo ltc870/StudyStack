@@ -1,16 +1,25 @@
-<p>study works!</p>
-<app-back-link></app-back-link>
-@if (stackResource.hasValue()) {
-  <p>{{ stackResource.value()?.name }}</p>
-}
-
-@if (cardResource.hasValue()) {
-  <p>{{ currentIndex() + 1 }} of {{ cardCount() }}</p>
-}
-
-@if (currentCard(); as card) {
-  <p>{{ isFlipped() ? card.answer : card.question }}</p>
-  <button type="button" (click)="previous()" [disabled]="!hasPrevious()">Previous</button>
-  <button type="button" (click)="flip()">Flip</button>
-  <button type="button" (click)="next()" [disabled]="!hasNext()">Next</button>
-}
+<div class="study-container">
+  <div class="header-container">
+    <app-back-link></app-back-link>
+    @if (stackResource.hasValue()) {
+      <h2 class="study-header">{{ stackResource.value()?.name }}</h2>
+    }
+    @if (currentCard()) {
+      <p class="card-position">{{ currentIndex() + 1 }} of {{ cardCount() }}</p>
+    }
+  </div>
+  @if (currentCard(); as card) {
+    <div class="study-card" aria-live="polite">
+      <p class="study-card-label">{{ isFlipped() ? 'ANSWER' : 'QUESTION' }}</p>
+      <p class="study-card-text">{{ isFlipped() ? card.answer : card.question }}</p>
+      @if (!isFlipped()) {
+        <p class="study-card-hint">Tap FLIP to reveal the answer</p>
+      }
+    </div>
+    <div class="study-controls">
+      <button type="button" (click)="previous()" [disabled]="!hasPrevious()">Previous</button>
+      <button type="button" (click)="flip()">Flip</button>
+      <button type="button" (click)="next()" [disabled]="!hasNext()">Next</button>
+    </div>
+  }
+</div>

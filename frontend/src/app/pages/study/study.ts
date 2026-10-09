@@ -4,9 +4,12 @@ import { StacksService } from '../../services/stacks-service';
 import { CardsService } from '../../services/cards-service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Card } from '../../models/card';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { phosphorCaretLeft, phosphorCaretRight } from '@ng-icons/phosphor-icons/regular';
 
 @Component({
-  imports: [BackLink],
+  imports: [BackLink, NgIcon],
+  providers: [provideIcons({ phosphorCaretLeft, phosphorCaretRight })],
   selector: 'app-study',
   styleUrl: './study.scss',
   templateUrl: './study.html',
@@ -74,6 +77,6 @@ export class Study {
   }
 
   flip() {
-    this.isFlipped.update(() => !this.isFlipped());
+    this.isFlipped.update((flipped) => !flipped);
   }
 }
