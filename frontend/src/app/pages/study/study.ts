@@ -1,12 +1,4 @@
-import {
-  Component,
-  inject,
-  input,
-  numberAttribute,
-  computed,
-  linkedSignal,
-  signal,
-} from '@angular/core';
+import { Component, inject, input, numberAttribute, computed, linkedSignal } from '@angular/core';
 import { BackLink } from '../../components/back-link/back-link';
 import { StacksService } from '../../services/stacks-service';
 import { CardsService } from '../../services/cards-service';
@@ -46,7 +38,7 @@ export class Study {
 
   currentCard = computed<Card | null>(() => {
     if (!this.cardResource.hasValue()) return null;
-    return this.cardResource.value()[this.currentIndex() ?? null];
+    return this.cardResource.value()[this.currentIndex()] ?? null;
   });
 
   // HTTP

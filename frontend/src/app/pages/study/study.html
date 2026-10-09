@@ -9,6 +9,6 @@
 }
 
 @if (currentCard(); as card) {
-  <p>{{ currentCard()?.question }}</p>
+  <p>{{ card?.question }}</p>
   {{ isFlipped() }}
 }
