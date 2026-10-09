@@ -9,6 +9,8 @@
 }
 
 @if (currentCard(); as card) {
-  <p>{{ card?.question }}</p>
-  {{ isFlipped() }}
+  <p>{{ isFlipped() ? card.answer : card.question }}</p>
+  <button type="button" (click)="previous()" [disabled]="!hasPrevious()">Previous</button>
+  <button type="button" (click)="flip()">Flip</button>
+  <button type="button" (click)="next()" [disabled]="!hasNext()">Next</button>
 }

@@ -41,6 +41,10 @@ export class Study {
     return this.cardResource.value()[this.currentIndex()] ?? null;
   });
 
+  hasPrevious = computed<boolean>(() => this.currentIndex() > 0);
+
+  hasNext = computed<boolean>(() => this.currentIndex() < this.cardCount() - 1);
+
   // HTTP
   stackResource = rxResource({
     params: () => this.stackId(),
@@ -52,4 +56,24 @@ export class Study {
     params: () => this.stackId(),
     stream: ({ params }) => this.cardsService.getAllCardsByStack(params),
   });
+
+  // Helper Functions
+  goTo(index: number) {
+    if (index < 0 || !(index < this.cardCount())) return;
+
+    this.currentIndex.set(index);
+    this.isFlipped.set(false);
+  }
+
+  next() {
+    this.goTo(this.currentIndex() + 1);
+  }
+
+  previous() {
+    this.goTo(this.currentIndex() - 1);
+  }
+
+  flip() {
+    this.isFlipped.update(() => !this.isFlipped());
+  }
 }
