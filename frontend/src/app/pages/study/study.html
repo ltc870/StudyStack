@@ -5,5 +5,10 @@
 }
 
 @if (cardResource.hasValue()) {
-  <p>{{ cardResource.value().length }}</p>
+  <p>{{ currentIndex() + 1 }} of {{ cardCount() }}</p>
+}
+
+@if (currentCard(); as card) {
+  <p>{{ currentCard()?.question }}</p>
+  {{ isFlipped() }}
 }

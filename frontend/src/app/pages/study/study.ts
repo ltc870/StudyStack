@@ -1,8 +1,17 @@
-import { Component, inject, input, numberAttribute } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  numberAttribute,
+  computed,
+  linkedSignal,
+  signal,
+} from '@angular/core';
 import { BackLink } from '../../components/back-link/back-link';
 import { StacksService } from '../../services/stacks-service';
 import { CardsService } from '../../services/cards-service';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { Card } from '../../models/card';
 
 @Component({
   imports: [BackLink],
@@ -17,6 +26,28 @@ export class Study {
 
   // Signals
   stackId = input.required<number, unknown>({ transform: numberAttribute });
+
+  // Linked Signals
+  currentIndex = linkedSignal({
+    source: () => this.stackId(),
+    computation: () => 0,
+  });
+
+  isFlipped = linkedSignal({
+    source: () => this.stackId(),
+    computation: () => false,
+  });
+
+  // Computed Signals
+  cardCount = computed(() => {
+    if (!this.cardResource.hasValue()) return 0;
+    return this.cardResource.value().length;
+  });
+
+  currentCard = computed<Card | null>(() => {
+    if (!this.cardResource.hasValue()) return null;
+    return this.cardResource.value()[this.currentIndex() ?? null];
+  });
 
   // HTTP
   stackResource = rxResource({
