@@ -6,12 +6,16 @@
     }
     @if (currentCard()) {
       <p class="card-position">Card {{ currentIndex() + 1 }} of {{ cardCount() }}</p>
+    } @else if (hasNoCards()) {
+      <p class="card-position">0 cards</p>
     }
   </div>
   @if (currentCard(); as card) {
     <div class="study-card" aria-live="polite">
       <p class="study-card-label">{{ isFlipped() ? 'ANSWER' : 'QUESTION' }}</p>
-      <p class="study-card-text">{{ isFlipped() ? card.answer : card.question }}</p>
+      <p class="study-card-text" [class.study-card-text--mono="card.isMonospace"]>
+        {{ isFlipped() ? card.answer : card.question }}
+      </p>
       @if (!isFlipped()) {
         <p class="study-card-hint">Tap Flip to reveal the answer</p>
       }
@@ -24,6 +28,15 @@
       <button class="nav-button" type="button" (click)="next()" [disabled]="!hasNext()">
         <ng-icon name="phosphorCaretRight" />
       </button>
+    </div>
+  } @else if (hasNoCards()) {
+    <div class="empty-state">
+      <div class="empty-state-icon">
+        <ng-icon name="phosphorCards" />
+      </div>
+      <h3 class="empty-state-title">No cards yet</h3>
+      <p class="empty-state-text">Add a few cards to start studying this stack.</p>
+      <a class="empty-state-button" [routerLink]="['/stacks', stackId(), 'cards']">Add Cards</a>
     </div>
   }
 </div>

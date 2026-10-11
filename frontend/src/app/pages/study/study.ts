@@ -1,15 +1,20 @@
 import { Component, inject, input, numberAttribute, computed, linkedSignal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { BackLink } from '../../components/back-link/back-link';
 import { StacksService } from '../../services/stacks-service';
 import { CardsService } from '../../services/cards-service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Card } from '../../models/card';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { phosphorCaretLeft, phosphorCaretRight } from '@ng-icons/phosphor-icons/regular';
+import {
+  phosphorCaretLeft,
+  phosphorCaretRight,
+  phosphorCards,
+} from '@ng-icons/phosphor-icons/regular';
 
 @Component({
-  imports: [BackLink, NgIcon],
-  providers: [provideIcons({ phosphorCaretLeft, phosphorCaretRight })],
+  imports: [BackLink, NgIcon, RouterLink],
+  providers: [provideIcons({ phosphorCaretLeft, phosphorCaretRight, phosphorCards })],
   selector: 'app-study',
   styleUrl: './study.scss',
   templateUrl: './study.html',
@@ -47,6 +52,13 @@ export class Study {
   hasPrevious = computed<boolean>(() => this.currentIndex() > 0);
 
   hasNext = computed<boolean>(() => this.currentIndex() < this.cardCount() - 1);
+
+  hasNoCards = computed(
+    () =>
+      !this.cardResource.isLoading() &&
+      this.cardResource.hasValue() &&
+      this.cardResource.value().length === 0,
+  );
 
   // HTTP
   stackResource = rxResource({
