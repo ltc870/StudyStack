@@ -13,19 +13,35 @@
   @if (currentCard(); as card) {
     <div class="study-card" aria-live="polite">
       <p class="study-card-label">{{ isFlipped() ? 'ANSWER' : 'QUESTION' }}</p>
-      <p class="study-card-text" [class.study-card-text--mono="card.isMonospace"]>
-        {{ isFlipped() ? card.answer : card.question }}
-      </p>
+      <p
+        class="study-card-text"
+        [class.study-card-text--mono]="card.isMonospace"
+        [textContent]="isFlipped() ? card.answer : card.question"
+      ></p>
       @if (!isFlipped()) {
         <p class="study-card-hint">Tap Flip to reveal the answer</p>
       }
     </div>
     <div class="study-controls">
-      <button class="nav-button" type="button" (click)="previous()" [disabled]="!hasPrevious()">
+      <button
+        class="nav-button"
+        type="button"
+        aria-label="Previous card"
+        (click)="previous()"
+        [disabled]="!hasPrevious()"
+      >
         <ng-icon name="phosphorCaretLeft" />
       </button>
-      <button class="flip-button" type="button" (click)="flip()">Flip</button>
-      <button class="nav-button" type="button" (click)="next()" [disabled]="!hasNext()">
+      <button class="flip-button" type="button" aria-label="Flip card" (click)="flip()">
+        Flip
+      </button>
+      <button
+        class="nav-button"
+        type="button"
+        aria-label="Next card"
+        (click)="next()"
+        [disabled]="!hasNext()"
+      >
         <ng-icon name="phosphorCaretRight" />
       </button>
     </div>
