@@ -9,7 +9,6 @@ export class CardsService {
   private http = inject(HttpClient);
 
   // Endpoints
-  private readonly baseUrl = 'https://localhost:7285';
   private readonly getAllCardsByStackEndpoint = '/api/Cards/get-cards-by-stack/';
   private readonly createCardEndpoint = '/api/Cards/create-card';
   private readonly updateCardByIdEndpoint = '/api/Cards/update-card/';
@@ -17,21 +16,21 @@ export class CardsService {
 
   // GET
   getAllCardsByStack(stackId: number): Observable<Card[]> {
-    return this.http.get<Card[]>(`${this.baseUrl}${this.getAllCardsByStackEndpoint}${stackId}`);
+    return this.http.get<Card[]>(`${this.getAllCardsByStackEndpoint}${stackId}`);
   }
 
   // POST
   createCard(card: CardCreateRequest): Observable<Card> {
-    return this.http.post<Card>(`${this.baseUrl}${this.createCardEndpoint}`, card);
+    return this.http.post<Card>(`${this.createCardEndpoint}`, card);
   }
 
   // PUT
   updateCardById(cardId: number, card: CardUpdateRequest): Observable<Card> {
-    return this.http.put<Card>(`${this.baseUrl}${this.updateCardByIdEndpoint}${cardId}`, card);
+    return this.http.put<Card>(`${this.updateCardByIdEndpoint}${cardId}`, card);
   }
 
   // DELETE
   deleteCardById(cardId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}${this.deleteCardByIdEndpoint}${cardId}`);
+    return this.http.delete<void>(`${this.deleteCardByIdEndpoint}${cardId}`);
   }
 }
