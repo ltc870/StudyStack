@@ -1,0 +1,383 @@
+@use '../../../scss/breakpoints' as bp;
+
+// Mobile (base): header with the position line centered under the title, the
+// card filling the content width, and one control row under it:
+// Previous (left), Flip (center), Next (right).
+.study-container {
+  display: flex;
+  flex-direction: column;
+}
+
+// Header: same title treatment as Manage Cards
+.header-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: var(--space-2);
+}
+
+.study-header {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0 0 0 -0.25em;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  overflow-wrap: anywhere;
+}
+
+// "Card 3 of 24" or "0 cards": its own centered line on mobile and tablet,
+// right-aligned on the title row on desktop
+.card-position {
+  flex-basis: 100%;
+  margin: var(--space-1) 0 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: var(--line-height-meta);
+  color: var(--color-text-secondary);
+}
+
+// The card: the largest, calmest surface in the app. A min-height keeps it
+// from jumping in size when you flip; long answers still grow it. The
+// min-height shrinks with the viewport height, so Flip stays above the fold
+// in short windows (a phone in landscape, dev tools docked).
+.study-card {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  min-block-size: clamp(8rem, 100dvh - 22rem, 27.5rem);
+  margin-top: var(--space-2);
+  padding: 1.25rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.study-card-label {
+  margin: 0;
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: var(--line-height-label);
+  color: var(--color-text-secondary);
+}
+
+// pre-wrap keeps the line breaks and indentation of code answers; long lines
+// still wrap inside the card instead of scrolling sideways
+.study-card-text {
+  margin: var(--space-3) 0 0;
+  font-size: 1.125rem;
+  line-height: var(--line-height-body);
+  color: var(--color-text-primary);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+
+// Cards saved with the monospace setting. Ligatures are already off on body.
+.study-card-text--mono {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-code);
+  line-height: var(--line-height-code);
+}
+
+// Pinned to the bottom of the card, question side only; hidden on desktop
+.study-card-hint {
+  margin: auto 0 0;
+  padding-top: var(--space-2);
+  font-size: 0.75rem;
+  line-height: var(--line-height-meta);
+  color: var(--color-text-secondary);
+}
+
+// Control row: the nav buttons sit on the card's edges, Flip in the middle
+.study-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  inline-size: 100%;
+  margin-top: var(--space-3);
+}
+
+// Previous / Next: deliberately low weight, so Flip is the one primary action
+.nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  inline-size: 48px;
+  block-size: 48px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+}
+
+.nav-button:hover:not(:disabled) {
+  background-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.nav-button:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.nav-button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.flip-button {
+  inline-size: 160px;
+  block-size: 48px;
+  padding: 0 var(--space-3);
+  border: none;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.flip-button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.flip-button:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+// Empty state: the stack has no cards. Calm, not alarming; the accent
+// "Add Cards" link goes to this stack's Manage Cards.
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: clamp(var(--space-4), 14vh, 6rem);
+  padding-bottom: var(--space-4);
+}
+
+.empty-state-icon {
+  display: flex;
+  color: var(--color-text-secondary);
+  font-size: 4rem;
+  margin-bottom: var(--space-2);
+}
+
+.empty-state-title {
+  margin: 0 0 var(--space-1);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h2);
+  color: var(--color-text-primary);
+}
+
+.empty-state-text {
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-size-meta);
+  color: var(--color-text-secondary);
+}
+
+// An <a> (it navigates), styled as the accent pill
+.empty-state-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 160px;
+  block-size: 48px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-accent);
+  color: var(--color-surface);
+  font-family: var(--font-family-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 120ms ease;
+}
+
+.empty-state-button:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.empty-state-button:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+// Tablet: the mobile layout, scaled up
+@include bp.tablet {
+  .header-container {
+    margin-top: var(--space-3);
+  }
+
+  .card-position {
+    font-size: 0.9375rem;
+  }
+
+  .study-card {
+    min-block-size: clamp(10rem, 100dvh - 25rem, 38.75rem);
+    margin-top: 1.25rem;
+    padding: var(--space-4);
+    border-radius: var(--radius-modal);
+  }
+
+  .study-card-label {
+    font-size: 0.75rem;
+  }
+
+  .study-card-text {
+    margin-top: var(--space-4);
+    font-size: 1.375rem;
+  }
+
+  .study-card-text--mono {
+    font-size: 1.0625rem;
+  }
+
+  .study-card-hint {
+    font-size: var(--font-size-meta);
+  }
+
+  .study-controls {
+    margin-top: var(--space-4);
+  }
+
+  .nav-button {
+    inline-size: 56px;
+    block-size: 56px;
+    font-size: 1.75rem;
+  }
+
+  .flip-button {
+    inline-size: 200px;
+    block-size: 56px;
+    font-size: 1.125rem;
+  }
+
+  .empty-state-icon {
+    font-size: 5rem;
+  }
+
+  .empty-state-title {
+    font-size: 1.75rem;
+  }
+
+  .empty-state-text {
+    font-size: 1.0625rem;
+  }
+
+  .empty-state-button {
+    min-inline-size: 220px;
+    block-size: 56px;
+    font-size: 1.0625rem;
+  }
+}
+
+// Desktop: "Card X of Y" moves onto the title row, right-aligned. The card
+// and control row are centered at 640px, the card editor's width, so text
+// wraps the way it did when it was typed.
+@include bp.desktop {
+  .header-container {
+    flex-wrap: nowrap;
+  }
+
+  .card-position {
+    flex: none;
+    flex-basis: auto;
+    margin: 0 0 0 var(--space-3);
+    text-align: right;
+    font-size: var(--font-size-meta);
+    white-space: nowrap;
+  }
+
+  .study-card,
+  .study-controls {
+    max-inline-size: 640px;
+    margin-inline: auto;
+  }
+
+  .study-card {
+    min-block-size: clamp(10rem, 100dvh - 23rem, 26.25rem);
+    margin-top: var(--space-4);
+    padding: 2.5rem;
+  }
+
+  .study-card-text {
+    margin-top: var(--space-4);
+    font-size: 1.25rem;
+  }
+
+  // Repeated here so the 1.25rem above doesn't override it
+  .study-card-text--mono {
+    font-size: 1.0625rem;
+  }
+
+  .study-card-hint {
+    display: none;
+  }
+
+  .study-controls {
+    margin-top: 2.5rem;
+  }
+
+  .nav-button {
+    inline-size: 52px;
+    block-size: 52px;
+    font-size: 1.625rem;
+  }
+
+  .flip-button {
+    inline-size: 180px;
+    block-size: 52px;
+    font-size: 1.0625rem;
+  }
+
+  .empty-state-title {
+    font-size: 1.625rem;
+  }
+
+  .empty-state-text {
+    font-size: var(--font-size-body);
+  }
+
+  .empty-state-button {
+    min-inline-size: 160px;
+    block-size: 52px;
+    font-size: var(--font-size-body);
+  }
+}
+
+// Short windows (a phone in landscape): drop the hint and tighten the card so
+// the control row stays above the fold. Height-based, so it applies at any width.
+@media (max-height: 30rem) {
+  .study-card {
+    min-block-size: 6rem;
+    padding-block: var(--space-2);
+  }
+
+  .study-card-text {
+    margin-top: var(--space-2);
+  }
+
+  .study-card-hint {
+    display: none;
+  }
+
+  .study-controls {
+    margin-top: var(--space-2);
+  }
+}

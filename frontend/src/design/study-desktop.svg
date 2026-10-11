@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <rect width="1280" height="800" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="1280" height="64" fill="#FFFFFF"/>
+  <line x1="0" y1="64" x2="1280" y2="64" stroke="#E3DFD5"/>
+  <text x="48" y="32.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="18" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <circle cx="1214" cy="32.0" r="18" fill="#3E4C74"/>
+  <text x="1214" y="32.0" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">LC</text>
+
+  <path d="M61.0,96 L53.0,104 L61.0,112" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="77" y="106" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <text x="1232" y="106" text-anchor="end" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">Card 3 of 24</text>
+
+  <rect x="320.5" y="156.5" width="639" height="419" rx="14" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="361" y="209" font-family="'Inter', sans-serif" font-size="12" font-weight="600" letter-spacing="1" fill="#6B675E">QUESTION</text>
+  <text x="361" y="268" font-family="'JetBrains Mono', monospace" font-size="17" fill="#2A2924">What does the `async` keyword actually do in C#?</text>
+
+  <path d="M350.5,633 L341.5,642 L350.5,651" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="550" y="616" width="180" height="52" rx="26" fill="#3E4C74"/>
+  <text x="640" y="642" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" fill="#FFFFFF">Flip</text>
+  <path d="M929.5,633 L938.5,642 L929.5,651" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
