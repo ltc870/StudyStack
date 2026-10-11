@@ -32,6 +32,7 @@ Thumbs.db
 # not in the repo)
 .env
 .env.*
+!.env.example
 *.pfx
 *.key
 
