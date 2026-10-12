@@ -22,6 +22,7 @@ services:
     environment:
       ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
       Jwt__SigningKey: ${JWT_SIGNING_KEY}
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
     depends_on:
       postgres:
         condition: service_healthy
