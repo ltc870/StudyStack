@@ -16,6 +16,8 @@ namespace backend.Controllers;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
+    private const string RefreshCookieName = "refreshToken";
+    
     private readonly AppDbContext _dbContext;
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly IConfiguration _configuration;
@@ -72,13 +74,7 @@ public class AuthController : ControllerBase
         await _dbContext.SaveChangesAsync();
         
         // Set the refresh token in the response
-        Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None,
-            Expires = refreshTokenEntity.ExpiresAt
-        });
+        Response.Cookies.Append(RefreshCookieName, refreshToken, RefreshCookieOptions(refreshTokenEntity.ExpiresAt));
 
         return Ok(new {token = jwt});
     }
@@ -95,6 +91,8 @@ public class AuthController : ControllerBase
             return Ok();
         }
         
+        Response.Cookies.Delete(RefreshCookieName, RefreshCookieOptions(DateTime.UnixEpoch));
+        
         // Hash that raw value with SHA256
         var currentHashedRefreshToken = SHA256.HashData(Encoding.UTF8.GetBytes(currentRefreshToken));
         var currentTokenHash = Convert.ToBase64String(currentHashedRefreshToken);
@@ -109,8 +107,6 @@ public class AuthController : ControllerBase
         
         token.IsRevoked = true;
         await _dbContext.SaveChangesAsync();
-        
-        Response.Cookies.Delete("refreshToken");
         
         return Ok();
     }
@@ -174,17 +170,21 @@ public class AuthController : ControllerBase
         await _dbContext.SaveChangesAsync();
         
         // Set the new cookie with the new raw token
-        Response.Cookies.Append("refreshToken", newRefreshToken, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None,
-            Expires = refreshTokenEntity.ExpiresAt
-        });
+        Response.Cookies.Append(RefreshCookieName, newRefreshToken, RefreshCookieOptions(refreshTokenEntity.ExpiresAt));
 
         // Return the new JWT and refresh token
         return Ok(new { Token = jwt });
     }
+    
+    // Strict: never sent on requests coming from another site. Path: only sent to /api/Auth/*.
+    private static CookieOptions RefreshCookieOptions(DateTime expires) => new()
+    {
+        HttpOnly = true,
+        Secure = true,
+        SameSite = SameSiteMode.Strict,
+        Path = "/api/Auth",
+        Expires = expires
+    };
 
     private static string GenerateJwt(User user, IConfiguration config)
     {

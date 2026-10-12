@@ -21,7 +21,7 @@ export class AuthService {
   async initializeAuth(): Promise<void> {
     try {
       const response = await firstValueFrom(
-        this.http.post<TokenResponse>(`${this.refreshEndpoint}`, {}, { withCredentials: true }),
+        this.http.post<TokenResponse>(`${this.refreshEndpoint}`, {}),
       );
 
       this.accessToken = response.token;
@@ -38,9 +38,7 @@ export class AuthService {
 
   async login(credentials: { username: string; password: string }): Promise<void> {
     const response = await firstValueFrom(
-      this.http.post<TokenResponse>(`${this.loginEndpoint}`, credentials, {
-        withCredentials: true,
-      }),
+      this.http.post<TokenResponse>(`${this.loginEndpoint}`, credentials),
     );
 
     this.accessToken = response.token;
@@ -51,6 +49,6 @@ export class AuthService {
     console.log('Trying to logout');
     this.accessToken = null;
     this.authState.next(false);
-    return this.http.post<any>(`${this.logoutEndpoint}`, {}, { withCredentials: true });
+    return this.http.post<any>(`${this.logoutEndpoint}`, {});
   }
 }
