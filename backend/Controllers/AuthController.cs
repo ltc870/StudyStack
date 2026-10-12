@@ -115,7 +115,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Refresh()
     {
         // Read the raw refresh token from the incoming cookie
-        var currentRefreshToken = Request.Cookies["refreshToken"];
+        var currentRefreshToken = Request.Cookies[RefreshCookieName];
         
         // If there's no cookie at all, return Unauthorized()
         if (currentRefreshToken == null)
