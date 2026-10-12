@@ -32,12 +32,26 @@ services:
   caddy:
     build: ./frontend
     restart: unless-stopped
+    environment:
+      # The Caddyfile's site address. On the server, the MagicDNS name, which turns on
+      # HTTPS. Falls back to :80 (plain HTTP, no certificate) for local testing.
+      SITE_ADDRESS: ${SITE_ADDRESS:-:80}
     ports:
       # Publish only on CADDY_BIND_ADDRESS: the VM's Tailscale IP on the server,
       # 127.0.0.1 (this computer only) when the variable isn't set, e.g. local testing.
       - "${CADDY_BIND_ADDRESS:-127.0.0.1}:80:80"
+      # >>> NEW: the next two lines (HTTPS over TCP, and HTTP/3 over UDP)
+      - "${CADDY_BIND_ADDRESS:-127.0.0.1}:443:443"
+      - "${CADDY_BIND_ADDRESS:-127.0.0.1}:443:443/udp"
+    volumes:
+      # The host's tailscaled socket folder, so Caddy can ask it for the *.ts.net certificate.
+      - /var/run/tailscale:/var/run/tailscale
+      - caddy-data:/data
+      - caddy-config:/config
     depends_on:
       - api
 
 volumes:
   postgres-data:
+  caddy-data:
+  caddy-config:
