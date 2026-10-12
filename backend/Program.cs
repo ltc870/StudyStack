@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using backend.Admin;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,6 +69,22 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
+}
+
+// Admin command mode: `dotnet backend.dll set-password <username>` changes a password
+// and exits without starting the web server.
+if (args.Length > 0 && args[0] == "set-password")
+{
+    if (args.Length != 2)
+    {
+        Console.Error.WriteLine("Usage: dotnet backend.dll set-password <username>");
+        Environment.ExitCode = 1;
+        return;
+    }
+
+    var succeeded = await SetPasswordCommand.RunAsync(app.Services, args[1]);
+    Environment.ExitCode = succeeded ? 0 : 1;
+    return;
 }
 
 // Configure the HTTP request pipeline.
