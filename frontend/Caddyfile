@@ -7,7 +7,27 @@
 
 	handle {
 		root * /srv
-		try_files {path} /index.html
+
+		# Every response revalidates with the server before reuse, unless a
+		# rule below says otherwise. "?" only sets it when not already set.
+		header ?Cache-Control "no-cache"
+
+		# Bundles with a content hash in the name (main-NJTCGOUR.js) never
+		# change, so the browser may keep them for a year without asking.
+		@hashed {
+			path_regexp ^/[^/]+-[A-Z0-9]{8}\.(js|css)$
+			file
+		}
+		header @hashed Cache-Control "public, max-age=31536000, immutable"
+
+		# The PWA manifest's official type, which not every system knows.
+		header /manifest.webmanifest Content-Type "application/manifest+json"
+
+		# Paths with no file extension are Angular routes: serve the app.
+		# Paths with an extension are files: served if they exist, 404 if not.
+		@route not path_regexp \.[^/]*$
+		rewrite @route /index.html
+
 		file_server
 	}
 }
