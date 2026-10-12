@@ -26,7 +26,7 @@ public static class SetPasswordCommand
 
         if (user is null)
         {
-            Console.Error.WriteLine($"No user named '{username}' exists. Nothing was changed");
+            Console.Error.WriteLine($"No user named '{username}' exists. Nothing was changed.");
             return false;
         }
         

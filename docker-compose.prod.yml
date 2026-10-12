@@ -22,7 +22,6 @@ services:
     environment:
       ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
       Jwt__SigningKey: ${JWT_SIGNING_KEY}
-      # >>> NEW (the next two comment lines and the setting):
       # Trust X-Forwarded-For / X-Forwarded-Proto from Caddy. Safe only because the api
       # service publishes no ports, so Caddy is the only thing that can reach it.
       ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
