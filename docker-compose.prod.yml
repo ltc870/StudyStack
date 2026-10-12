@@ -40,7 +40,6 @@ services:
       # Publish only on CADDY_BIND_ADDRESS: the VM's Tailscale IP on the server,
       # 127.0.0.1 (this computer only) when the variable isn't set, e.g. local testing.
       - "${CADDY_BIND_ADDRESS:-127.0.0.1}:80:80"
-      # >>> NEW: the next two lines (HTTPS over TCP, and HTTP/3 over UDP)
       - "${CADDY_BIND_ADDRESS:-127.0.0.1}:443:443"
       - "${CADDY_BIND_ADDRESS:-127.0.0.1}:443:443/udp"
     volumes:
