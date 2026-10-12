@@ -1,0 +1,14 @@
+# StudyStack: nightly database backup (ops/backup-db.sh).
+# Install as /etc/cron.d/studystack-backup, with no dot in the name: cron ignores
+# files in /etc/cron.d whose names contain a dot.
+#   sudo install -m 644 -o root -g root ops/studystack-backup.cron /etc/cron.d/studystack-backup
+#
+# The server's clock is UTC: 08:17 UTC is 4:17 a.m. Eastern in summer, 3:17 a.m. in winter.
+# The script logs to the journal itself; anything else it prints (such as a shell error)
+# is sent there too, under the same tag. Read with: journalctl -t studystack-backup
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# m  h  dom mon dow  user  command
+17   8  *   *   *    root  /home/lawrence/StudyStack/ops/backup-db.sh 2>&1 | logger -t studystack-backup

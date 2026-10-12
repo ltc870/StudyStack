@@ -1,0 +1,5 @@
+# Files that run on the Linux server must keep Unix line endings (LF), even when they
+# are edited on Windows. A Windows line ending (CRLF) breaks a shell script
+# ("bash\r: No such file or directory") and makes cron reject or misread its file.
+*.sh    text eol=lf
+*.cron  text eol=lf
