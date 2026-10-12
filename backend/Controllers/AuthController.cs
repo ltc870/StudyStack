@@ -83,7 +83,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Logout()
     {
         // Read the raw refresh toke from the cookie
-        var currentRefreshToken = Request.Cookies["refreshToken"];
+        var currentRefreshToken = Request.Cookies[RefreshCookieName];
         
         // Validate if the cookie is present. If so, hash it, if not, early return
         if (currentRefreshToken == null)
