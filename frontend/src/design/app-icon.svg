@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- StudyStack app icon ("any"): rounded indigo tile -->
+  <rect width="512" height="512" rx="112" fill="#3E4C74"/>
+  <g transform="translate(256 256) scale(1.0) translate(-256 -256)">
+    <!-- Back card (sage), tilted right -->
+    <rect x="170" y="134" width="236" height="200" rx="24" fill="#5E8272" transform="rotate(8 288 234)"/>
+    <!-- Front card (cream), tilted left, with the code mark -->
+    <g transform="rotate(-4 245 274)">
+      <rect x="110" y="170" width="270" height="208" rx="26" fill="#F6F4EF"/>
+      <g fill="none" stroke="#3E4C74" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="196,234 160,274 196,314"/>
+        <line x1="262" y1="226" x2="228" y2="322"/>
+        <polyline points="294,234 330,274 294,314"/>
+      </g>
+    </g>
+  </g>
+</svg>
