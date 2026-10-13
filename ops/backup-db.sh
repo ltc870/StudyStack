@@ -24,9 +24,12 @@ RETENTION_DAYS="${RETENTION_DAYS:-30}"
 COMPOSE_FILE="docker-compose.prod.yml"
 LOG_TAG="studystack-backup"
 
-# New files and folders are readable by their owner (root) only: a dump contains
-# everything in the database, including password hashes.
-umask 077
+# New files are readable and writable by root, readable by the backup folder's group,
+# and closed to everyone else (mode 640): a dump contains everything in the database,
+# including password hashes. BACKUP_DIR is owned by group studystack-backup with the
+# setgid bit (mode 2750), so every new dump inherits that group, and the pull-only
+# backup-pull user (a member) can copy the dumps off the server without sudo.
+umask 027
 
 # Log to the journal, and also to the screen when run by hand from a terminal.
 log() {
