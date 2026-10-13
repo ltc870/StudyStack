@@ -1,0 +1,15 @@
+# StudyStack: daily copy of the database dumps from the server (ops/pull-backups.sh).
+# Runs on homeserver, not on the server. Install as /etc/cron.d/studystack-pull, with no
+# dot in the name: cron ignores files in /etc/cron.d whose names contain a dot.
+#   sudo install -m 644 -o root -g root ops/studystack-pull.cron /etc/cron.d/studystack-pull
+#
+# homeserver's clock is Louisville time. The server backs up at 08:17 UTC, which is
+# 4:17 a.m. EDT or 3:17 a.m. EST, so 5:47 a.m. local is always after it.
+# The script logs to the journal itself; anything else it prints (such as a shell error)
+# is sent there too, under the same tag. Read with: journalctl -t studystack-pull
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# m  h  dom mon dow  user  command
+47   5  *   *   *    root  /home/lawrence/StudyStack/ops/pull-backups.sh 2>&1 | logger -t studystack-pull
