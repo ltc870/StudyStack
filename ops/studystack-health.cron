@@ -1,0 +1,14 @@
+# StudyStack: health check every 5 minutes (ops/health-check.sh).
+# Install as /etc/cron.d/studystack-health, with no dot in the name: cron ignores
+# files in /etc/cron.d whose names contain a dot.
+#   sudo install -m 644 -o root -g root ops/studystack-health.cron /etc/cron.d/studystack-health
+#
+# The script reports every run to Healthchecks.io and writes failures to the journal.
+# Anything else it prints (such as a shell error) goes to the journal under the same tag.
+# Read with: sudo journalctl -t studystack-health --no-pager -n 20
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# m     h  dom mon dow  user  command
+*/5     *  *   *   *    root  /home/lawrence/StudyStack/ops/health-check.sh 2>&1 | logger -t studystack-health

@@ -93,4 +93,12 @@ app.MapControllers();
 
 app.MapGet("/api/health", () => Results.Ok(new { status = "ok" }));
 
+// API -> database check, used by ops/health-check.sh. /api/health above never touches the
+// database, so the two tell "API down" apart from "API up, database unreachable".
+// CanConnectAsync returns false (rather than throwing) when the database can't be reached.
+app.MapGet("/api/health/db", async (AppDbContext db, CancellationToken cancellationToken) =>
+    await db.Database.CanConnectAsync(cancellationToken)
+        ? Results.Ok(new { status = "ok" })
+        : Results.Json(new { status = "unavailable" }, statusCode: StatusCodes.Status503ServiceUnavailable));
+
 app.Run();
