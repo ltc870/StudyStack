@@ -36,7 +36,12 @@
               "node_modules/prismjs/components/prism-typescript.min.js",
               "node_modules/prismjs/components/prism-sql.min.js",
               "node_modules/prismjs/components/prism-json.min.js",
-              "node_modules/prismjs/components/prism-bash.min.js"
+              "node_modules/prismjs/components/prism-bash.min.js",
+              "node_modules/prismjs/components/prism-scss.min.js",
+              "node_modules/prismjs/components/prism-c.min.js",
+              "node_modules/prismjs/components/prism-cpp.min.js",
+              "node_modules/prismjs/components/prism-python.min.js",
+              "node_modules/prismjs/components/prism-java.min.js"
             ]
           },
           "configurations": {
