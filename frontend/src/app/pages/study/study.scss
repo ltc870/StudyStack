@@ -63,16 +63,17 @@
   color: var(--color-text-secondary);
 }
 
-// pre-wrap keeps the line breaks and indentation of code answers; long lines
-// still wrap inside the card instead of scrolling sideways
+// CHANGED: the card text is now rendered markdown (see src/scss/_markdown.scss),
+// which handles line breaks itself; long lines still wrap inside the card
 .study-card-text {
   margin: var(--space-3) 0 0;
   font-size: 1.125rem;
   line-height: var(--line-height-body);
   color: var(--color-text-primary);
-  white-space: pre-wrap;
+  // REMOVED: white-space: pre-wrap; (it turned the line breaks between
+  // markdown's paragraphs, code blocks and lists into extra blank lines)
   overflow-wrap: anywhere;
-  tab-size: 4;
+  // REMOVED: tab-size: 4; (only mattered with pre-wrap)
 }
 
 // Cards saved with the monospace setting. Ligatures are already off on body.

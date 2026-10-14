@@ -31,15 +31,15 @@
   }
 
   code {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-family-mono); // CHANGED: use the token
     font-size: 0.9em;
-    background: var(--color-surface-tint);
+    background: var(--color-bg); // CHANGED: --color-surface-tint is almost the card's white
     padding: 0.1em 0.35em;
     border-radius: 4px;
   }
 
   pre {
-    background: var(--color-surface-tint);
+    background: var(--color-bg); // CHANGED: --color-surface-tint is almost the card's white
     padding: 12px 16px;
     border-radius: 8px;
     overflow-x: auto;
