@@ -22,6 +22,9 @@
     "@ng-icons/lucide": "^36.1.0",
     "@ng-icons/phosphor-icons": "^36.1.0",
     "@ng-icons/remixicon": "^36.1.0",
+    "marked": "^18.1.1",
+    "ngx-markdown": "^22.1.0",
+    "prismjs": "^1.30.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

@@ -1,0 +1,53 @@
+// Styles for markdown rendered by ngx-markdown (inserted at runtime, so
+// component-scoped styles can't reach it). Used on the Study card.
+.card-markdown {
+  display: block;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+
+  > :first-child {
+    margin-top: 0;
+  }
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  p,
+  ul,
+  ol,
+  pre,
+  blockquote {
+    margin: 0 0 0.75em;
+  }
+  ul,
+  ol {
+    padding-left: 1.5em;
+  }
+  h1,
+  h2,
+  h3 {
+    font-size: 1.15em;
+    margin: 0 0 0.5em;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+    background: var(--color-surface-tint);
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+
+  pre {
+    background: var(--color-surface-tint);
+    padding: 12px 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+
+    code {
+      background: none;
+      padding: 0;
+      font-size: var(--font-size-code);
+    }
+  }
+}

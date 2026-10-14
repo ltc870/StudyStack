@@ -13,11 +13,11 @@
   @if (currentCard(); as card) {
     <div class="study-card" aria-live="polite">
       <p class="study-card-label">{{ isFlipped() ? 'ANSWER' : 'QUESTION' }}</p>
-      <p
-        class="study-card-text"
+      <markdown
+        class="study-card-text card-markdown"
         [class.study-card-text--mono]="card.isMonospace"
-        [textContent]="isFlipped() ? card.answer : card.question"
-      ></p>
+        [data]="isFlipped() ? card.answer : card.question"
+      />
       @if (!isFlipped()) {
         <p class="study-card-hint">Tap Flip to reveal the answer</p>
       }
