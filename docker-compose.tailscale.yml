@@ -1,0 +1,49 @@
+# StudyStack: run the stack as its own Tailscale machine, for the environments on
+# homeserver (~/applications/environments/<test|production>/studystack-<env>).
+#
+# Used together with docker-compose.prod.yml, never on its own. The environment's .env
+# names both files, so plain "docker compose ..." commands pick them up:
+#   COMPOSE_FILE=docker-compose.prod.yml:docker-compose.tailscale.yml
+#   COMPOSE_PROJECT_NAME=studystack-test
+#
+# How a request flows: a browser on the tailnet -> https://<TS_HOSTNAME>.tail63e067.ts.net
+# -> the tailscale container, whose "serve" feature holds the certificate and ends HTTPS
+# -> plain HTTP to Caddy on 127.0.0.1:80 (Caddy shares the tailscale container's network)
+# -> the app. Nothing is published on homeserver's own addresses, so CasaOS keeps port 80.
+
+services:
+  tailscale:
+    image: tailscale/tailscale:stable
+    hostname: ${TS_HOSTNAME:?set TS_HOSTNAME in .env, e.g. studystack-test}
+    restart: unless-stopped
+    environment:
+      # Only needed for the very first start; after that the machine's identity lives
+      # in the tailscale-state volume, and the key can be removed from .env.
+      TS_AUTHKEY: ${TS_AUTHKEY:-}
+      TS_HOSTNAME: ${TS_HOSTNAME}
+      # Must survive restarts, or the container joins as a new machine every time.
+      TS_STATE_DIR: /var/lib/tailscale
+      TS_SERVE_CONFIG: /config/serve.json
+    volumes:
+      - tailscale-state:/var/lib/tailscale
+      # A folder rather than the single file, so Tailscale notices edits to serve.json.
+      - ./ops/tailscale:/config:ro
+
+  caddy:
+    # Share the tailscale container's network: Caddy is reached at 127.0.0.1:80 from
+    # serve, and still reaches the api by name over the stack's Docker network.
+    network_mode: service:tailscale
+    environment:
+      # Plain HTTP; HTTPS is handled by tailscale serve.
+      SITE_ADDRESS: ":80"
+    # No published ports on homeserver.
+    ports: !reset []
+    # No host tailscaled socket: this stack doesn't use homeserver's own Tailscale.
+    volumes: !override
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - tailscale
+
+volumes:
+  tailscale-state:
