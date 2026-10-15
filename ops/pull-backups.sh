@@ -11,7 +11,11 @@
 #      the pull-only backup-pull user. That user's key is limited on the server to
 #      read-only rsync of /var/backups/studystack (rrsync -ro).
 #   3. Never deletes anything: dumps the server prunes after 30 days stay here.
-#   4. If PING_URL_FILE holds a Healthchecks.io ping URL, reports success or failure
+#   4. When new dumps arrived, tells Nextcloud to rescan its "StudyStack backups"
+#      folder. Nextcloud lists files from its own cache and doesn't notice files that
+#      appear on External storage by themselves. A failed rescan is logged as a WARNING
+#      but doesn't fail the run, because the copies themselves are safe.
+#   5. If PING_URL_FILE holds a Healthchecks.io ping URL, reports success or failure
 #      there; without it, the run only writes to the journal.
 # Every message goes to the systemd journal: journalctl -t studystack-pull
 
@@ -23,6 +27,11 @@ SSH_KEY="${SSH_KEY:-/root/.ssh/studystack-backup-pull}"
 MOUNT_POINT="${MOUNT_POINT:-/mnt/storage}"
 DEST_DIR="${DEST_DIR:-/mnt/storage/backups/studystack}"
 PING_URL_FILE="${PING_URL_FILE:-/etc/studystack/pull-healthcheck-url}"
+# Nextcloud's container and the folder to rescan: the Nextcloud user (casaos), then
+# "files", then the External storage mount's name. An empty NEXTCLOUD_CONTAINER skips
+# the rescan.
+NEXTCLOUD_CONTAINER="${NEXTCLOUD_CONTAINER-nextcloud}"
+NEXTCLOUD_SCAN_PATH="${NEXTCLOUD_SCAN_PATH:-/casaos/files/StudyStack backups}"
 LOG_TAG="studystack-pull"
 
 # Log to the journal, and also to the screen when run by hand from a terminal.
@@ -79,5 +88,20 @@ fi
 copied="$(grep -c '^>f' "$output" || true)"
 total="$(find "$DEST_DIR" -maxdepth 1 -type f -name '*.dump' | wc -l)"
 
-log "OK copied $copied new dump(s); $total dumps in $DEST_DIR"
-report "" "copied $copied new dump(s); $total dumps in $DEST_DIR"
+summary="copied $copied new dump(s); $total dumps in $DEST_DIR"
+
+# 3. Nextcloud. Only when something new arrived. occ must run as www-data, the user
+#    Nextcloud runs as inside its container. timeout keeps a stuck container from
+#    holding up the report.
+if [[ "$copied" -gt 0 && -n "$NEXTCLOUD_CONTAINER" ]]; then
+  if timeout 300 docker exec -u www-data "$NEXTCLOUD_CONTAINER" \
+      php occ files:scan --path="$NEXTCLOUD_SCAN_PATH" >"$output" 2>&1; then
+    summary="$summary; Nextcloud rescanned"
+  else
+    log "WARNING: Nextcloud rescan failed (container '$NEXTCLOUD_CONTAINER'): $(tr '\n' ' ' <"$output")"
+    summary="$summary; WARNING: Nextcloud rescan failed, see journalctl -t $LOG_TAG"
+  fi
+fi
+
+log "OK $summary"
+report "" "$summary"
