@@ -1,0 +1,116 @@
+# StudyStack CI: on every push to any branch, check that the code builds and the
+# server files are valid, before anything is deployed with ops/deploy.sh.
+#
+# Three jobs, run side by side on GitHub's standard runners (free for a public repo):
+#   frontend  the production build of the Angular app (the same command its Dockerfile runs)
+#   backend   the Release build of the API, and EF Core's check that the model matches
+#             the last migration (EF Core 9+ refuses to migrate at startup otherwise)
+#   ops       shellcheck on the server scripts, and docker compose config on the
+#             production stack alone and with the Tailscale add-on
+#
+# Nothing here deploys, and nothing reaches the tailnet. No secrets are used.
+
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  # A pull request from a fork has no push event in this repo, so it gets its own run.
+  # (A pull request from a branch here is already covered by that branch's push run.)
+  pull_request:
+  # The "Run workflow" button on the Actions tab.
+  workflow_dispatch:
+
+# Read-only: CI only needs to check out the code.
+permissions:
+  contents: read
+
+# A newer push to the same branch cancels the older run, which is now out of date.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Frontend build
+    # Skip the pull_request run when the branch is in this repo (its push run covers it).
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v7
+
+      # Node 24, matching frontend/Dockerfile (node:24-slim). npm's download cache is
+      # keyed on the lockfile, so unchanged dependencies install from the cache.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Size-budget warnings are expected and don't fail the build; an error budget does.
+      - name: Production build
+        run: npx ng build --configuration production
+
+  backend:
+    name: Backend build and migration check
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      # Program.cs stops at startup without these, and dotnet ef runs Program.cs to find
+      # the DbContext. Placeholders only: nothing connects to a database here.
+      ConnectionStrings__DefaultConnection: "Host=localhost;Database=ci;Username=ci;Password=ci"
+      Jwt__SigningKey: "ci-only-placeholder-signing-key-not-a-secret"
+      DOTNET_NOLOGO: "true"
+      DOTNET_CLI_TELEMETRY_OPTOUT: "true"
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build (Release)
+        run: dotnet build --configuration Release --no-restore
+
+      # The same version as the Microsoft.EntityFrameworkCore.Design package in backend.csproj.
+      - name: Install dotnet-ef
+        run: dotnet tool install --global dotnet-ef --version 10.0.12
+
+      # Fails when the model has changes that no migration covers yet.
+      - name: Check for pending model changes
+        run: dotnet ef migrations has-pending-model-changes --configuration Release --no-build
+
+  ops:
+    name: Server scripts and compose files
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # shellcheck comes preinstalled on GitHub's Ubuntu runners.
+      - name: shellcheck
+        run: shellcheck ops/*.sh
+
+      # docker compose config resolves the files with .env's placeholders filled in and
+      # fails on a syntax or schema mistake. --quiet prints nothing when they're valid.
+      - name: Compose files
+        run: |
+          cp .env.example .env
+          docker compose -f docker-compose.prod.yml config --quiet
+          TS_HOSTNAME=studystack-ci docker compose -f docker-compose.prod.yml -f docker-compose.tailscale.yml config --quiet
+          echo "both compose configurations are valid"
