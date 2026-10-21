@@ -54,7 +54,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Size-budget warnings are expected and don't fail the build; an error budget does.
+      # CHANGED: a size-budget warning doesn't fail the build, but there should be none
+      # (they were cleared Oct 2026); an error budget does fail it.
       - name: Production build
         run: npx ng build --configuration production
 

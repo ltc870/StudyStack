@@ -6,7 +6,7 @@ import { CardsService } from '../../services/cards-service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Card } from '../../models/card';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { MarkdownComponent } from 'ngx-markdown';
+import { MarkdownComponent, MARKED_OPTIONS, provideMarkdown } from 'ngx-markdown';
 import {
   phosphorCaretLeft,
   phosphorCaretRight,
@@ -15,7 +15,12 @@ import {
 
 @Component({
   imports: [BackLink, NgIcon, RouterLink, MarkdownComponent],
-  providers: [provideIcons({ phosphorCaretLeft, phosphorCaretRight, phosphorCards })],
+  providers: [
+    provideIcons({ phosphorCaretLeft, phosphorCaretRight, phosphorCards }),
+    provideMarkdown({
+      markedOptions: { provide: MARKED_OPTIONS, useValue: { gfm: true, breaks: true } },
+    }),
+  ],
   selector: 'app-study',
   styleUrl: './study.scss',
   templateUrl: './study.html',
