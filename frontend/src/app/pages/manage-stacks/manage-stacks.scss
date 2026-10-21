@@ -1,280 +1,137 @@
 @use '../../../scss/breakpoints' as bp;
 
+// NEW: the header, toolbar, search box, New Stack button and both empty states
+// are shared with Manage Cards in src/scss/_list-pages.scss; this file keeps
+// only what is Manage Stacks' own.
+
 .manage-stacks-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-.header-container {
-    width: 100%;
-    display: flex;
-    align-items: center;
-}
+// REMOVED: .header-container (now in _list-pages.scss)
 
 .manage-stacks-header {
-    font-size: var(--font-size-h1);
-    font-family: var(--font-family-heading);
-    margin-top: var(--space-2);
-    margin-left: -.25em;
+  font-size: var(--font-size-h1);
+  font-family: var(--font-family-heading);
+  margin-top: var(--space-2);
+  margin-left: -0.25em;
 }
 
-.toolbar-container {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin-top: var(--space-2);
-}
+// REMOVED: .toolbar-container (now in _list-pages.scss)
 
 .search-stacks-container {
-    flex: 1;
-    position: relative;
+  flex: 1;
+  position: relative;
 }
 
-.search-icon {
-    position: absolute;
-    left: var(--space-1);
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--color-text-secondary);
-}
+// REMOVED: .search-icon (now in _list-pages.scss)
 
+// CHANGED: only this page's padding and font size stay here; the border,
+// colors, placeholder, hover and focus ring are in _list-pages.scss
 .search-stacks-input {
-    width: 100%;
-    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
-    border-radius: var(--radius-default);
-    border: 1px solid var(--color-border);
-    background-color: var(--color-surface);
-    color: var(--color-text-primary);
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body);
-    transition: border-color 120ms ease, box-shadow 120ms ease;
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  font-size: var(--font-size-body);
 }
 
-.search-stacks-input::placeholder {
-    color: var(--color-text-secondary);
-}
-
-.search-stacks-input:hover {
-    border-color: var(--color-focus-ring);
-}
-
-.search-stacks-input:focus-visible {
-    border-color: var(--color-focus-ring);
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: 2px;
-}
-
-// Mobile and tablet: a fixed circular FAB
-.new-stack-button {
-    position: fixed;
-    right: var(--space-3);
-    bottom: var(--space-3);
-    height: 56px;
-    width: 56px;
-    border-radius: var(--radius-pill);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--color-primary);
-    border: none;
-    cursor: pointer;
-    transition: background-color 120ms ease;
-}
-
-.new-stack-button:hover {
-    background-color: var(--color-primary-hover);
-}
-
-.new-stack-button:focus-visible {
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: 2px;
-}
-
-.new-stack-icon {
-    font-size: 1.5rem;
-    color: var(--color-surface);
-}
-
-.new-stack-text {
-    display: none;
-}
+// REMOVED: .search-stacks-input::placeholder, :hover and :focus-visible,
+// and the whole New Stack button (.new-stack-button, its :hover and
+// :focus-visible, .new-stack-icon, .new-stack-text) -- now in _list-pages.scss
 
 .stacks-container {
-    margin-top: var(--space-2);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+  margin-top: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
 }
 
 .stack-card-container {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: repeat(2, auto);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-default);
-    padding: var(--space-2);
-    cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: repeat(2, auto);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-default);
+  padding: var(--space-2);
+  cursor: pointer;
 }
 
 .stack-card-title {
-    grid-column: 1 / -1;
-    grid-row: 1 / 2;
-    margin-top: 0;
-    margin-bottom: var(--space-1);
+  grid-column: 1 / -1;
+  grid-row: 1 / 2;
+  margin-top: 0;
+  margin-bottom: var(--space-1);
 }
 
 .stack-card-count {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
 }
 
 .edit-delete-container {
-    grid-column: 2 / 3;
-    grid-row: 1 / 3;
-    justify-self: end;
-    align-self: center;
-    margin-top: var(--space-2);
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  justify-self: end;
+  align-self: center;
+  margin-top: var(--space-2);
 }
 
 .edit-delete-buttons {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
 }
 
 .edit-delete-buttons:focus-visible {
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: 2px;
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
 }
 
 .edit-stack-button {
-    color: var(--color-text-secondary);
+  color: var(--color-text-secondary);
 }
 
 .delete-stack-button {
-    color: var(--color-warning);
+  color: var(--color-warning);
 }
 
-// Empty state: the user has no stacks at all
-.empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-top: clamp(var(--space-4), 14vh, 6rem);
-}
-
-.empty-state-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    inline-size: 72px;
-    block-size: 72px;
-    border-radius: var(--radius-pill);
-    background-color: var(--color-primary);
-    color: var(--color-surface);
-    font-size: 1.5rem;
-    margin-bottom: var(--space-3);
-}
-
-.empty-state-title {
-    margin: 0 0 var(--space-1);
-    font-family: var(--font-family-heading);
-    font-size: var(--font-size-h2);
-    color: var(--color-text-primary);
-}
-
-.empty-state-text {
-    margin: 0 0 var(--space-3);
-    font-size: var(--font-size-meta);
-    color: var(--color-text-secondary);
-}
-
-.empty-state-button {
-    block-size: 48px;
-    padding: 0 var(--space-4);
-    border: none;
-    border-radius: var(--radius-pill);
-    background-color: var(--color-primary);
-    color: var(--color-surface);
-    font-family: var(--font-family-body);
-    font-size: 0.9375rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 120ms ease;
-}
-
-.empty-state-button:hover {
-    background-color: var(--color-primary-hover);
-}
-
-.empty-state-button:focus-visible {
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: 2px;
-}
-
-// No-matches state: stacks exist, but the search filters them all out
-.no-matches-text {
-    margin: clamp(var(--space-4), 14vh, 6rem) 0 0;
-    text-align: center;
-    color: var(--color-text-secondary);
-}
+// REMOVED: the empty state (.empty-state, .empty-state-icon, -title, -text,
+// -button and its :hover and :focus-visible) and .no-matches-text -- now in
+// _list-pages.scss
 
 // Tablet: the mobile layout, scaled up (still a single column and the FAB)
 @include bp.tablet {
-    .manage-stacks-header {
-        margin-top: var(--space-3);
-    }
+  .manage-stacks-header {
+    margin-top: var(--space-3);
+  }
 
-    .toolbar-container {
-        margin-top: var(--space-3);
-    }
+  // REMOVED: .toolbar-container (now in _list-pages.scss)
 
-    .search-stacks-input {
-        padding-block: 0.875rem;
-    }
+  // Kept here: this page's own rule above would outrank a shared one
+  .search-stacks-input {
+    padding-block: 0.875rem;
+  }
 
-    .stacks-container {
-        margin-top: var(--space-3);
-    }
+  .stacks-container {
+    margin-top: var(--space-3);
+  }
 
-    .stack-card-container {
-        padding: var(--space-3) var(--space-3);
-    }
+  .stack-card-container {
+    padding: var(--space-3) var(--space-3);
+  }
 
-    .stack-card-title {
-        font-size: 1.25rem;
-    }
+  .stack-card-title {
+    font-size: 1.25rem;
+  }
 
-    .stack-card-count {
-        font-size: 0.9375rem;
-        color: var(--color-text-secondary);
-    }
+  .stack-card-count {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+  }
 
-    .empty-state-icon {
-        inline-size: 80px;
-        block-size: 80px;
-        font-size: 1.75rem;
-    }
-
-    .empty-state-title {
-        font-size: 1.5rem;
-    }
-
-    .empty-state-text {
-        font-size: var(--font-size-body);
-    }
-
-    .empty-state-button {
-        block-size: 52px;
-        font-size: var(--font-size-body);
-    }
-
-    .no-matches-text {
-        font-size: 1.0625rem;
-    }
+  // REMOVED: .empty-state-icon, -title, -text, -button and .no-matches-text
+  // (now in _list-pages.scss)
 }
 
 // Desktop: the title, search and "New Stack" button share one row, and the
@@ -283,102 +140,51 @@
 // search + 24px gap + 180px button). In study mode there is no button, so the
 // search simply fills the whole slot.
 @include bp.desktop {
-    .manage-stacks-container {
-        display: grid;
-        grid-template-columns: 1fr 504px;
-        align-items: center;
-    }
+  .manage-stacks-container {
+    display: grid;
+    grid-template-columns: 1fr 504px;
+    align-items: center;
+  }
 
-    .header-container {
-        grid-column: 1;
-        grid-row: 1;
-        margin-top: var(--space-3);
-    }
+  // REMOVED: .header-container and .toolbar-container (now in _list-pages.scss)
 
-    .manage-stacks-header {
-        margin-block: 0;
-    }
+  .manage-stacks-header {
+    margin-block: 0;
+  }
 
-    .toolbar-container {
-        grid-column: 2;
-        grid-row: 1;
-        margin-top: var(--space-3);
-        gap: var(--space-3);
-    }
+  // Kept here: this page's own rule above would outrank a shared one
+  .search-stacks-input {
+    padding-block: 0.6875rem;
+    font-size: var(--font-size-meta);
+  }
 
-    .search-stacks-input {
-        padding-block: 0.6875rem;
-        font-size: var(--font-size-meta);
-    }
+  // CHANGED: only .stacks-container here; .empty-state and .no-matches-text
+  // get their grid-column from _list-pages.scss. Merged into the
+  // .stacks-container rule below.
+  // REMOVED: .new-stack-button, .new-stack-button--empty, .new-stack-icon
+  // and .new-stack-text (now in _list-pages.scss)
 
-    .stacks-container,
-    .empty-state,
-    .no-matches-text {
-        grid-column: 1 / -1;
-    }
+  .stacks-container {
+    grid-column: 1 / -1; // MOVED: from the shared grid-column rule
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
 
-    .new-stack-button {
-        position: static;
-        height: auto;
-        width: 180px;
-        flex: none;
-        gap: var(--space-1);
-        padding: 0.6875rem var(--space-3);
-        border-radius: var(--radius-default);
-    }
+  .stack-card-container {
+    min-block-size: 96px;
+    padding: var(--space-2) var(--space-3);
+  }
 
-    // With no stacks, the empty state's own button replaces this one
-    .new-stack-button--empty {
-        display: none;
-    }
+  .stack-card-title {
+    font-size: 1.125rem;
+  }
 
-    .new-stack-icon {
-        font-size: 1.1rem;
-    }
+  .stack-card-count {
+    font-size: var(--font-size-meta);
+  }
 
-    .new-stack-text {
-        display: inline;
-        color: var(--color-surface);
-        font-family: var(--font-family-body);
-        font-weight: 600;
-    }
-
-    .stacks-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-3);
-        margin-top: var(--space-4);
-    }
-
-    .stack-card-container {
-        min-block-size: 96px;
-        padding: var(--space-2) var(--space-3);
-    }
-
-    .stack-card-title {
-        font-size: 1.125rem;
-    }
-
-    .stack-card-count {
-        font-size: var(--font-size-meta);
-    }
-
-    .empty-state-icon {
-        inline-size: 80px;
-        block-size: 80px;
-    }
-
-    .empty-state-title {
-        font-size: 1.625rem;
-    }
-
-    .empty-state-text {
-        font-size: var(--font-size-body);
-    }
-
-    .empty-state-button {
-        block-size: 52px;
-        padding: 0 var(--space-4);
-        font-size: var(--font-size-body);
-    }
+  // REMOVED: .empty-state-icon, -title, -text and -button (now in
+  // _list-pages.scss, or the same as tablet)
 }
