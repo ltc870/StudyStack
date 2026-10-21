@@ -27,8 +27,11 @@
   z-index: 91;
   display: flex;
   flex-direction: column;
-  inline-size: min(300px, calc(100% - 48px));
-  padding: var(--space-3) 1.25rem 0;
+  // CHANGED: wider and padded by the safe areas, so the rows stay clear of
+  // a notch on the left and the status bar on top (was
+  // inline-size: min(300px, calc(100% - 48px)); padding: var(--space-3) 1.25rem 0;)
+  inline-size: min(calc(300px + var(--safe-left)), calc(100% - 48px));
+  padding: calc(var(--space-3) + var(--safe-top)) 1.25rem 0 calc(1.25rem + var(--safe-left));
   background-color: var(--color-surface-tint);
   border-inline-end: 1px solid var(--color-border);
 }
@@ -90,7 +93,7 @@
   flex-direction: column;
   gap: var(--space-1);
   margin: 0 -4px;
-  padding: 4px 4px var(--space-3);
+  padding: 4px 4px calc(var(--space-3) + var(--safe-bottom)); // CHANGED: clear of the home indicator (was 4px 4px var(--space-3))
   list-style: none;
 }
 
@@ -152,8 +155,8 @@
 // Tablet: a wider drawer with taller rows and larger text
 @include bp.tablet {
   .card-tray {
-    inline-size: min(380px, calc(100% - 48px));
-    padding-inline: var(--space-3);
+    inline-size: min(calc(380px + var(--safe-left)), calc(100% - 48px)); // CHANGED: was min(380px, calc(100% - 48px))
+    padding-inline: calc(var(--space-3) + var(--safe-left)) var(--space-3); // CHANGED: was var(--space-3)
   }
 
   .card-tray-item {

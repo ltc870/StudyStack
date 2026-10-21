@@ -164,8 +164,8 @@
   }
 
   .new-card-button {
-    right: var(--space-4);
-    bottom: var(--space-4);
+    right: calc(var(--space-4) + var(--safe-right)); // CHANGED: was var(--space-4)
+    bottom: calc(var(--space-4) + var(--safe-bottom)); // CHANGED: was var(--space-4)
     height: 64px;
     width: 64px;
   }
