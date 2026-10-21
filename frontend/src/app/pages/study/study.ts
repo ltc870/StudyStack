@@ -1,24 +1,42 @@
-import { Component, inject, input, numberAttribute, computed, linkedSignal } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  numberAttribute,
+  computed,
+  linkedSignal,
+  signal,
+  viewChild,
+  ElementRef,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { BackLink } from '../../components/back-link/back-link';
 import { StacksService } from '../../services/stacks-service';
 import { CardsService } from '../../services/cards-service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Card } from '../../models/card';
+import { CardTray } from '../../components/card-tray/card-tray';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { MarkdownComponent, MARKED_OPTIONS, provideMarkdown } from 'ngx-markdown';
 import {
+  phosphorSidebarSimple,
   phosphorCaretLeft,
   phosphorCaretRight,
   phosphorCards,
 } from '@ng-icons/phosphor-icons/regular';
 
 @Component({
-  imports: [BackLink, NgIcon, RouterLink, MarkdownComponent],
+  imports: [BackLink, NgIcon, RouterLink, MarkdownComponent, CardTray],
   providers: [
-    provideIcons({ phosphorCaretLeft, phosphorCaretRight, phosphorCards }),
+    provideIcons({ phosphorCaretLeft, phosphorCaretRight, phosphorCards, phosphorSidebarSimple }),
     provideMarkdown({
-      markedOptions: { provide: MARKED_OPTIONS, useValue: { gfm: true, breaks: true } },
+      markedOptions: {
+        provide: MARKED_OPTIONS,
+        useValue: {
+          gfm: true, // GitHub-flavored markdown: fenced code, tables, strikethrough
+          breaks: true, // a single Enter in the textarea stays a line break
+        },
+      },
     }),
   ],
   selector: 'app-study',
@@ -32,6 +50,7 @@ export class Study {
 
   // Signals
   stackId = input.required<number, unknown>({ transform: numberAttribute });
+  isTrayOpen = signal(false);
 
   // Linked Signals
   currentIndex = linkedSignal({
@@ -66,6 +85,9 @@ export class Study {
       this.cardResource.value().length === 0,
   );
 
+  // Queries
+  trayToggle = viewChild<ElementRef<HTMLButtonElement>>('trayToggle');
+
   // HTTP
   stackResource = rxResource({
     params: () => this.stackId(),
@@ -96,5 +118,14 @@ export class Study {
 
   flip() {
     this.isFlipped.update((flipped) => !flipped);
+  }
+
+  toggleTray() {
+    this.isTrayOpen.update((opened) => !opened);
+  }
+
+  closeTray() {
+    this.isTrayOpen.set(false);
+    this.trayToggle()?.nativeElement.focus();
   }
 }

@@ -2,45 +2,38 @@
   <rect width="1280" height="800" fill="#F6F4EF"/>
   <rect x="0" y="0" width="1280" height="64" fill="#FFFFFF"/>
   <line x1="0" y1="64" x2="1280" y2="64" stroke="#E3DFD5"/>
-  <text x="48" y="32" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="18" font-weight="600" fill="#3E4C74">StudyStack</text>
-  <circle cx="1214" cy="32" r="18" fill="#3E4C74"/>
-  <text x="1214" y="32" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">LC</text>
-
-  <!-- persistent tray -->
-  <rect x="0" y="64" width="300" height="736" fill="#FBFAF6"/>
-  <line x1="300" y1="64" x2="300" y2="800" stroke="#E3DFD5"/>
-  <text x="24" y="100" font-family="'Inter', sans-serif" font-size="12" font-weight="600" letter-spacing="1" fill="#6B675E">CARDS IN THIS STACK</text>
-
-  <rect x="24" y="124" width="252" height="56" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
-  <text x="36" y="152" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#2A2924">1. What is dependency injection?</text>
-
-  <rect x="24" y="188" width="252" height="56" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
-  <text x="36" y="216" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#2A2924">2. IEnumerable vs IQueryable?</text>
-
-  <rect x="24" y="252" width="252" height="56" rx="8" fill="#5E8272"/>
-  <text x="36" y="280" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">3. What does async do in C#?</text>
-
-  <rect x="24" y="316" width="252" height="56" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
-  <text x="36" y="344" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#2A2924">4. What is a closure?</text>
-
-  <rect x="24" y="380" width="252" height="56" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
-  <text x="36" y="408" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#2A2924">5. Boxing vs unboxing?</text>
-
-  <rect x="24" y="444" width="252" height="56" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
-  <text x="36" y="472" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#2A2924">6. Explain SOLID principles.</text>
-
-  <!-- main content -->
-  <path d="M348,100 L340,108 L348,116" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="356" y="108" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="26" font-weight="600" fill="#2A2924">C# Fundamentals</text>
-  <text x="1232" y="108" text-anchor="end" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">Card 3 of 24</text>
-
-  <rect x="490" y="190" width="600" height="420" rx="14" fill="#FFFFFF" stroke="#E3DFD5"/>
-  <text x="530" y="228" font-family="'Inter', sans-serif" font-size="12" font-weight="600" letter-spacing="1" fill="#6B675E">QUESTION</text>
-  <text x="530" y="280" font-family="'JetBrains Mono', monospace" font-size="20" fill="#2A2924">
-    <tspan x="530" dy="0">What does the `async` keyword</tspan>
-    <tspan x="530" dy="32">actually do in C#?</tspan>
-  </text>
-
-  <rect x="700" y="650" width="180" height="52" rx="26" fill="#3E4C74"/>
-  <text x="790" y="676" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" fill="#FFFFFF">Flip</text>
+  <text x="48" y="32.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="18" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <circle cx="1214" cy="32.0" r="18" fill="#3E4C74"/>
+  <text x="1214" y="32.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" text-anchor="middle" fill="#FFFFFF">LC</text>
+  <path d="M61.0,96 L53.0,104 L61.0,112" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="77" y="106" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <text x="1232" y="106" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" text-anchor="end" fill="#6B675E">Card 3 of 24</text>
+  <rect x="48.5" y="140.5" width="111" height="35" rx="17.5" fill="#E3DFD5" stroke="#E3DFD5"/>
+  <g transform="translate(70,158)">
+    <rect x="-8.0" y="-7.2" width="16.0" height="14.4" rx="2" fill="none" stroke="#2A2924" stroke-width="1.5"/>
+    <line x1="-2.3999999999999995" y1="-7.2" x2="-2.3999999999999995" y2="7.2" stroke="#2A2924" stroke-width="1.5"/>
+  </g>
+  <text x="88" y="158" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#2A2924">Cards</text>
+  <rect x="48.5" y="196.5" width="299" height="556" rx="12" fill="#FBFAF6" stroke="#E3DFD5"/>
+  <text x="68" y="226" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#6B675E" letter-spacing="1">CARDS IN THIS STACK</text>
+  <rect x="68.5" y="248.5" width="259" height="47" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="80" y="272.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#2A2924">1. What is dependency injection?</text>
+  <rect x="68.5" y="304.5" width="259" height="47" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="80" y="328.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#2A2924">2. IEnumerable vs IQueryable?</text>
+  <rect x="68" y="360" width="260" height="48" rx="8" fill="#5E8272"/>
+  <text x="80" y="384.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">3. What does async do in C#?</text>
+  <rect x="68.5" y="416.5" width="259" height="47" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="80" y="440.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#2A2924">4. What is a closure, and why doe...</text>
+  <rect x="68.5" y="472.5" width="259" height="47" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="80" y="496.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#2A2924">5. Boxing vs unboxing?</text>
+  <rect x="68.5" y="528.5" width="259" height="47" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="80" y="552.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#2A2924">6. Explain SOLID principles.</text>
+  <rect x="482.5" y="196.5" width="639" height="399" rx="14" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="522.0" y="242" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#6B675E" letter-spacing="1">QUESTION</text>
+  <text x="522.0" y="286" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="17" fill="#2A2924">What does the `async` keyword actually do in C#?</text>
+  <path d="M510.5,653 L501.5,662 L510.5,671" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="712.0" y="636.0" width="180" height="52" rx="26.0" fill="#3E4C74"/>
+  <text x="802.0" y="662" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" text-anchor="middle" fill="#FFFFFF">Flip</text>
+  <path d="M1093.5,653 L1102.5,662 L1093.5,671" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="640.0" y="786" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" text-anchor="middle" fill="#6B675E" font-style="italic">Tray open: a 300px panel inside the page gutter; the card and controls re-center in the space left. Cards pill toggles it.</text>
 </svg>

@@ -1,0 +1,30 @@
+<div class="card-tray-backdrop" (click)="closeRequested.emit()" aria-hidden="true"></div>
+<nav class="card-tray" id="card-tray" aria-label="Cards in this stack">
+  <div class="card-tray-header">
+    <h3 class="card-tray-title">Cards in this stack</h3>
+    <button
+      class="card-tray-close"
+      aria-label="Hide cards"
+      (click)="closeRequested.emit()"
+      type="button"
+    >
+      <ng-icon name="phosphorX" />
+    </button>
+  </div>
+  <ol class="card-tray-list" role="list">
+    @for (card of cards(); track card.id; let index = $index) {
+      <li>
+        <button
+          class="card-tray-item"
+          type="button"
+          [class.card-tray-item--current]="index === currentIndex()"
+          [attr.aria-current]="index === currentIndex() ? 'true' : null"
+          (click)="cardSelected.emit(index)"
+        >
+          <span class="card-tray-number">{{ index + 1 }}.</span>
+          <span class="card-tray-question">{{ card.question }}</span>
+        </button>
+      </li>
+    }
+  </ol>
+</nav>
