@@ -5,45 +5,70 @@
       <h2 class="study-header">{{ stackResource.value()?.name }}</h2>
     }
     @if (currentCard()) {
+      <button
+        #trayToggle
+        class="tray-toggle"
+        [class.tray-toggle--open]="isTrayOpen()"
+        type="button"
+        aria-controls="card-tray"
+        [attr.aria-expanded]="isTrayOpen()"
+        [attr.aria-label]="isTrayOpen() ? 'Hide cards' : 'Show cards'"
+        (click)="toggleTray()"
+      >
+        <ng-icon name="phosphorSidebarSimple" />
+        <span class="tray-toggle-text">Cards</span>
+      </button>
       <p class="card-position">Card {{ currentIndex() + 1 }} of {{ cardCount() }}</p>
     } @else if (hasNoCards()) {
       <p class="card-position">0 cards</p>
     }
   </div>
   @if (currentCard(); as card) {
-    <div class="study-card" aria-live="polite">
-      <p class="study-card-label">{{ isFlipped() ? 'ANSWER' : 'QUESTION' }}</p>
-      <markdown
-        class="study-card-text card-markdown"
-        [class.study-card-text--mono]="card.isMonospace"
-        [data]="isFlipped() ? card.answer : card.question"
-      />
-      @if (!isFlipped()) {
-        <p class="study-card-hint">Tap Flip to reveal the answer</p>
+    <div class="study-body" [class.study-body--tray-open]="isTrayOpen()">
+      @if (isTrayOpen()) {
+        <app-card-tray
+          [cards]="cardResource.value()"
+          [currentIndex]="currentIndex()"
+          (cardSelected)="goTo($event)"
+          (closeRequested)="closeTray()"
+        />
       }
-    </div>
-    <div class="study-controls">
-      <button
-        class="nav-button"
-        type="button"
-        aria-label="Previous card"
-        (click)="previous()"
-        [disabled]="!hasPrevious()"
-      >
-        <ng-icon name="phosphorCaretLeft" />
-      </button>
-      <button class="flip-button" type="button" aria-label="Flip card" (click)="flip()">
-        Flip
-      </button>
-      <button
-        class="nav-button"
-        type="button"
-        aria-label="Next card"
-        (click)="next()"
-        [disabled]="!hasNext()"
-      >
-        <ng-icon name="phosphorCaretRight" />
-      </button>
+      <div class="study-main">
+        <div class="study-card" aria-live="polite">
+          <p class="study-card-label">{{ isFlipped() ? 'ANSWER' : 'QUESTION' }}</p>
+          <markdown
+            class="study-card-text card-markdown"
+            [class.study-card-text--mono]="card.isMonospace"
+            [data]="isFlipped() ? card.answer : card.question"
+          />
+          @if (!isFlipped()) {
+            <p class="study-card-hint">Tap Flip to reveal the answer</p>
+          }
+        </div>
+        <div class="study-controls">
+          <button
+            class="nav-button"
+            type="button"
+            aria-label="Previous card"
+            (click)="previous()"
+            [disabled]="!hasPrevious()"
+          >
+            <ng-icon name="phosphorCaretLeft" />
+          </button>
+          <button class="flip-button" type="button" aria-label="Flip card" (click)="flip()">
+            Flip
+          </button>
+          <button
+            class="nav-button"
+            type="button"
+            aria-label="Next card"
+            (click)="next()"
+            [disabled]="!hasNext()"
+          >
+            <ng-icon name="phosphorCaretRight" />
+          </button>
+        </div>
+      </div>
     </div>
   } @else if (hasNoCards()) {
     <div class="empty-state">

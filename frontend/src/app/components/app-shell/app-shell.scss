@@ -5,8 +5,11 @@
     align-items: center;
     justify-content: space-between;
     min-block-size: 48px;
-    padding-block: var(--space-1);
-    padding-inline: var(--page-inset);
+    // CHANGED: the white bar reaches the screen edges in landscape, and its
+    // contents stay clear of the notch and the status bar (was
+    // padding-block: var(--space-1); padding-inline: var(--page-inset);)
+    padding-block: calc(var(--space-1) + var(--safe-top)) var(--space-1);
+    padding-inline: calc(var(--page-inset) + var(--safe-left)) calc(var(--page-inset) + var(--safe-right));
     background: var(--color-surface);
     border-bottom: 1px solid var(--color-border);
 

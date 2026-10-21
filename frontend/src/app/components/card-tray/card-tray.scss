@@ -1,0 +1,205 @@
+@use '../../../scss/breakpoints' as bp;
+
+// NEW FILE: the Study screen's card tray.
+//
+// Mobile and tablet (base): a drawer over a dimmed page, 300px / 380px wide,
+// covering the full height like the modals' backdrop. Picking a card keeps it
+// open; the X, the backdrop and Escape close it.
+//
+// Desktop: a panel in the first column of Study's layout grid (Study's own
+// stylesheet sets the 300px column); no backdrop and no X, since the Cards
+// pill stays visible.
+
+// The backdrop: fixed and full screen, just under the drawer
+.card-tray-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+// The drawer. On the narrowest phones it leaves at least 48px of backdrop to
+// tap on. The list scrolls inside it; the header stays put.
+.card-tray {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 91;
+  display: flex;
+  flex-direction: column;
+  // CHANGED: wider and padded by the safe areas, so the rows stay clear of
+  // a notch on the left and the status bar on top (was
+  // inline-size: min(300px, calc(100% - 48px)); padding: var(--space-3) 1.25rem 0;)
+  inline-size: min(calc(300px + var(--safe-left)), calc(100% - 48px));
+  padding: calc(var(--space-3) + var(--safe-top)) 1.25rem 0 calc(1.25rem + var(--safe-left));
+  background-color: var(--color-surface-tint);
+  border-inline-end: 1px solid var(--color-border);
+}
+
+.card-tray-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+  margin-bottom: 0.75rem;
+}
+
+// "CARDS IN THIS STACK": typed in normal case, shown in capitals
+.card-tray-title {
+  margin: 0;
+  font-family: var(--font-family-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: var(--line-height-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+// The X: a 40px round target, pulled into the padding so the icon lines up
+// with the rows' right edge
+.card-tray-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  inline-size: 40px;
+  block-size: 40px;
+  margin-inline-end: -0.625rem;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+}
+
+.card-tray-close:hover {
+  background-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+// The list scrolls by itself. Its 4px padding (cancelled by the negative
+// margin) keeps the rows' focus rings from being cut off by the scroll edge.
+.card-tray-list {
+  flex: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0 -4px;
+  padding: 4px 4px calc(var(--space-3) + var(--safe-bottom)); // CHANGED: clear of the home indicator (was 4px 4px var(--space-3))
+  list-style: none;
+}
+
+// One row: "3. What does async do in C#?" on a single line
+.card-tray-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  inline-size: 100%;
+  min-block-size: 52px;
+  padding: 0 0.75rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-default);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: 0.8125rem;
+  line-height: var(--line-height-body);
+  text-align: start;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+.card-tray-item:hover {
+  border-color: var(--color-focus-ring);
+}
+
+// The current card. The design system names --color-accent for this, but
+// white text on it is 4.28:1, under the 4.5:1 normal-size text needs; the
+// accent's hover shade gives 6.29:1 and still reads as the same sage.
+.card-tray-item--current,
+.card-tray-item--current:hover {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: var(--color-surface);
+  font-weight: 600;
+}
+
+.card-tray-close:focus-visible,
+.card-tray-item:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+// The number always shows; the question gets cut off with "..."
+.card-tray-number {
+  flex: none;
+}
+
+.card-tray-question {
+  min-inline-size: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// Tablet: a wider drawer with taller rows and larger text
+@include bp.tablet {
+  .card-tray {
+    inline-size: min(calc(380px + var(--safe-left)), calc(100% - 48px)); // CHANGED: was min(380px, calc(100% - 48px))
+    padding-inline: calc(var(--space-3) + var(--safe-left)) var(--space-3); // CHANGED: was var(--space-3)
+  }
+
+  .card-tray-item {
+    min-block-size: 64px;
+    padding-inline: var(--space-2);
+    font-size: 0.9375rem;
+  }
+
+  .card-tray-list {
+    gap: 0.75rem;
+  }
+}
+
+// Desktop: a panel in Study's layout instead of a drawer. Its height is
+// capped so it ends at the bottom of the window (15rem covers the top bar,
+// Study's header and the page's bottom padding), never shorter than 16rem; a
+// long stack scrolls inside the list. It sticks near the top while a long
+// answer scrolls the page.
+@include bp.desktop {
+  .card-tray-backdrop,
+  .card-tray-close {
+    display: none;
+  }
+
+  .card-tray {
+    position: sticky;
+    inset-block: var(--space-3) auto;
+    z-index: auto;
+    inline-size: auto;
+    max-block-size: max(16rem, 100dvh - 15rem);
+    padding: 1.25rem 1.25rem 0;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+  }
+
+  .card-tray-item {
+    min-block-size: 48px;
+    padding-inline: 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .card-tray-list {
+    gap: var(--space-1);
+    padding-bottom: 1.25rem;
+  }
+}

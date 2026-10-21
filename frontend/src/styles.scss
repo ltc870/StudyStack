@@ -87,6 +87,15 @@
   --page-gutter: 1.25rem;
   --page-max: 1184px;
   --page-inset: max(var(--page-gutter), (100% - var(--page-max)) / 2);
+
+  // NEW: the device's safe areas (the notch and rounded corners on a phone in
+  // landscape, the home indicator at the bottom). index.html's viewport-fit=cover
+  // lets the page's backgrounds reach the screen edges; these keep the content
+  // clear of the notch. 0px on screens without them.
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
   --modal-width: 350px;
   --modal-padding: var(--space-3);
 }
@@ -129,8 +138,11 @@ body {
 }
 
 .main-container {
-  padding-block: 0 var(--space-4);
-  padding-inline: var(--page-inset);
+  // CHANGED: the gutter is added to the safe areas, so content keeps its
+  // place beside a notch while the background reaches the screen edges
+  // (was padding-block: 0 var(--space-4); padding-inline: var(--page-inset);)
+  padding-block: 0 calc(var(--space-4) + var(--safe-bottom));
+  padding-inline: calc(var(--page-inset) + var(--safe-left)) calc(var(--page-inset) + var(--safe-right));
 }
 
 // Shared by the stack editor and delete confirmation modals

@@ -8,17 +8,27 @@
   flex-direction: column;
 }
 
-// Header: same title treatment as Manage Cards
+// CHANGED: a grid instead of a flex row, so the tray toggle can sit on the
+// title row on mobile and tablet and under it on desktop.
+// Header: same title treatment as Manage Cards.
 .header-container {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid; // CHANGED: was display: flex; flex-wrap: wrap;
+  grid-template-columns: auto minmax(0, 1fr) auto; // NEW
+  grid-template-areas: // NEW
+    'back title toggle'
+    'position position position';
   align-items: center;
   margin-top: var(--space-2);
 }
 
+// NEW: the back chevron's place in the header grid
+app-back-link {
+  grid-area: back;
+}
+
 .study-header {
-  flex: 1 1 0;
+  grid-area: title; // CHANGED: was flex: 1 1 0;
   min-width: 0;
   margin: 0 0 0 -0.25em;
   font-family: var(--font-family-heading);
@@ -30,12 +40,46 @@
 // "Card 3 of 24" or "0 cards": its own centered line on mobile and tablet,
 // right-aligned on the title row on desktop
 .card-position {
-  flex-basis: 100%;
+  grid-area: position; // CHANGED: was flex-basis: 100%;
   margin: var(--space-1) 0 0;
   text-align: center;
   font-size: 0.8125rem;
   line-height: var(--line-height-meta);
   color: var(--color-text-secondary);
+}
+
+// NEW: the tray toggle: an icon button on the title row (mobile and tablet), a
+// "Cards" pill under the header (desktop). Shaded while the tray is open.
+.tray-toggle {
+  grid-area: toggle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  inline-size: 40px;
+  block-size: 40px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-primary);
+  font-size: 1.375rem;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.tray-toggle:hover,
+.tray-toggle--open {
+  background-color: var(--color-border);
+}
+
+.tray-toggle:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.tray-toggle-text {
+  display: none;
 }
 
 // The card: the largest, calmest surface in the app. A min-height keeps it
@@ -229,6 +273,13 @@
     font-size: 0.9375rem;
   }
 
+  // NEW
+  .tray-toggle {
+    inline-size: 44px;
+    block-size: 44px;
+    font-size: 1.5rem;
+  }
+
   .study-card {
     min-block-size: clamp(10rem, 100dvh - 25rem, 38.75rem);
     margin-top: 1.25rem;
@@ -292,17 +343,60 @@
 // and control row are centered at 640px, the card editor's width, so text
 // wraps the way it did when it was typed.
 @include bp.desktop {
+  // CHANGED: the position moves onto the title row and the toggle onto its
+  // own row below (was flex-wrap: nowrap;)
   .header-container {
-    flex-wrap: nowrap;
+    grid-template-areas:
+      'back title position'
+      'toggle toggle toggle';
   }
 
+  // REMOVED: flex: none; flex-basis: auto; (not needed in a grid)
   .card-position {
-    flex: none;
-    flex-basis: auto;
     margin: 0 0 0 var(--space-3);
     text-align: right;
     font-size: var(--font-size-meta);
     white-space: nowrap;
+  }
+
+  // NEW: the "Cards" pill
+  .tray-toggle {
+    justify-self: start;
+    inline-size: auto;
+    block-size: 36px;
+    margin-top: var(--space-2);
+    padding: 0 var(--space-2);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    font-size: 1.125rem;
+  }
+
+  // NEW: repeated here because the pill's surface color above would
+  // otherwise win over the shaded open and hover state
+  .tray-toggle:hover,
+  .tray-toggle--open {
+    background-color: var(--color-border);
+  }
+
+  // NEW
+  .tray-toggle-text {
+    display: inline;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-meta);
+  }
+
+  // NEW: the tray and the card start on the same line, so the gap above them
+  // moves from the card to the body
+  .study-body {
+    margin-top: var(--space-4);
+  }
+
+  // NEW: tray open: a 300px column for the tray, the rest for the card and
+  // controls, which stay centered at 640px (narrower if the window is)
+  .study-body--tray-open {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    column-gap: var(--space-3);
   }
 
   .study-card,
@@ -313,7 +407,7 @@
 
   .study-card {
     min-block-size: clamp(10rem, 100dvh - 23rem, 26.25rem);
-    margin-top: var(--space-4);
+    margin-top: 0; // CHANGED: was var(--space-4); the gap is on .study-body now
     padding: 2.5rem;
   }
 

@@ -138,8 +138,8 @@ $list-pages: '.manage-stacks-container, .manage-cards-container';
 .new-stack-button,
 .new-card-button {
   position: fixed;
-  right: var(--space-3);
-  bottom: var(--space-3);
+  right: calc(var(--space-3) + var(--safe-right)); // CHANGED: clear of the notch (was var(--space-3))
+  bottom: calc(var(--space-3) + var(--safe-bottom)); // CHANGED: clear of the home indicator (was var(--space-3))
   height: 56px;
   width: 56px;
   border-radius: var(--radius-pill);
