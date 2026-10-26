@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
-# StudyStack: copy the production database dumps off the server (runs on homeserver).
+# StudyStack: copy the production database dumps to homeserver's external drive.
 #
-# Run as root, daily, by /etc/cron.d/studystack-pull (see ops/studystack-pull.cron),
-# or by hand with: sudo ~/StudyStack/ops/pull-backups.sh
+# Run as root on homeserver, daily, by /etc/cron.d/studystack-pull (see
+# ops/studystack-pull.cron), or by hand from the production folder with:
+#   sudo ops/pull-backups.sh
+#
+# Since Phase 7 production runs on homeserver itself, so by default the dumps come from
+# its own /var/backups/studystack (on the system disk, next to the database) and go to
+# the external drive: a second disk. Until Oct 26, 2026 they were pulled from the cloud
+# VM over SSH; a SOURCE of the form user@host: still does that (see Settings).
 #
 # What it does:
 #   1. Refuses to run unless the external drive is mounted, so the copies can never
 #      land on the system disk under an empty mount point.
-#   2. Pulls every dump it doesn't have yet from the server with rsync, over SSH as
-#      the pull-only backup-pull user. That user's key is limited on the server to
-#      read-only rsync of /var/backups/studystack (rrsync -ro).
-#   3. Never deletes anything: dumps the server prunes after 30 days stay here.
+#   2. Copies every dump it doesn't have yet from SOURCE with rsync. For a local SOURCE,
+#      rsync copies between the two folders directly and ignores its SSH settings.
+#   3. Never deletes anything: dumps backup-db.sh prunes after 30 days stay here.
 #   4. When new dumps arrived, tells Nextcloud to rescan its "StudyStack backups"
 #      folder. Nextcloud lists files from its own cache and doesn't notice files that
 #      appear on External storage by themselves. A failed rescan is logged as a WARNING
@@ -22,7 +27,9 @@
 set -euo pipefail
 
 # --- Settings (each can be overridden from the environment, e.g. for testing) ---
-SOURCE="${SOURCE:-backup-pull@studystack.tail63e067.ts.net:}"
+# Where the dumps come from: a local folder (the default), or user@host: for a server
+# reached over SSH with SSH_KEY.
+SOURCE="${SOURCE:-/var/backups/studystack/}"
 SSH_KEY="${SSH_KEY:-/root/.ssh/studystack-backup-pull}"
 MOUNT_POINT="${MOUNT_POINT:-/mnt/storage}"
 DEST_DIR="${DEST_DIR:-/mnt/storage/backups/studystack}"
@@ -73,11 +80,12 @@ if [[ ! -d "$DEST_DIR" ]]; then
   fail "$DEST_DIR does not exist (create it once with: install -d -m 2750 -o root -g www-data $DEST_DIR)"
 fi
 
-# 2. Pull. -r copies the folder's contents, -t keeps each dump's original time (so the
+# 2. Copy. -r copies the folder's contents, -t keeps each dump's original time (so the
 #    next run knows what it already has), --chmod=F640 makes every copy rw-r-----.
 #    The folder's setgid bit gives each copy the folder's group (www-data, for Nextcloud).
-#    --exclude skips a dump the server is still writing. BatchMode makes ssh fail
-#    instead of waiting for a password or a host-key question nobody will answer.
+#    --exclude skips a dump backup-db.sh is still writing. For a remote SOURCE only:
+#    BatchMode makes ssh fail instead of waiting for a password or a host-key question
+#    nobody will answer.
 if ! rsync -rt --chmod=F640 --exclude='*.partial' --itemize-changes \
     -e "ssh -i $SSH_KEY -o BatchMode=yes -o ConnectTimeout=30" \
     "$SOURCE" "$DEST_DIR/" >"$output" 2>&1; then
