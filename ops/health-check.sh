@@ -2,11 +2,17 @@
 # StudyStack: health check for the server, the containers and the app.
 #
 # Run as root every 5 minutes by /etc/cron.d/studystack-health (see ops/studystack-health.cron),
-# or by hand with: sudo ~/StudyStack/ops/health-check.sh
+# or by hand from the stack's repo folder with: sudo ops/health-check.sh
+#
+# It checks the stack its own repo folder belongs to:
+#   - the VM:         ~/StudyStack (docker-compose.prod.yml, project studystack-prod)
+#   - an environment: ~/applications/environments/production/studystack-prod on homeserver,
+#                     whose .env sets COMPOSE_FILE and COMPOSE_PROJECT_NAME
 #
 # Checks:
-#   1. postgres, api and caddy each have a running container, and postgres is healthy.
-#   2. https://<SITE_ADDRESS>/api/health/db answers 200 with a valid certificate
+#   1. Every service in the stack has a running container, and every container with a
+#      health check is healthy (postgres, api, caddy, plus tailscale on homeserver).
+#   2. https://<machine>/api/health/db answers 200 with a valid certificate
 #      (proves Tailscale, the certificate, Caddy, the API and Postgres in one request).
 #   3. The root disk is less than DISK_LIMIT percent full.
 #   4. A nightly dump (studystack-*.dump) is less than BACKUP_MAX_AGE_HOURS old.
@@ -26,7 +32,7 @@ BACKUP_DIR="${BACKUP_DIR:-/var/backups/studystack}"
 PING_URL_FILE="${PING_URL_FILE:-/etc/studystack/healthcheck-url}"
 DISK_LIMIT="${DISK_LIMIT:-85}"
 BACKUP_MAX_AGE_HOURS="${BACKUP_MAX_AGE_HOURS:-26}"
-COMPOSE_FILE="docker-compose.prod.yml"
+TAILNET="${TAILNET:-tail63e067.ts.net}"
 LOG_TAG="studystack-health"
 
 failures=()
@@ -50,19 +56,49 @@ say() {
 
 cd "$REPO_DIR" || { logger -t "$LOG_TAG" -- "FAILED: cannot cd to $REPO_DIR"; exit 1; }
 
-# The health address comes from SITE_ADDRESS in .env (the machine's MagicDNS name), so
-# the same script works on the home lab without editing. Only that line is read.
+# Which compose files: an environment's .env names them in COMPOSE_FILE, and docker
+# compose reads that from .env by itself. The VM's .env doesn't, so name the file.
+# (The same rule as ops/deploy.sh.)
+compose=(docker compose)
+if ! grep -q '^COMPOSE_FILE=' .env 2>/dev/null; then
+  compose+=(-f docker-compose.prod.yml)
+fi
+
+# The health address. The VM's .env has SITE_ADDRESS (its MagicDNS name). An environment
+# has TS_HOSTNAME instead, and homeserver can't resolve *.ts.net names, so curl is given
+# the machine's Tailscale IP with --resolve, which keeps the normal certificate check for
+# the real name. Only those two lines of .env are read.
+resolve=()
 if [[ -z "${HEALTH_URL:-}" ]]; then
-  site="$(grep -m1 '^SITE_ADDRESS=' .env 2>/dev/null | cut -d= -f2- || true)"
+  site="$(sed -n 's/^SITE_ADDRESS=//p' .env 2>/dev/null | tail -1)"
+  if [[ -z "$site" ]]; then
+    ts_hostname="$(sed -n 's/^TS_HOSTNAME=//p' .env 2>/dev/null | tail -1)"
+    if [[ -n "$ts_hostname" ]]; then
+      site="$ts_hostname.$TAILNET"
+    fi
+  fi
   if [[ -n "$site" ]]; then
     HEALTH_URL="https://$site/api/health/db"
+    if [[ "$site" == *."$TAILNET" ]]; then
+      # "tailscale ip" asks Tailscale itself, so it works without DNS.
+      resolve_ip="$(tailscale ip -4 "${site%%.*}" 2>/dev/null | head -1 || true)"
+      if [[ -n "$resolve_ip" ]]; then
+        resolve=(--resolve "$site:443:$resolve_ip")
+      fi
+    fi
   fi
 fi
 
-# 1. Containers. "docker compose ps -a -q <service>" prints the service's container ID
-#    (also when it is stopped); "docker inspect" reports its state and health.
-for service in postgres api caddy; do
-  id="$(docker compose -f "$COMPOSE_FILE" ps -a -q "$service" 2>/dev/null)"
+# 1. Containers. "docker compose config --services" lists every service in the stack;
+#    "docker compose ps -a -q <service>" prints its container ID (also when it is
+#    stopped); "docker inspect" reports its state and, if it has a health check, health.
+services=()
+mapfile -t services < <("${compose[@]}" config --services 2>/dev/null)
+if (( ${#services[@]} == 0 )); then
+  fail "containers: docker compose config failed in $REPO_DIR (run it by hand to see why)"
+fi
+for service in "${services[@]}"; do
+  id="$("${compose[@]}" ps -a -q "$service" 2>/dev/null)"
   if [[ -z "$id" ]]; then
     fail "$service: no container"
     continue
@@ -72,28 +108,26 @@ for service in postgres api caddy; do
     fail "$service: container is ${state:-unknown}"
     continue
   fi
-  if [[ "$service" == "postgres" ]]; then
-    health="$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{end}}' "$id" 2>/dev/null)"
-    if [[ "$health" != "healthy" ]]; then
-      fail "postgres: health is ${health:-unknown}"
-    fi
+  health="$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{end}}' "$id" 2>/dev/null)"
+  if [[ -n "$health" && "$health" != "healthy" ]]; then
+    fail "$service: health is $health"
   fi
 done
-say "containers checked"
+say "containers checked: ${services[*]}"
 
 # 2. The whole path, API -> database included. curl checks the certificate as usual
 #    (no -k). -w prints the HTTP status; 000 means no answer at all.
 if [[ -z "${HEALTH_URL:-}" ]]; then
-  fail "api: SITE_ADDRESS is not set in $REPO_DIR/.env"
+  fail "api: neither SITE_ADDRESS nor TS_HOSTNAME is set in $REPO_DIR/.env"
 else
   curl_error="$(mktemp)"
-  code="$(curl -sS -m 20 -o /dev/null -w '%{http_code}' "$HEALTH_URL" 2>"$curl_error")"
+  code="$(curl -sS -m 20 -o /dev/null -w '%{http_code}' "${resolve[@]}" "$HEALTH_URL" 2>"$curl_error")"
   if [[ "$code" != "200" ]]; then
     fail "api: $HEALTH_URL answered ${code:-000} $(tr '\n' ' ' <"$curl_error")"
   fi
   rm -f "$curl_error"
 fi
-say "endpoint checked: $HEALTH_URL"
+say "endpoint checked: ${HEALTH_URL:-none}${resolve[1]:+ (via ${resolve[1]##*:})}"
 
 # 3. Disk. df prints the root filesystem's use as, e.g., " 23%"; keep only the digits.
 used="$(df --output=pcent / | tail -1 | tr -dc '0-9')"

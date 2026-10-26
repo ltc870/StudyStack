@@ -11,17 +11,22 @@
 #      studystack-<UTC timestamp>.dump in BACKUP_DIR.
 #   3. Only after a successful backup, deletes studystack-*.dump files older than
 #      RETENTION_DAYS. manual-*.dump files are never deleted.
+# It backs up the stack its own repo folder belongs to:
+#   - the VM:         ~/StudyStack (docker-compose.prod.yml, project studystack-prod)
+#   - an environment: ~/applications/environments/production/studystack-prod on homeserver,
+#                     whose .env sets COMPOSE_FILE and COMPOSE_PROJECT_NAME
+# It refuses to run for a test environment (a project name ending in -test), whose data
+# is only a copy of production's and must never mix with production's dumps.
 # Every message goes to the systemd journal: journalctl -t studystack-backup
 
 set -euo pipefail
 
 # --- Settings (each can be overridden from the environment, e.g. for testing) ---
 # The repo folder is the parent of this script's folder, so the same script works on
-# any server without editing (studystack today, homeserver in Phase 7).
+# any server without editing (the VM, or the production folder on homeserver).
 REPO_DIR="${REPO_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 BACKUP_DIR="${BACKUP_DIR:-/var/backups/studystack}"
 RETENTION_DAYS="${RETENTION_DAYS:-30}"
-COMPOSE_FILE="docker-compose.prod.yml"
 LOG_TAG="studystack-backup"
 
 # New files are readable and writable by root, readable by the backup folder's group,
@@ -54,12 +59,31 @@ listing="$(mktemp)"
 # (After a successful rename, the .partial file no longer exists.)
 trap 'rm -f "$partial" "$errors" "$listing"' EXIT
 
+cd "$REPO_DIR" || fail "cannot cd to $REPO_DIR"   # so docker compose finds the compose files and .env
+
+# Which compose files: an environment's .env names them in COMPOSE_FILE, and docker
+# compose reads that from .env by itself. The VM's .env doesn't, so name the file.
+# (The same rule as ops/deploy.sh.)
+compose=(docker compose)
+if ! grep -q '^COMPOSE_FILE=' .env 2>/dev/null; then
+  compose+=(-f docker-compose.prod.yml)
+fi
+
+# Production only: config prints "name: <project>" first.
+project="$("${compose[@]}" config 2>/dev/null | sed -n '1s/^name: //p' || true)"
+if [[ -z "$project" ]]; then
+  fail "docker compose config failed in $REPO_DIR (run it by hand to see why)"
+fi
+if [[ "$project" == *-test ]]; then
+  fail "$project is a test environment; only production is backed up"
+fi
+
 mkdir -p "$BACKUP_DIR"
-cd "$REPO_DIR"   # so docker compose finds the compose file and .env
 
 # 1. Dump. The single quotes make the container's shell expand $POSTGRES_USER and
 #    $POSTGRES_DB from the container's own environment.
-if ! docker compose -f "$COMPOSE_FILE" exec -T postgres \
+# shellcheck disable=SC2016  # the single quotes are on purpose (see above)
+if ! "${compose[@]}" exec -T postgres \
     sh -c 'pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Fc' \
     >"$partial" 2>"$errors"; then
   fail "pg_dump: $(tr '\n' ' ' <"$errors")"
@@ -70,7 +94,7 @@ fi
 if [[ ! -s "$partial" ]]; then
   fail "the dump is empty"
 fi
-if ! docker compose -f "$COMPOSE_FILE" exec -T postgres pg_restore --list \
+if ! "${compose[@]}" exec -T postgres pg_restore --list \
     <"$partial" >"$listing" 2>"$errors"; then
   fail "pg_restore --list: $(tr '\n' ' ' <"$errors")"
 fi
@@ -91,4 +115,4 @@ pruned="$(find "$BACKUP_DIR" -maxdepth 1 -type f \
   -print -delete | wc -l)"
 kept="$(find "$BACKUP_DIR" -maxdepth 1 -type f -name 'studystack-*.dump' | wc -l)"
 
-log "OK $(basename "$final"): $size bytes, $tables tables; pruned $pruned, $kept dumps kept"
+log "OK $(basename "$final") ($project): $size bytes, $tables tables; pruned $pruned, $kept dumps kept"
