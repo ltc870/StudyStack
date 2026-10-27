@@ -1,0 +1,15 @@
+# StudyStack: daily encrypted copy of the database dumps to Backblaze B2 (ops/offsite-backups.sh).
+# Runs on homeserver. Install as /etc/cron.d/studystack-offsite, with no dot in the name:
+# cron ignores files in /etc/cron.d whose names contain a dot.
+#   sudo install -m 644 -o root -g root ops/studystack-offsite.cron /etc/cron.d/studystack-offsite
+#
+# homeserver's clock is Louisville time. backup-db.sh runs at 4:17 a.m. and the copy to
+# the external drive at 5:47 a.m., so 6:17 a.m. is after both.
+# The script logs to the journal itself; anything else it prints (such as a shell error)
+# is sent there too, under the same tag. Read with: journalctl -t studystack-offsite
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# m  h  dom mon dow  user  command
+17   6  *   *   *    root  /home/lawrence/applications/environments/production/studystack-prod/ops/offsite-backups.sh 2>&1 | logger -t studystack-offsite
