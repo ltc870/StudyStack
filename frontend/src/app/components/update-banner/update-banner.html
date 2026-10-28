@@ -1,0 +1,25 @@
+@if (updateService.isReloadRequired()) {
+  <div class="update-banner">
+    <ng-icon name="phosphorWarningCircle" class="update-banner-icon update-banner-icon--warning" />
+    <p class="update-banner-text">StudyStack needs to reload to keep working.</p>
+    <button class="update-banner-reload" type="button" (click)="updateService.reload()">
+      Reload
+    </button>
+  </div>
+} @else if (updateService.isUpdateReady()) {
+  <div class="update-banner">
+    <ng-icon name="phosphorArrowClockwise" class="update-banner-icon" />
+    <p class="update-banner-text">A new version is ready.</p>
+    <button class="update-banner-reload" type="button" (click)="updateService.reload()">
+      Reload
+    </button>
+    <button
+      class="update-banner-dismiss"
+      type="button"
+      aria-label="Dismiss"
+      (click)="updateService.dismiss()"
+    >
+      <ng-icon name="remixCloseFill" />
+    </button>
+  </div>
+}
