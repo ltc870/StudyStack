@@ -12,6 +12,7 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthService } from './services/auth-service';
 import { authInterceptor } from './interceptors/auth-interceptor';
+import { UpdateService } from './services/update-service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,6 +26,10 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(() => {
       const auth = inject(AuthService);
       return auth.initializeAuth();
+    }),
+
+    provideAppInitializer(() => {
+      inject(UpdateService);
     }),
   ],
 };

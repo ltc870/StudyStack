@@ -1,0 +1,118 @@
+@use '../../../scss/breakpoints' as bp;
+
+// The "new version" banner: a slim bar under the top bar, inside the page
+// gutter (it sits in AppShell's .main-container, which adds the gutter and the
+// safe areas). Calm, not an error: surface, border, primary icon and button.
+// The "reload required" case swaps in a warning icon and has no X.
+// The host carries role="status", so screen readers announce the banner when
+// it appears; with nothing to show, the host is empty and takes no space.
+
+.update-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: var(--space-2);
+  padding: 0.625rem 0.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-default);
+  font-family: var(--font-family-body);
+}
+
+.update-banner-icon {
+  flex: none;
+  font-size: 1.25rem;
+  color: var(--color-primary);
+}
+
+.update-banner-icon--warning {
+  color: var(--color-warning);
+}
+
+// Takes the free space, so Reload and the X stay at the right edge; wraps to
+// a second line when it has to (the reload-required text on a phone).
+.update-banner-text {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  margin: 0;
+  font-size: var(--font-size-meta);
+  line-height: var(--line-height-meta);
+  color: var(--color-text-primary);
+}
+
+.update-banner-reload {
+  flex: none;
+  min-inline-size: 76px;
+  padding: 0.4375rem var(--space-2);
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-default);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-meta);
+  font-weight: 600;
+  color: var(--color-surface);
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.update-banner-reload:hover {
+  background-color: var(--color-primary-hover);
+}
+
+// The same quiet X as the dialogs, with a 32px target
+.update-banner-dismiss {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 32px;
+  block-size: 32px;
+  margin-inline-start: -0.25rem;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-default);
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.update-banner-dismiss:hover {
+  color: var(--color-text-primary);
+}
+
+.update-banner-reload:focus-visible,
+.update-banner-dismiss:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+// Tablet and desktop: a little roomier, same layout
+@include bp.tablet {
+  .update-banner {
+    gap: var(--space-2);
+    padding: 0.625rem var(--space-2);
+  }
+
+  .update-banner-text {
+    font-size: 0.9375rem;
+  }
+
+  .update-banner-reload {
+    min-inline-size: 84px;
+    padding-block: 0.5rem;
+  }
+}
+
+// Short windows (a phone in landscape): a tighter banner, so Study's Flip
+// row stays on screen while it's showing. 30rem matches Study's own rule.
+@media (max-height: 30rem) {
+  .update-banner {
+    margin-top: var(--space-1);
+    padding-block: 0.25rem;
+  }
+
+  .update-banner-reload {
+    padding-block: 0.3125rem;
+  }
+}

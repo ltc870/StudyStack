@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844">
+  <rect width="390" height="844" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="390" height="48" fill="#FFFFFF"/>
+  <line x1="0" y1="48" x2="390" y2="48" stroke="#E3DFD5"/>
+  <text x="20" y="24.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="15" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="300" y="7.0" width="70" height="34" rx="8" fill="#6B675E"/>
+  <text x="335.0" y="24.0" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">Logout</text>
+  <!-- Update banner (ready) -->
+  <rect x="20.5" y="64.5" width="349" height="51" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <path d="M44.5,83.9 A7,7 0 1,1 37.5,83.9" fill="none" stroke="#3E4C74" stroke-width="1.8" stroke-linecap="round"/><path d="M36.9,88.0 L38.8,83.2 L33.7,82.4" fill="none" stroke="#3E4C74" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="60" y="90.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#2A2924">A new version is ready.</text>
+  <rect x="242" y="74.0" width="76" height="32" rx="8" fill="#3E4C74"/>
+  <text x="280.0" y="90.0" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">Reload</text>
+  <path d="M336.5,84.5 L347.5,95.5 M347.5,84.5 L336.5,95.5" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round"/>
+  <path d="M34,146 L26,154 L34,162" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="48" y="155" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <rect x="330" y="135" width="40" height="40" rx="20" fill="none"/>
+  <rect x="341.0" y="147.5" width="18.0" height="15.0" rx="2.5" fill="none" stroke="#6B675E" stroke-width="1.6"/><line x1="347.5" y1="147.5" x2="347.5" y2="162.5" stroke="#6B675E" stroke-width="1.6"/>
+  <text x="195" y="194" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B675E">Card 3 of 24</text>
+  <rect x="20.5" y="216.5" width="349" height="438" rx="12" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="41" y="247" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#6B675E" letter-spacing="1">QUESTION</text>
+  <text x="41" y="290" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="15" fill="#2A2924">What does the `async` keyword</text>
+  <text x="41" y="314" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="15" fill="#2A2924">actually do in C#?</text>
+  <text x="41" y="628" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" fill="#6B675E">Tap Flip to reveal the answer</text>
+  <path d="M48,694 L40,702 L48,710" fill="none" stroke="#6B675E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="115" y="678" width="160" height="48" rx="24" fill="#3E4C74"/>
+  <text x="195" y="702" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="16" font-weight="600" fill="#FFFFFF">Flip</text>
+  <path d="M342,710 L350,702 L342,694" fill="none" stroke="#6B675E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
