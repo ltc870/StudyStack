@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844">
+  <rect width="390" height="844" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="390" height="48" fill="#FFFFFF"/>
+  <line x1="0" y1="48" x2="390" y2="48" stroke="#E3DFD5"/>
+  <text x="20" y="24.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="15" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="300" y="7.0" width="70" height="34" rx="8" fill="#6B675E"/>
+  <text x="335.0" y="24.0" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">Logout</text>
+  <!-- Manage Cards behind the dialog -->
+  <text x="20" y="92" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="24" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <rect x="20" y="128" width="350" height="76" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="36" y="156" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="600" fill="#2A2924">What is dependency injection?</text>
+  <text x="36" y="178" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B675E">A way to give a class what it needs...</text>
+  <rect x="0" y="0" width="390" height="844" fill="#000000" opacity="0.45"/>
+  <!-- Card editor with Formatting help open; taller than the window, so it scrolls inside itself (shown scrolled to the bottom) -->
+  <clipPath id="dlg"><rect x="20.0" y="16" width="350" height="812" rx="14"/></clipPath>
+  <rect x="20.0" y="16" width="350" height="812" rx="14" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <g clip-path="url(#dlg)">
+  <text x="44.0" y="-13.700000000000001" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="19" font-weight="600" fill="#2A2924">Add Card</text>
+  <path d="M336.0,-19.700000000000003 L348.0,-7.700000000000001 M348.0,-19.700000000000003 L336.0,-7.700000000000001" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="44.0" y="29.099999999999998" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#6B675E" letter-spacing="1">QUESTION</text>
+  <rect x="44.0" y="42.599999999999994" width="302" height="110" rx="8" fill="#FBFAF6" stroke="#E3DFD5"/>
+  <text x="58.0" y="64.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">What does the `async`</text>
+  <text x="58.0" y="86.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">keyword actually do</text>
+  <text x="58.0" y="108.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">in C#?</text>
+  <text x="44.0" y="182.1" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#6B675E" letter-spacing="1">ANSWER</text>
+  <rect x="44.0" y="195.6" width="302" height="110" rx="8" fill="#FBFAF6" stroke="#E3DFD5"/>
+  <text x="58.0" y="217.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">It marks a method as</text>
+  <text x="58.0" y="239.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">asynchronous, so awaited</text>
+  <text x="58.0" y="261.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">calls can yield...</text>
+  <rect x="44.0" y="329.6" width="40" height="22" rx="11" fill="#5E8272"/><circle cx="73.0" cy="340.6" r="8" fill="#FFFFFF"/>
+  <text x="96.0" y="340.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#2A2924">Monospace font</text>
+  <!-- Formatting help: a text button; aria-expanded shows whether the panel is open -->
+  <text x="328.0" y="340.6" text-anchor="end" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" font-weight="500" fill="#3E4C74">Formatting help</text>
+  <path d="M335.0,343.6 L340.0,338.6 L345.0,343.6" fill="none" stroke="#3E4C74" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="44.5" y="368.1" width="301" height="363" rx="8" fill="#FBFAF6" stroke="#E3DFD5"/>
+  <text x="60.0" y="389.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#6B675E" letter-spacing="1">YOU TYPE</text>
+  <text x="188.0" y="389.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#6B675E" letter-spacing="1">YOU GET</text>
+  <line x1="60.0" y1="407.6" x2="330.0" y2="407.6" stroke="#E3DFD5"/>
+  <text x="60.0" y="422.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="12.5" fill="#2A2924">**bold**</text>
+  <text x="188.0" y="422.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" font-weight="700" fill="#2A2924">bold</text>
+  <line x1="60.0" y1="437.6" x2="330.0" y2="437.6" stroke="#E3DFD5"/>
+  <text x="60.0" y="452.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="12.5" fill="#2A2924">*italic*</text>
+  <text x="188.0" y="452.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#2A2924" font-style="italic">italic</text>
+  <line x1="60.0" y1="467.6" x2="330.0" y2="467.6" stroke="#E3DFD5"/>
+  <text x="60.0" y="482.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="12.5" fill="#2A2924">- item</text>
+  <circle cx="192.0" cy="482.6" r="2.5" fill="#2A2924"/>
+  <text x="202.0" y="482.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#2A2924">item</text>
+  <line x1="60.0" y1="497.6" x2="330.0" y2="497.6" stroke="#E3DFD5"/>
+  <text x="60.0" y="512.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="12.5" fill="#2A2924">1. item</text>
+  <text x="188.0" y="512.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#2A2924">1.  item</text>
+  <line x1="60.0" y1="527.6" x2="330.0" y2="527.6" stroke="#E3DFD5"/>
+  <text x="60.0" y="542.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="12.5" fill="#2A2924">`List&lt;User&gt;`</text>
+  <rect x="186.0" y="531.6" width="85" height="22" rx="4" fill="#F6F4EF"/>
+  <text x="191.0" y="542.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="12.5" fill="#2A2924">List&lt;User&gt;</text>
+  <line x1="60.0" y1="557.6" x2="330.0" y2="557.6" stroke="#E3DFD5"/>
+  <text x="60.0" y="575.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="12.5" fill="#2A2924">```csharp</text>
+  <text x="60.0" y="593.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="12.5" fill="#2A2924">var count = 1;</text>
+  <text x="60.0" y="611.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="12.5" fill="#2A2924">```</text>
+  <rect x="188.0" y="566.6" width="142.0" height="54" rx="6" fill="#F6F4EF" stroke="#E3DFD5"/>
+  <text x="198.0" y="593.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="12.5"><tspan fill="#3E4C74">var</tspan><tspan fill="#2A2924"> count = </tspan><tspan fill="#96492F">1</tspan><tspan fill="#6B675E">;</tspan></text>
+  <text x="60.0" y="650.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B675E">Code colors: csharp, typescript,</text>
+  <text x="60.0" y="669.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B675E">javascript, html, css, scss, sql, json,</text>
+  <text x="60.0" y="688.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B675E">bash, c, cpp, python, java.</text>
+  <text x="60.0" y="707.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B675E">Press Enter once for a new line.</text>
+  <rect x="262.0" y="763.6" width="84" height="40" rx="8" fill="#3E4C74"/>
+  <text x="304.0" y="783.6" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">Save</text>
+  <text x="252.0" y="783.6" text-anchor="end" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">Cancel</text>
+  </g>
+</svg>

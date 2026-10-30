@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844">
+  <rect width="390" height="844" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="390" height="48" fill="#FFFFFF"/>
+  <line x1="0" y1="48" x2="390" y2="48" stroke="#E3DFD5"/>
+  <text x="20" y="24.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="15" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="300" y="7.0" width="70" height="34" rx="8" fill="#6B675E"/>
+  <text x="335.0" y="24.0" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">Logout</text>
+  <!-- Manage Cards behind the dialog -->
+  <text x="20" y="92" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="24" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <rect x="20" y="128" width="350" height="76" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="36" y="156" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="600" fill="#2A2924">What is dependency injection?</text>
+  <text x="36" y="178" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="13" fill="#6B675E">A way to give a class what it needs...</text>
+  <rect x="0" y="0" width="390" height="844" fill="#000000" opacity="0.45"/>
+  <!-- Card editor -->
+  <clipPath id="dlg"><rect x="20.0" y="172" width="350" height="499" rx="14"/></clipPath>
+  <rect x="20.0" y="172" width="350" height="499" rx="14" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <g clip-path="url(#dlg)">
+  <text x="44.0" y="209.3" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="19" font-weight="600" fill="#2A2924">Add Card</text>
+  <path d="M336.0,203.3 L348.0,215.3 M348.0,203.3 L336.0,215.3" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="44.0" y="252.1" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#6B675E" letter-spacing="1">QUESTION</text>
+  <rect x="44.0" y="265.6" width="302" height="110" rx="8" fill="#FBFAF6" stroke="#E3DFD5"/>
+  <text x="58.0" y="287.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">What does the `async`</text>
+  <text x="58.0" y="309.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">keyword actually do</text>
+  <text x="58.0" y="331.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">in C#?</text>
+  <text x="44.0" y="405.1" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#6B675E" letter-spacing="1">ANSWER</text>
+  <rect x="44.0" y="418.6" width="302" height="110" rx="8" fill="#FBFAF6" stroke="#E3DFD5"/>
+  <text x="58.0" y="440.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">It marks a method as</text>
+  <text x="58.0" y="462.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">asynchronous, so awaited</text>
+  <text x="58.0" y="484.6" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="14" fill="#2A2924">calls can yield...</text>
+  <rect x="44.0" y="552.6" width="40" height="22" rx="11" fill="#5E8272"/><circle cx="73.0" cy="563.6" r="8" fill="#FFFFFF"/>
+  <text x="96.0" y="563.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#2A2924">Monospace font</text>
+  <!-- Formatting help: a text button; aria-expanded shows whether the panel is open -->
+  <text x="328.0" y="563.6" text-anchor="end" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" font-weight="500" fill="#3E4C74">Formatting help</text>
+  <path d="M335.0,561.6 L340.0,566.6 L345.0,561.6" fill="none" stroke="#3E4C74" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="262.0" y="606.6" width="84" height="40" rx="8" fill="#3E4C74"/>
+  <text x="304.0" y="626.6" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">Save</text>
+  <text x="252.0" y="626.6" text-anchor="end" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">Cancel</text>
+  </g>
+</svg>
