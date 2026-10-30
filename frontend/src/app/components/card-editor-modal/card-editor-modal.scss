@@ -17,6 +17,11 @@
     // instead of running off the screen
     max-block-size: calc(100dvh - var(--space-4));
     overflow-y: auto;
+    // NEW: a slim scrollbar with a see-through track, so on a desktop browser
+    // (where scrollbars take up room) it no longer squares off the dialog's
+    // rounded corners or hides its right border
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
     padding: var(--modal-padding);
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
@@ -93,16 +98,27 @@
     tab-size: 4;
 }
 
+// NEW: the row under the textareas: the Monospace switch on the left, the
+// "Formatting help" button on the right. Its full-width grid row and top
+// margin used to be on .mono-toggle.
+.card-editor-options {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-1);
+    margin-top: var(--space-3);
+}
+
 // "Monospace font" switch. The real checkbox stays in the page (keyboard and
 // screen readers use it) but is visually hidden; the track span draws the switch.
+// CHANGED: grid-column, justify-self and margin-top moved to .card-editor-options
 .mono-toggle {
-    grid-column: 1 / -1;
-    justify-self: start;
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    margin-top: var(--space-3);
     cursor: pointer;
 }
 
@@ -156,6 +172,38 @@
     color: var(--color-text-primary);
 }
 
+// NEW: "Formatting help": a quiet text button in the primary color, with a
+// caret that points up while the panel is open
+.formatting-help-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    margin-inline-end: -0.25rem;
+    background: none;
+    border: none;
+    border-radius: var(--radius-default);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-meta);
+    font-weight: 500;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+
+.formatting-help-toggle:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.formatting-help-toggle-icon {
+    font-size: 0.875rem;
+}
+
+.formatting-help-toggle-icon--open {
+    transform: rotate(180deg);
+}
+
 // Footer: Cancel + Save, right-aligned on the dialog's inner padding
 .cancel-save-buttons-container {
     grid-column: 1 / -1;
@@ -201,6 +249,7 @@
 }
 
 .modal-close-button:focus-visible,
+.formatting-help-toggle:focus-visible, // CHANGED: added
 .cancel-button:focus-visible,
 .save-button:focus-visible,
 .card-editor-textarea:focus-visible {

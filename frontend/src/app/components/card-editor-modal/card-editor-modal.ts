@@ -1,11 +1,13 @@
-import { Component, computed, input, linkedSignal, output } from '@angular/core';
+import { Component, computed, input, linkedSignal, output, signal } from '@angular/core';
 import { Card, CardCreateRequest } from '../../models/card';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { remixCloseFill } from '@ng-icons/remixicon';
+import { FormattingHelp } from '../formatting-help/formatting-help';
+import { phosphorCaretDown } from '@ng-icons/phosphor-icons/regular';
 
 @Component({
-  imports: [NgIcon],
-  providers: [provideIcons({ remixCloseFill })],
+  imports: [NgIcon, FormattingHelp],
+  providers: [provideIcons({ remixCloseFill, phosphorCaretDown })],
   selector: 'app-card-editor-modal',
   styleUrl: './card-editor-modal.scss',
   templateUrl: './card-editor-modal.html',
@@ -19,6 +21,7 @@ export class CardEditorModal {
   isMonospace = linkedSignal(() => this.card()?.isMonospace ?? false);
   save = output<Omit<CardCreateRequest, 'stackId'>>();
   cancel = output<void>();
+  isFormattingHelpOpen = signal(false);
 
   // Computed Signals
   canSave = computed(() => {
@@ -40,6 +43,10 @@ export class CardEditorModal {
   setIsMonospace(event: Event) {
     const input = event.target as HTMLInputElement;
     this.isMonospace.set(input.checked);
+  }
+
+  toggleFormattingHelp() {
+    this.isFormattingHelpOpen.update((isOpen) => !isOpen);
   }
 
   onSave() {

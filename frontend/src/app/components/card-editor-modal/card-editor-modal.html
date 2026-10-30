@@ -24,17 +24,36 @@
       (input)="setAnswer($event)"
       [class.card-editor-textarea--mono]="isMonospace()"
     ></textarea>
-    <label class="mono-toggle">
-      <input
-        type="checkbox"
-        role="switch"
-        class="mono-toggle-input"
-        [checked]="isMonospace()"
-        (change)="setIsMonospace($event)"
-      />
-      <span class="mono-toggle-track"></span>
-      <span class="mono-toggle-text">Monospace font</span>
-    </label>
+    <div class="card-editor-options">
+      <label class="mono-toggle">
+        <input
+          type="checkbox"
+          role="switch"
+          class="mono-toggle-input"
+          [checked]="isMonospace()"
+          (change)="setIsMonospace($event)"
+        />
+        <span class="mono-toggle-track"></span>
+        <span class="mono-toggle-text">Monospace font</span>
+      </label>
+      <button
+        class="formatting-help-toggle"
+        type="button"
+        aria-controls="formatting-help"
+        [attr.aria-expanded]="isFormattingHelpOpen()"
+        (click)="toggleFormattingHelp()"
+      >
+        Formatting help
+        <ng-icon
+          name="phosphorCaretDown"
+          class="formatting-help-toggle-icon"
+          [class.formatting-help-toggle-icon--open]="isFormattingHelpOpen()"
+        />
+      </button>
+    </div>
+    @if (isFormattingHelpOpen()) {
+      <app-formatting-help id="formatting-help" />
+    }
     <div class="cancel-save-buttons-container">
       <button class="cancel-button" (click)="cancel.emit()">Cancel</button>
       <button class="save-button" [disabled]="!canSave()" (click)="onSave()">Save</button>
