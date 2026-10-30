@@ -104,6 +104,12 @@ td:last-child {
         padding: var(--space-2);
     }
 
+    // CHANGED: more room between "You type" and "You get" once the panel is
+    // wide (tablet, desktop and a phone in landscape); was 16px at every size
+    td:first-child {
+        padding-right: var(--space-4);
+    }
+
     .formatting-help-source,
     .card-markdown code,
     .card-markdown pre code {

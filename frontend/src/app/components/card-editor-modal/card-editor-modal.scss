@@ -190,10 +190,14 @@
     cursor: pointer;
 }
 
-.formatting-help-toggle:hover {
-    color: var(--color-primary-hover);
-    text-decoration: underline;
-    text-underline-offset: 3px;
+// CHANGED: only on devices that really hover (a mouse or trackpad). A phone
+// applies :hover on a tap and keeps it, which left the text underlined.
+@media (hover: hover) {
+    .formatting-help-toggle:hover {
+        color: var(--color-primary-hover);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
 }
 
 .formatting-help-toggle-icon {
