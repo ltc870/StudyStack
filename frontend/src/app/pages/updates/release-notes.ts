@@ -8,7 +8,7 @@ import { ReleaseNote } from '../../models/release-note';
 // date: the day it reaches production, as 'YYYY-MM-DD'.
 export const releaseNotes: ReleaseNote[] = [
   {
-    date: '2026-10-30',
+    date: '2026-10-31',
     title: 'See what changed',
     changes: [
       'Tap "What\'s new" under the Manage and Study buttons to see this list of updates, newest first.',
