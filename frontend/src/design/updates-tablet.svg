@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 768 1024">
+  <rect width="768" height="1024" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="768" height="60" fill="#FFFFFF"/>
+  <line x1="0" y1="60" x2="768" y2="60" stroke="#E3DFD5"/>
+  <text x="32" y="30.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="20" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="658" y="10.0" width="78" height="40" rx="8" fill="#6B675E"/>
+  <text x="697.0" y="30.0" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">Logout</text>
+  <path d="M46,98 L38,106 L46,114" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="61" y="107" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">Updates</text>
+  <text x="32" y="146" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">What changed in each release, newest first.</text>
+  <!-- Release notes: one card per release, newest first; the list scrolls with the page -->
+  <rect x="32.5" y="176.5" width="703" height="166" rx="12" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="56" y="207.2" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#6B675E" letter-spacing="1">OCT 21, 2026</text>
+  <text x="56" y="234.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">Jump to any card</text>
+  <circle cx="60" cy="266.4" r="2.5" fill="#6B675E"/>
+  <text x="74" y="266.4" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">Tap Cards on the Study screen (the panel icon next to the stack name on a phone) to</text>
+  <text x="74" y="288.9" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">see every card in the stack. Tap one to jump straight to it; the list stays open.</text>
+  <circle cx="60" cy="311.4" r="2.5" fill="#6B675E"/>
+  <text x="74" y="311.4" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">On an iPhone in landscape, the top bar now reaches the edges of the screen.</text>
+  <rect x="32.5" y="359.5" width="703" height="121" rx="12" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="56" y="390.2" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#6B675E" letter-spacing="1">OCT 20, 2026</text>
+  <text x="56" y="417.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">Faster start</text>
+  <circle cx="60" cy="449.5" r="2.5" fill="#6B675E"/>
+  <text x="74" y="449.5" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">StudyStack opens faster, because it downloads less when it starts.</text>
+  <rect x="32.5" y="497.5" width="703" height="166" rx="12" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="56" y="528.2" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#6B675E" letter-spacing="1">OCT 14, 2026</text>
+  <text x="56" y="555.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">Format your cards</text>
+  <circle cx="60" cy="587.5" r="2.5" fill="#6B675E"/>
+  <text x="74" y="587.5" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">Questions and answers now support markdown: bold, italics, lists, code, and code</text>
+  <text x="74" y="610.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">blocks with colors.</text>
+  <circle cx="60" cy="632.5" r="2.5" fill="#6B675E"/>
+  <text x="74" y="632.5" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">Tap Formatting help in the card editor to see how.</text>
+  <rect x="32.5" y="680.5" width="703" height="211" rx="12" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="56" y="711.2" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#6B675E" letter-spacing="1">OCT 12, 2026</text>
+  <text x="56" y="738.6" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">StudyStack is online</text>
+  <circle cx="60" cy="770.5" r="2.5" fill="#6B675E"/>
+  <text x="74" y="770.5" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">Make stacks of cards, each with a question and an answer, and find any of them with</text>
+  <text x="74" y="793.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">search.</text>
+  <circle cx="60" cy="815.5" r="2.5" fill="#6B675E"/>
+  <text x="74" y="815.5" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">Study a stack: Flip shows the answer, and Previous and Next move between cards.</text>
+  <circle cx="60" cy="838.0" r="2.5" fill="#6B675E"/>
+  <text x="74" y="838.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">Turn on Monospace font in the card editor for cards that are mostly code.</text>
+  <circle cx="60" cy="860.5" r="2.5" fill="#6B675E"/>
+  <text x="74" y="860.5" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">Add it to your home screen: in Safari, tap Share, then Add to Home Screen.</text>
+</svg>

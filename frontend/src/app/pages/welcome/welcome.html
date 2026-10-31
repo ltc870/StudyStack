@@ -1,16 +1,17 @@
 <div class="welcome-header-container">
-    <h1 class="welcome-header">StudyStack</h1>
-    <p class="welcome-text">Focused practice for the concepts that stick!</p>
+  <h1 class="welcome-header">StudyStack</h1>
+  <p class="welcome-text">Focused practice for the concepts that stick!</p>
 </div>
 <div class="welcome-body">
-    <div class="welcome-buttons-container">
-        <button class="create-button welcome-button" (click)="onManage()">
-            <ng-icon name="phosphorPlusBold" class="icon-class plus-icon"></ng-icon>
-            <span class="create-button-text">Manage</span>
-        </button>
-        <button class="study-button welcome-button" (click)="onStudy()">
-            <ng-icon name="phosphorPlayFill" class="icon-class play-icon"></ng-icon>
-            <span class="study-button-text">Study</span>
-        </button>
-    </div>
+  <div class="welcome-buttons-container">
+    <button class="create-button welcome-button" (click)="onManage()">
+      <ng-icon name="phosphorPlusBold" class="icon-class plus-icon"></ng-icon>
+      <span class="create-button-text">Manage</span>
+    </button>
+    <button class="study-button welcome-button" (click)="onStudy()">
+      <ng-icon name="phosphorPlayFill" class="icon-class play-icon"></ng-icon>
+      <span class="study-button-text">Study</span>
+    </button>
+  </div>
+  <a class="whats-new-link" routerLink="/updates">What's new</a>
 </div>

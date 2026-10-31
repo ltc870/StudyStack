@@ -46,6 +46,12 @@ export const routes: Routes = [
         title: 'Manage Cards | StudyStack',
       },
       {
+        path: 'updates',
+        loadComponent: () => import('./pages/updates/updates').then((module) => module.Updates),
+        data: { backTo: '/welcome' },
+        title: 'Updates | StudyStack',
+      },
+      {
         path: 'study/:stackId',
         loadComponent: () => import('./pages/study/study').then((module) => module.Study),
         data: { backTo: '/stacks/study' },
