@@ -142,3 +142,48 @@
         font-size: var(--font-size-body);
     }
 }
+
+// NEW: "What's new": a quiet text link under the two buttons, to the Updates page
+.whats-new-link {
+    display: block;
+    inline-size: fit-content;
+    margin: var(--space-1) auto 0;
+    padding: 0.25rem;
+    border-radius: var(--radius-default);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-meta);
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.whats-new-link:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+@media (hover: hover) {
+    .whats-new-link:hover {
+        color: var(--color-text-primary);
+    }
+}
+
+// NEW: short windows (a phone in landscape): Manage and Study sit side by side,
+// as on desktop, so "What's new" still fits without scrolling. 30rem matches
+// Study's own short-window rule. Last in the file, so it wins over the tablet
+// block at the same width.
+@media (max-height: 30rem) {
+    .welcome-buttons-container {
+        flex-direction: row;
+        justify-content: center;
+        gap: var(--space-2);
+        inline-size: auto;
+    }
+
+    .welcome-button {
+        inline-size: 180px;
+        min-block-size: 48px;
+        margin-bottom: 0;
+        font-size: var(--font-size-body);
+    }
+}

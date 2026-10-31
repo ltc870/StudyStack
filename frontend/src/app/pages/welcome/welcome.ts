@@ -2,10 +2,10 @@ import { Component, inject } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { phosphorPlayFill } from '@ng-icons/phosphor-icons/fill';
 import { phosphorPlusBold } from '@ng-icons/phosphor-icons/bold';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
-  imports: [NgIcon],
+  imports: [NgIcon, RouterLink],
   providers: [provideIcons({ phosphorPlayFill, phosphorPlusBold })],
   selector: 'app-welcome',
   styleUrl: './welcome.scss',
@@ -15,10 +15,10 @@ export class Welcome {
   private readonly router = inject(Router);
 
   onManage() {
-    this.router.navigateByUrl("/stacks");
+    this.router.navigateByUrl('/stacks');
   }
 
   onStudy() {
-    this.router.navigateByUrl("/stacks/study")
+    this.router.navigateByUrl('/stacks/study');
   }
 }

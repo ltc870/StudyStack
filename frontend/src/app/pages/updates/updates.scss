@@ -1,0 +1,152 @@
+@use '../../../scss/breakpoints' as bp;
+
+// The Updates page: a header like the other screens (back chevron and title),
+// one line of intro, then one card per release, newest first. Phone and
+// tablet stack the date above the title; desktop puts the date in its own
+// column and keeps the list to a 760px reading width.
+
+.updates-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    margin-top: var(--space-2);
+}
+
+.updates-header {
+    margin: 0;
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h1);
+    line-height: var(--line-height-h1);
+    color: var(--color-text-primary);
+}
+
+.updates-intro {
+    margin: var(--space-1) 0 0;
+    font-size: 0.8125rem;
+    line-height: var(--line-height-meta);
+    color: var(--color-text-secondary);
+}
+
+// role="list" in the template keeps it a list for VoiceOver once the
+// bullets are removed
+.release-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.release {
+    padding: var(--space-2);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+}
+
+// OCT 21, 2026: the all-caps label style
+.release-date {
+    display: block;
+    font-size: var(--font-size-label);
+    line-height: var(--line-height-label);
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+}
+
+.release-title {
+    margin: var(--space-1) 0 0;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    line-height: 1.4;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.release-changes {
+    margin: var(--space-1) 0 0;
+    padding-left: 1.125rem;
+    // A list inside another list gets hollow circles by default; the mockups
+    // use filled dots
+    list-style-type: disc;
+    font-size: var(--font-size-meta);
+    line-height: 1.5;
+    color: var(--color-text-primary);
+
+    li + li {
+        margin-top: 0.25rem;
+    }
+
+    li::marker {
+        color: var(--color-text-secondary);
+    }
+}
+
+@include bp.tablet {
+    .header-container {
+        margin-top: var(--space-3);
+    }
+
+    .updates-intro {
+        font-size: 0.9375rem;
+    }
+
+    .release-list {
+        gap: var(--space-2);
+        margin-top: var(--space-3);
+    }
+
+    .release {
+        padding: var(--space-3);
+    }
+
+    .release-date {
+        font-size: 0.75rem;
+    }
+
+    .release-title {
+        font-size: 1.125rem;
+    }
+
+    .release-changes {
+        font-size: 0.9375rem;
+    }
+}
+
+// Desktop: the date in a column of its own, beside the title and changes
+@include bp.desktop {
+    .header-container {
+        margin-top: var(--space-4);
+    }
+
+    .release-list {
+        max-inline-size: 760px;
+    }
+
+    .release {
+        display: grid;
+        grid-template-columns: 136px minmax(0, 1fr);
+        column-gap: 0;
+    }
+
+    .release-date {
+        grid-row: 1 / span 2;
+        padding-top: 0.2rem;
+    }
+
+    .release-title {
+        grid-column: 2;
+        margin-top: 0;
+        font-size: 1.0625rem;
+    }
+
+    .release-changes {
+        grid-column: 2;
+    }
+}

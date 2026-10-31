@@ -1,0 +1,22 @@
+<div class="updates-container">
+  <div class="header-container">
+    <app-back-link />
+    <h1 class="updates-header">Updates</h1>
+  </div>
+  <p class="updates-intro">What changed in each release, newest first.</p>
+  <ol class="release-list" role="list">
+    @for (releaseNote of releaseNotes; track releaseNote.title) {
+      <li class="release">
+        <time [attr.datetime]="releaseNote.date" class="release-date">{{
+          releaseNote.displayDate
+        }}</time>
+        <h2 class="release-title">{{ releaseNote.title }}</h2>
+        <ul class="release-changes">
+          @for (change of releaseNote.changes; track $index) {
+            <li>{{ change }}</li>
+          }
+        </ul>
+      </li>
+    }
+  </ol>
+</div>

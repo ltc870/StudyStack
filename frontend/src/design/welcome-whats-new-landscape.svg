@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="844" height="390" viewBox="0 0 844 390">
+  <!-- Phone in landscape (844 x 390, tablet width): below 30rem of height the two buttons sit side by side, so "What's new" still fits without scrolling -->
+  <rect width="844" height="390" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="844" height="60" fill="#FFFFFF"/>
+  <line x1="0" y1="60" x2="844" y2="60" stroke="#E3DFD5"/>
+  <text x="32" y="30.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="20" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="734" y="10" width="78" height="40" rx="8" fill="#6B675E"/>
+  <text x="773" y="30" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">Logout</text>
+  <text x="422.0" y="144" text-anchor="middle" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="48" font-weight="700" fill="#3E4C74">StudyStack</text>
+  <text x="422.0" y="202" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="18" fill="#6B675E" font-weight="300">Focused practice for the concepts that stick!</text>
+  <rect x="210.0" y="246" width="200" height="56" rx="8" fill="#3E4C74"/>
+  <g transform="translate(274.0,274)" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"><line x1="-6" y1="0" x2="6" y2="0"/><line x1="0" y1="-6" x2="0" y2="6"/></g>
+  <text x="294.0" y="274" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="700" fill="#FFFFFF">Manage</text>
+  <rect x="434.0" y="246" width="200" height="56" rx="8" fill="#5E8272"/>
+  <path d="M500.0,268 L511.0,274 L500.0,280 Z" fill="#FFFFFF"/>
+  <text x="520.0" y="274" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="700" fill="#FFFFFF">Study</text>
+  <text x="422.0" y="328" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">What's new</text>
+  <line x1="383.0" y1="337" x2="461.0" y2="337" stroke="#6B675E" stroke-width="1"/>
+</svg>

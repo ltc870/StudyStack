@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 768 1024">
+  <rect width="768" height="1024" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="768" height="60" fill="#FFFFFF"/>
+  <line x1="0" y1="60" x2="768" y2="60" stroke="#E3DFD5"/>
+  <text x="32" y="30.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="20" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="658" y="10.0" width="78" height="40" rx="8" fill="#6B675E"/>
+  <text x="697.0" y="30.0" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">Logout</text>
+  <text x="384.0" y="232" text-anchor="middle" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="48" font-weight="700" fill="#3E4C74">StudyStack</text>
+  <text x="384.0" y="290" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="18" fill="#6B675E" font-weight="300">Focused practice for the concepts that stick!</text>
+  <rect x="204" y="383" width="360" height="60" rx="8" fill="#3E4C74"/>
+  <g transform="translate(340.0,413)" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"><line x1="-6.5" y1="0" x2="6.5" y2="0"/><line x1="0" y1="-6.5" x2="0" y2="6.5"/></g>
+  <text x="354.0" y="413" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="700" fill="#FFFFFF">Manage</text>
+  <rect x="204" y="459" width="360" height="60" rx="8" fill="#5E8272"/>
+  <path d="M334.8,482.5 L346.5,489 L334.8,495.5 Z" fill="#FFFFFF"/>
+  <text x="354.0" y="489" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="700" fill="#FFFFFF">Study</text>
+  <!-- "What's new" link to /updates -->
+  <text x="384.0" y="547" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">What's new</text>
+  <line x1="345.0" y1="556.3" x2="423.0" y2="556.3" stroke="#6B675E" stroke-width="1"/>
+</svg>
