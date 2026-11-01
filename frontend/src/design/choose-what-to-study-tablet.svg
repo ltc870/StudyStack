@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 768 1024">
+  <rect width="768" height="1024" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="768" height="60" fill="#FFFFFF"/>
+  <line x1="0" y1="60" x2="768" y2="60" stroke="#E3DFD5"/>
+  <text x="32" y="30.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="20" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="658" y="10.0" width="78" height="40" rx="8" fill="#6B675E"/>
+  <text x="697.0" y="30.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#FFFFFF">Logout</text>
+  <path d="M46,94 L38,102 L46,110" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="61" y="102" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <text x="61" y="134" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">Study every card, or one substack.</text>
+  <rect x="32" y="166" width="704" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="48" y="204.4" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="19" font-weight="600" fill="#2A2924">All cards</text>
+  <text x="48" y="231.28" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">24 cards, every substack</text>
+  <path d="M712,208.0 L718,214.0 L712,220.0" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="32" y="278" width="704" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="48" y="316.4" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="19" font-weight="600" fill="#2A2924">Async/Await</text>
+  <text x="48" y="343.28" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">2 cards</text>
+  <path d="M712,320.0 L718,326.0 L712,332.0" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="32" y="390" width="704" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="48" y="428.4" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="19" font-weight="600" fill="#2A2924">LINQ</text>
+  <text x="48" y="455.28" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">1 card</text>
+  <path d="M712,432.0 L718,438.0 L712,444.0" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="32" y="502" width="704" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="48" y="540.4" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="19" font-weight="600" fill="#2A2924">Dependency Injection</text>
+  <text x="48" y="567.28" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">0 cards</text>
+  <path d="M712,544.0 L718,550.0 L712,556.0" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="384.0" y="1010" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" text-anchor="middle" font-style="italic" fill="#6B675E">Only for stacks with substacks; the others go straight to Study. A substack with 0 cards opens Study's empty state.</text>
+</svg>

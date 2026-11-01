@@ -6,6 +6,6 @@ public class User
     public string Username { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
 
-    public List<Stack> Stacks { get; set; } = new();
-    public List<RefreshToken> RefreshTokens { get; set; } = new();
+    public List<Stack> Stacks { get; set; } = [];
+    public List<RefreshToken> RefreshTokens { get; set; } = [];
 }

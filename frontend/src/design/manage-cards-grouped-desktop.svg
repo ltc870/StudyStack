@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <rect width="1280" height="800" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="1280" height="64" fill="#FFFFFF"/>
+  <line x1="0" y1="64" x2="1280" y2="64" stroke="#E3DFD5"/>
+  <text x="48" y="32.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="18" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="1154" y="12.0" width="78" height="40" rx="8" fill="#6B675E"/>
+  <text x="1193.0" y="32.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#FFFFFF">Logout</text>
+  <path d="M56,100 L48,108 L56,116" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="108" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <text x="362" y="108" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">(24 cards)</text>
+  <rect x="572" y="88" width="300" height="40" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <circle cx="592" cy="108.0" r="5" fill="none" stroke="#6B675E" stroke-width="1.5"/>
+  <line x1="596" y1="112.0" x2="601" y2="117.0" stroke="#6B675E" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="608" y="108.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">Search cards...</text>
+  <rect x="888.5" y="88.5" width="147" height="39" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <path d="M904,103.0 L909,103.0 L911,105.0 L918,105.0 L918,114.0 L904,114.0 Z" fill="none" stroke="#2A2924" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="926" y="108.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="500" fill="#2A2924">Substacks</text>
+  <rect x="1052" y="88" width="180" height="40" rx="8" fill="#3E4C74"/>
+  <g transform="translate(1072,108.0)" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"><line x1="-5" y1="0" x2="5" y2="0"/><line x1="0" y1="-5" x2="0" y2="5"/></g>
+  <text x="1090" y="108.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">New Card</text>
+  <text x="48" y="172" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" fill="#2A2924">Async/Await</text>
+  <text x="1232" y="172" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" text-anchor="end" fill="#6B675E">2 cards</text>
+  <rect x="48" y="192" width="1184" height="76" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="72" y="220" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" fill="#2A2924">What does the async keyword actually do in C#?</text>
+  <text x="72" y="244" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">Marks a method as asynchronous, allowing awaited calls to yield control...</text>
+  <g transform="translate(1168,230.0) rotate(45) scale(1)" stroke-linecap="round" stroke-linejoin="round"><rect x="-2" y="-8" width="4" height="12" rx="1" fill="none" stroke="#6B675E" stroke-width="1.5"/><path d="M-2,4 L0,9 L2,4 Z" fill="#6B675E"/><line x1="-2" y1="-3" x2="2" y2="-3" stroke="#6B675E" stroke-width="1.5"/></g>
+  <g transform="translate(1204,230.0) scale(1)"><rect x="-7" y="-6" width="14" height="3" rx="1" fill="#B15C3E"/><rect x="-5" y="-2" width="10" height="14" rx="2" fill="none" stroke="#B15C3E" stroke-width="1.5"/><line x1="-2" y1="1" x2="-2" y2="9" stroke="#B15C3E" stroke-width="1.5"/><line x1="2" y1="1" x2="2" y2="9" stroke="#B15C3E" stroke-width="1.5"/></g>
+  <rect x="48" y="280" width="1184" height="76" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="72" y="308" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" fill="#2A2924">When should you use ConfigureAwait(false)?</text>
+  <text x="72" y="332" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">In library code, so continuations do not capture the caller's context...</text>
+  <g transform="translate(1168,318.0) rotate(45) scale(1)" stroke-linecap="round" stroke-linejoin="round"><rect x="-2" y="-8" width="4" height="12" rx="1" fill="none" stroke="#6B675E" stroke-width="1.5"/><path d="M-2,4 L0,9 L2,4 Z" fill="#6B675E"/><line x1="-2" y1="-3" x2="2" y2="-3" stroke="#6B675E" stroke-width="1.5"/></g>
+  <g transform="translate(1204,318.0) scale(1)"><rect x="-7" y="-6" width="14" height="3" rx="1" fill="#B15C3E"/><rect x="-5" y="-2" width="10" height="14" rx="2" fill="none" stroke="#B15C3E" stroke-width="1.5"/><line x1="-2" y1="1" x2="-2" y2="9" stroke="#B15C3E" stroke-width="1.5"/><line x1="2" y1="1" x2="2" y2="9" stroke="#B15C3E" stroke-width="1.5"/></g>
+  <text x="48" y="400" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" fill="#2A2924">LINQ</text>
+  <text x="1232" y="400" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" text-anchor="end" fill="#6B675E">1 card</text>
+  <rect x="48" y="420" width="1184" height="76" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="72" y="448" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" fill="#2A2924">What is the difference between IEnumerable and IQueryable?</text>
+  <text x="72" y="472" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">IQueryable defers execution and can translate expressions into SQL...</text>
+  <g transform="translate(1168,458.0) rotate(45) scale(1)" stroke-linecap="round" stroke-linejoin="round"><rect x="-2" y="-8" width="4" height="12" rx="1" fill="none" stroke="#6B675E" stroke-width="1.5"/><path d="M-2,4 L0,9 L2,4 Z" fill="#6B675E"/><line x1="-2" y1="-3" x2="2" y2="-3" stroke="#6B675E" stroke-width="1.5"/></g>
+  <g transform="translate(1204,458.0) scale(1)"><rect x="-7" y="-6" width="14" height="3" rx="1" fill="#B15C3E"/><rect x="-5" y="-2" width="10" height="14" rx="2" fill="none" stroke="#B15C3E" stroke-width="1.5"/><line x1="-2" y1="1" x2="-2" y2="9" stroke="#B15C3E" stroke-width="1.5"/><line x1="2" y1="1" x2="2" y2="9" stroke="#B15C3E" stroke-width="1.5"/></g>
+  <text x="48" y="540" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" fill="#2A2924">Not in a substack</text>
+  <text x="1232" y="540" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" text-anchor="end" fill="#6B675E">21 cards</text>
+  <rect x="48" y="560" width="1184" height="76" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="72" y="588" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" fill="#2A2924">What is dependency injection and why does ASP.NET Core use it by default?</text>
+  <text x="72" y="612" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">A design pattern where dependencies are supplied by an external source...</text>
+  <g transform="translate(1168,598.0) rotate(45) scale(1)" stroke-linecap="round" stroke-linejoin="round"><rect x="-2" y="-8" width="4" height="12" rx="1" fill="none" stroke="#6B675E" stroke-width="1.5"/><path d="M-2,4 L0,9 L2,4 Z" fill="#6B675E"/><line x1="-2" y1="-3" x2="2" y2="-3" stroke="#6B675E" stroke-width="1.5"/></g>
+  <g transform="translate(1204,598.0) scale(1)"><rect x="-7" y="-6" width="14" height="3" rx="1" fill="#B15C3E"/><rect x="-5" y="-2" width="10" height="14" rx="2" fill="none" stroke="#B15C3E" stroke-width="1.5"/><line x1="-2" y1="1" x2="-2" y2="9" stroke="#B15C3E" stroke-width="1.5"/><line x1="2" y1="1" x2="2" y2="9" stroke="#B15C3E" stroke-width="1.5"/></g>
+  <rect x="48" y="648" width="1184" height="76" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="72" y="676" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" fill="#2A2924">Explain boxing and unboxing in C#.</text>
+  <text x="72" y="700" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">Boxing converts a value type to a reference type object...</text>
+  <g transform="translate(1168,686.0) rotate(45) scale(1)" stroke-linecap="round" stroke-linejoin="round"><rect x="-2" y="-8" width="4" height="12" rx="1" fill="none" stroke="#6B675E" stroke-width="1.5"/><path d="M-2,4 L0,9 L2,4 Z" fill="#6B675E"/><line x1="-2" y1="-3" x2="2" y2="-3" stroke="#6B675E" stroke-width="1.5"/></g>
+  <g transform="translate(1204,686.0) scale(1)"><rect x="-7" y="-6" width="14" height="3" rx="1" fill="#B15C3E"/><rect x="-5" y="-2" width="10" height="14" rx="2" fill="none" stroke="#B15C3E" stroke-width="1.5"/><line x1="-2" y1="1" x2="-2" y2="9" stroke="#B15C3E" stroke-width="1.5"/><line x1="2" y1="1" x2="2" y2="9" stroke="#B15C3E" stroke-width="1.5"/></g>
+  <text x="640.0" y="786" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" text-anchor="middle" font-style="italic" fill="#6B675E">Grouped by substack in creation order, then Not in a substack. A stack with no substacks shows no headings.</text>
+</svg>

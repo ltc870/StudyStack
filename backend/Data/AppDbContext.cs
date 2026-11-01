@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<Stack> Stacks => Set<Stack>();
     public DbSet<Card> Cards => Set<Card>();
+    public DbSet<Substack> Substacks => Set<Substack>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,12 +28,23 @@ public class AppDbContext : DbContext
             .HasForeignKey(stack => stack.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        modelBuilder.Entity<Substack>()
+            .HasOne(substack => substack.Stack)
+            .WithMany(stack => stack.Substacks)
+            .HasForeignKey(substack => substack.StackId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         modelBuilder.Entity<Card>()
             .HasOne(card => card.Stack)
             .WithMany(stack => stack.Cards)
             .HasForeignKey(card => card.StackId)
             .OnDelete(DeleteBehavior.Cascade);
         
+        modelBuilder.Entity<Card>()
+            .HasOne(card => card.Substack)
+            .WithMany(substack => substack.Cards)
+            .HasForeignKey(card => card.SubstackId)
+            .OnDelete(DeleteBehavior.SetNull);
         modelBuilder.Entity<RefreshToken>()
             .HasOne(token => token.User)
             .WithMany(user => user.RefreshTokens)
