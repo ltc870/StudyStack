@@ -73,6 +73,27 @@ export class ManageStacks {
   });
 
   // Helper functions
+  countText(stack: Stack): string {
+    const cards = `${stack.cardCount} ${stack.cardCount === 1 ? 'card' : 'cards'}`;
+
+    if (stack.substackCount === 0) {
+      return cards;
+    }
+
+    const substacks = `${stack.substackCount} ${stack.substackCount === 1 ? 'substack' : 'substacks'}`;
+    return `${cards}, ${substacks}`;
+  }
+
+  cascadeText(stack: Stack): string {
+    if (stack.substackCount === 0) {
+      return `and all ${stack.cardCount} of its cards`;
+    }
+
+    return stack.substackCount === 1
+      ? `and all ${stack.cardCount} of its cards and ${stack.substackCount} substack`
+      : `and all ${stack.cardCount} of its cards and ${stack.substackCount} substacks`;
+  }
+
   updateText(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchQuery.set(input.value);

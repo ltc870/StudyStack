@@ -4,6 +4,7 @@ export interface Card {
   question: string;
   answer: string;
   isMonospace: boolean;
+  substackId: number | null;
 }
 
 export interface CardCreateRequest {
@@ -11,10 +12,16 @@ export interface CardCreateRequest {
   question: string;
   answer: string;
   isMonospace: boolean;
+  substackId: number | null;
 }
 
 export interface CardUpdateRequest {
   question?: string;
   answer?: string;
   isMonospace?: boolean;
+}
+
+export interface MoveCardsRequest {
+  cardIds: number[];
+  substackId: number | null;
 }

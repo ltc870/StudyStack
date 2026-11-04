@@ -1,0 +1,185 @@
+// NEW FILE: Manage Substacks' own styles. The header, toolbar, search box,
+// New Substack button and both empty states are shared with Manage Stacks and
+// Manage Cards in src/scss/_list-pages.scss; the rows follow Manage Stacks'
+// cards (manage-stacks.scss), without the click-through.
+@use '../../../scss/breakpoints' as bp;
+
+.manage-substacks-container {
+  display: flex;
+  flex-direction: column;
+}
+
+// The chevron lines up with the title, not with the stack name above it
+.manage-substacks-container .header-container {
+  align-items: flex-end;
+}
+
+.manage-substacks-heading {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+// The stack's name above the title, in the all-caps label style
+.manage-substacks-kicker {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-size-label);
+  line-height: var(--line-height-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.manage-substacks-header {
+  margin: 0 0 0 -0.25em;
+  font-size: var(--font-size-h1);
+  font-family: var(--font-family-heading);
+}
+
+.search-substacks-container {
+  flex: 1;
+  position: relative;
+}
+
+.search-substacks-input {
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  font-size: var(--font-size-body);
+}
+
+.substacks-container {
+  margin-top: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+// Rows aren't clickable: renaming and deleting go through the two buttons
+.substack-card-container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: repeat(2, auto);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-default);
+  padding: var(--space-2);
+}
+
+.substack-card-title {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  margin-top: 0;
+  margin-bottom: var(--space-1);
+  overflow-wrap: anywhere;
+}
+
+.substack-card-count {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  color: var(--color-text-secondary);
+}
+
+.edit-delete-container {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  align-self: center;
+  display: flex;
+}
+
+.edit-delete-buttons {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+.edit-delete-buttons:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.edit-substack-button {
+  color: var(--color-text-secondary);
+}
+
+.delete-substack-button {
+  color: var(--color-warning);
+}
+
+// Room for the floating "+" under the last row on mobile and tablet
+.substacks-container,
+.empty-state {
+  padding-bottom: calc(56px + var(--space-4) + var(--safe-bottom));
+}
+
+// Tablet: the mobile layout, scaled up
+@include bp.tablet {
+  .manage-substacks-kicker {
+    margin-top: var(--space-3);
+    font-size: 0.75rem;
+  }
+
+  .search-substacks-input {
+    padding-block: 0.875rem;
+  }
+
+  .substacks-container {
+    margin-top: var(--space-3);
+  }
+
+  .substack-card-container {
+    padding: var(--space-3);
+  }
+
+  .substack-card-title {
+    font-size: 1.25rem;
+  }
+
+  .substack-card-count {
+    font-size: 0.9375rem;
+  }
+}
+
+// Desktop: like Manage Stacks, the heading and the toolbar (300px search,
+// 24px gap, 180px New Substack button) share one row, and the substacks sit
+// in a three-column grid below
+@include bp.desktop {
+  .manage-substacks-container {
+    display: grid;
+    grid-template-columns: 1fr 504px;
+    align-items: end;
+  }
+
+  .search-substacks-input {
+    padding-block: 0.6875rem;
+    font-size: var(--font-size-meta);
+  }
+
+  .substacks-container {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    padding-bottom: 0;
+  }
+
+  .empty-state {
+    padding-bottom: 0;
+  }
+
+  .substack-card-container {
+    min-block-size: 96px;
+    padding: var(--space-2) var(--space-3);
+    align-content: center;
+  }
+
+  .substack-card-title {
+    font-size: 1.125rem;
+  }
+
+  .substack-card-count {
+    font-size: var(--font-size-meta);
+  }
+}

@@ -55,6 +55,7 @@ export class CardEditorModal {
         question: this.question(),
         answer: this.answer(),
         isMonospace: this.isMonospace(),
+        substackId: null,
       });
     }
   }

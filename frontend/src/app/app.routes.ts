@@ -57,6 +57,14 @@ export const routes: Routes = [
         data: { backTo: '/stacks/study' },
         title: 'Study | StudyStack',
       },
+      {
+        path: 'stacks/:stackId/substacks',
+        loadComponent: () =>
+          import('./pages/manage-substacks/manage-substacks').then(
+            (module) => module.ManageSubstacks,
+          ),
+        title: 'Manage Substacks | StudyStack',
+      },
     ],
   },
   {

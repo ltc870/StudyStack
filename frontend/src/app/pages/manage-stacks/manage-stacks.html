@@ -45,9 +45,7 @@
       @for (stack of filteredStacks(); track stack.id) {
         <div class="stack-card-container" (click)="onRowClick(stack)">
           <h3 class="stack-card-title">{{ stack.name }}</h3>
-          <span class="stack-card-count"
-            >{{ stack.cardCount }} {{ stack.cardCount === 1 ? 'card' : 'cards' }}</span
-          >
+          <span class="stack-card-count">{{ countText(stack) }}</span>
 
           @if (mode() === 'manage') {
             <div class="edit-delete-container">
@@ -75,7 +73,7 @@
   @if (editorState()) {
     <app-stack-editor-modal
       [mode]="editorState()!.mode"
-      [stack]="editorState()!.stack"
+      [item]="editorState()!.stack"
       (save)="onEditorSave($event)"
       (cancel)="editorState.set(null)"
     />
@@ -85,7 +83,7 @@
     <app-delete-confirmation-modal
       title="Delete stack?"
       [itemLabel]="deleteTarget()!.name"
-      [cascadeWarning]="'and all ' + deleteTarget()!.cardCount + ' of its cards'"
+      [cascadeWarning]="cascadeText(deleteTarget()!)"
       (confirmed)="onDeleteConfirmed()"
       (cancelled)="deleteTarget.set(null)"
     />

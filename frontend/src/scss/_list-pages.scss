@@ -1,17 +1,20 @@
-// NEW FILE: frontend/src/scss/_list-pages.scss
 @use 'breakpoints' as bp;
 
-// Shared by Manage Stacks and Manage Cards, the two list screens, which use the
-// same header, toolbar, search box, New button and empty states. Each page's
-// own stylesheet keeps only what differs between them.
+// REMOVED: the old "NEW FILE: frontend/src/scss/_list-pages.scss" first line
+// CHANGED: the comment below now covers Manage Substacks too
 //
-// Global (like _markdown.scss), so it costs neither page's component style
-// budget. The generic class names (.empty-state, .header-container, ...) are
-// scoped under the two pages' containers, so they never reach Study, which
-// uses some of the same names with its own styles. The rest have page-specific
-// names (.new-stack-button / .new-card-button) and are listed in pairs.
+// Shared by the list screens, Manage Stacks, Manage Cards and Manage
+// Substacks, which use the same header, toolbar, search box, New button and
+// empty states. Each page's own stylesheet keeps only what differs.
+//
+// Global (like _markdown.scss), so it costs no page's component style budget.
+// The generic class names (.empty-state, .header-container, ...) are scoped
+// under the pages' containers, so they never reach Study, which uses some of
+// the same names with its own styles. The rest have page-specific names
+// (.new-stack-button, .new-card-button, .new-substack-button) and are listed
+// together.
 
-$list-pages: '.manage-stacks-container, .manage-cards-container';
+$list-pages: '.manage-stacks-container, .manage-cards-container, .manage-substacks-container'; // CHANGED: Manage Substacks added
 
 :is(#{$list-pages}) {
   .header-container {
@@ -105,7 +108,8 @@ $list-pages: '.manage-stacks-container, .manage-cards-container';
 // Search box: each page keeps its own padding and font size (a page's own
 // rules outrank these, so sizes that change at a breakpoint stay in the page)
 .search-stacks-input,
-.search-cards-input {
+.search-cards-input,
+.search-substacks-input { // CHANGED: .search-substacks-input added
   width: 100%;
   border-radius: var(--radius-default);
   border: 1px solid var(--color-border);
@@ -118,25 +122,29 @@ $list-pages: '.manage-stacks-container, .manage-cards-container';
 }
 
 .search-stacks-input::placeholder,
-.search-cards-input::placeholder {
+.search-cards-input::placeholder,
+.search-substacks-input::placeholder { // CHANGED: .search-substacks-input added
   color: var(--color-text-secondary);
 }
 
 .search-stacks-input:hover,
-.search-cards-input:hover {
+.search-cards-input:hover,
+.search-substacks-input:hover { // CHANGED: .search-substacks-input added
   border-color: var(--color-focus-ring);
 }
 
 .search-stacks-input:focus-visible,
-.search-cards-input:focus-visible {
+.search-cards-input:focus-visible,
+.search-substacks-input:focus-visible { // CHANGED: .search-substacks-input added
   border-color: var(--color-focus-ring);
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
-// New Stack / New Card: a floating circular button on mobile and tablet
+// New Stack / New Card / New Substack: a floating circular button on mobile and tablet // CHANGED: New Substack added
 .new-stack-button,
-.new-card-button {
+.new-card-button,
+.new-substack-button { // CHANGED: .new-substack-button added
   position: fixed;
   right: calc(var(--space-3) + var(--safe-right)); // CHANGED: clear of the notch (was var(--space-3))
   bottom: calc(var(--space-3) + var(--safe-bottom)); // CHANGED: clear of the home indicator (was var(--space-3))
@@ -153,24 +161,28 @@ $list-pages: '.manage-stacks-container, .manage-cards-container';
 }
 
 .new-stack-button:hover,
-.new-card-button:hover {
+.new-card-button:hover,
+.new-substack-button:hover { // CHANGED: .new-substack-button added
   background-color: var(--color-primary-hover);
 }
 
 .new-stack-button:focus-visible,
-.new-card-button:focus-visible {
+.new-card-button:focus-visible,
+.new-substack-button:focus-visible { // CHANGED: .new-substack-button added
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
 .new-stack-icon,
-.new-card-icon {
+.new-card-icon,
+.new-substack-icon { // CHANGED: .new-substack-icon added
   font-size: 1.5rem;
   color: var(--color-surface);
 }
 
 .new-stack-text,
-.new-card-text {
+.new-card-text,
+.new-substack-text { // CHANGED: .new-substack-text added
   display: none;
 }
 
@@ -235,7 +247,8 @@ $list-pages: '.manage-stacks-container, .manage-cards-container';
 
   // The floating button becomes an inline "New ..." button in the toolbar
   .new-stack-button,
-  .new-card-button {
+  .new-card-button,
+  .new-substack-button { // CHANGED: .new-substack-button added
     position: static;
     height: auto;
     width: 180px;
@@ -247,17 +260,20 @@ $list-pages: '.manage-stacks-container, .manage-cards-container';
 
   // With nothing in the list, the empty state's own button replaces this one
   .new-stack-button--empty,
-  .new-card-button--empty {
+  .new-card-button--empty,
+  .new-substack-button--empty { // CHANGED: .new-substack-button--empty added
     display: none;
   }
 
   .new-stack-icon,
-  .new-card-icon {
+  .new-card-icon,
+  .new-substack-icon { // CHANGED: .new-substack-icon added
     font-size: 1.1rem;
   }
 
   .new-stack-text,
-  .new-card-text {
+  .new-card-text,
+  .new-substack-text { // CHANGED: .new-substack-text added
     display: inline;
     color: var(--color-surface);
     font-family: var(--font-family-body);
