@@ -4,6 +4,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { remixCloseFill } from '@ng-icons/remixicon';
 import { FormattingHelp } from '../formatting-help/formatting-help';
 import { phosphorCaretDown } from '@ng-icons/phosphor-icons/regular';
+import { Substack } from '../../models/substack';
 
 @Component({
   imports: [NgIcon, FormattingHelp],
@@ -16,12 +17,16 @@ export class CardEditorModal {
   // Signals
   mode = input<'create' | 'edit'>('create');
   card = input<Card | null>(null);
+  substacks = input<Substack[]>([]);
+  save = output<Omit<CardCreateRequest, 'stackId'>>();
+  cancel = output<void>();
+
+  isFormattingHelpOpen = signal(false);
+
   question = linkedSignal(() => this.card()?.question ?? '');
   answer = linkedSignal(() => this.card()?.answer ?? '');
   isMonospace = linkedSignal(() => this.card()?.isMonospace ?? false);
-  save = output<Omit<CardCreateRequest, 'stackId'>>();
-  cancel = output<void>();
-  isFormattingHelpOpen = signal(false);
+  substackId = linkedSignal(() => this.card()?.substackId ?? null);
 
   // Computed Signals
   canSave = computed(() => {
@@ -30,6 +35,11 @@ export class CardEditorModal {
   title = computed(() => (this.mode() === 'create' ? 'Add Card' : 'Edit Card'));
 
   // Helper Functions
+  setSubstack(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    this.substackId.set(select.value === '' ? null : Number(select.value));
+  }
+
   setQuestion(event: Event) {
     const input = event.target as HTMLTextAreaElement;
     this.question.set(input.value);
@@ -55,7 +65,7 @@ export class CardEditorModal {
         question: this.question(),
         answer: this.answer(),
         isMonospace: this.isMonospace(),
-        substackId: null,
+        substackId: this.substackId(),
       });
     }
   }

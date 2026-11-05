@@ -24,6 +24,17 @@
       (input)="setAnswer($event)"
       [class.card-editor-textarea--mono]="isMonospace()"
     ></textarea>
+    @if (substacks().length > 0) {
+      <label for="card-substack" class="card-editor-label">SUBSTACK</label>
+      <select id="card-substack" class="card-substack-select" (change)="setSubstack($event)">
+        <option value="" [selected]="substackId() === null">Not in a substack</option>
+        @for (substack of substacks(); track substack.id) {
+          <option [value]="substack.id" [selected]="substack.id === substackId()">
+            {{ substack.name }}
+          </option>
+        }
+      </select>
+    }
     <div class="card-editor-options">
       <label class="mono-toggle">
         <input
