@@ -1,0 +1,33 @@
+<div class="choose-container">
+  <div class="header-container">
+    <app-back-link />
+    <div class="choose-heading">
+      @if (stackResource.hasValue()) {
+        <h2 class="choose-header">{{ stackResource.value()?.name }}</h2>
+      }
+      <p class="choose-subtitle">Study every card, or one substack.</p>
+    </div>
+  </div>
+  <ul class="choose-list">
+    @if (stackResource.hasValue()) {
+      <li>
+        <a [routerLink]="['/study', stackId()]" class="choose-tile">
+          <span class="choose-tile-name">All cards</span>
+          <span class="choose-tile-count"
+            >{{ cardCountLabel(stackResource.value().cardCount) }}, every substack</span
+          >
+          <ng-icon class="choose-tile-icon" name="phosphorCaretRight" aria-hidden="true" />
+        </a>
+      </li>
+      @for (substack of substackResource.value(); track substack.id) {
+        <li>
+          <a class="choose-tile" [routerLink]="['/study', stackId(), 'substacks', substack.id]">
+            <span class="choose-tile-name">{{ substack.name }}</span>
+            <span class="choose-tile-count">{{ cardCountLabel(substack.cardCount) }}</span>
+            <ng-icon class="choose-tile-icon" name="phosphorCaretRight" aria-hidden="true" />
+          </a>
+        </li>
+      }
+    }
+  </ul>
+</div>

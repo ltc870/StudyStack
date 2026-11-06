@@ -65,6 +65,15 @@ export const routes: Routes = [
           ),
         title: 'Manage Substacks | StudyStack',
       },
+      {
+        path: 'stacks/study/:stackId',
+        loadComponent: () =>
+          import('./pages/choose-what-to-study/choose-what-to-study').then(
+            (module) => module.ChooseWhatToStudy,
+          ),
+        data: { backTo: '/stacks/study' },
+        title: 'Choose What to Study | StudyStack',
+      },
     ],
   },
   {

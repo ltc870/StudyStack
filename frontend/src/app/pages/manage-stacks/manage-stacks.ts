@@ -103,7 +103,11 @@ export class ManageStacks {
     if (this.mode() === 'manage') {
       this.router.navigateByUrl(`/stacks/${stack.id}/cards`);
     } else {
-      this.router.navigateByUrl(`/study/${stack.id}`);
+      if (stack.substackCount > 0) {
+        this.router.navigateByUrl(`/stacks/study/${stack.id}`);
+      } else {
+        this.router.navigateByUrl(`/study/${stack.id}`);
+      }
     }
   }
 

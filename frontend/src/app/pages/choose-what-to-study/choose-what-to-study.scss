@@ -1,0 +1,166 @@
+// NEW FILE: Choose What to Study's own styles (mockups choose-what-to-study-*).
+// Header: back chevron on the title line, the stack name as the title and a
+// one-line subtitle under it. Tiles: "All cards" first, then one per substack,
+// each a whole-tile link with a chevron on the right. One column on mobile
+// and tablet, three columns on desktop, like Manage Stacks' cards.
+@use '../../../scss/breakpoints' as bp;
+
+.choose-container {
+  display: flex;
+  flex-direction: column;
+}
+
+// Header: same spacing as Study's
+.header-container {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  margin-top: var(--space-2);
+}
+
+// The chevron sits on the title's line, not centered on title plus subtitle:
+// its box is exactly one title line tall
+app-back-link {
+  flex: none;
+  display: flex;
+  align-items: center;
+  block-size: calc(var(--font-size-h1) * var(--line-height-h1));
+}
+
+.choose-heading {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  // The same pull toward the chevron that the other pages give their title
+  // (-0.25em of the title's size), moved here so the subtitle lines up with it
+  margin-left: calc(var(--font-size-h1) * -0.25);
+}
+
+.choose-header {
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  color: var(--color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.choose-subtitle {
+  margin: var(--space-1) 0 0;
+  font-size: 0.8125rem;
+  line-height: var(--line-height-meta);
+  color: var(--color-text-secondary);
+}
+
+// The tiles: a plain list (no bullets or indent), one column
+.choose-list {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0 0 var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+// The whole tile is the link: name on the first row, count on the second,
+// chevron centered on the right across both
+.choose-tile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: var(--space-2);
+  row-gap: 0.25rem;
+  min-block-size: 76px;
+  padding: var(--space-2);
+  box-sizing: border-box;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-default);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: border-color 120ms ease;
+}
+
+.choose-tile:hover {
+  border-color: var(--color-focus-ring);
+}
+
+.choose-tile:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.choose-tile-name {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.choose-tile-count {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}
+
+.choose-tile-icon {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+}
+
+// Tablet: the mobile layout, scaled up
+@include bp.tablet {
+  .header-container {
+    margin-top: var(--space-3);
+  }
+
+  .choose-subtitle {
+    font-size: 0.9375rem;
+  }
+
+  .choose-list {
+    gap: var(--space-2);
+  }
+
+  .choose-tile {
+    min-block-size: 96px;
+    padding: var(--space-2) var(--space-3) var(--space-2) var(--space-2);
+    border-radius: 10px;
+  }
+
+  .choose-tile-name {
+    font-size: 1.1875rem;
+  }
+
+  .choose-tile-count {
+    font-size: 0.9375rem;
+  }
+}
+
+// Desktop: three columns of tiles, 24px apart
+@include bp.desktop {
+  .choose-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    padding-bottom: 0;
+  }
+
+  .choose-tile {
+    padding: var(--space-2) var(--space-3) var(--space-2) 1.25rem;
+  }
+
+  .choose-tile-name {
+    font-size: 1.125rem;
+  }
+
+  .choose-tile-count {
+    font-size: var(--font-size-meta);
+  }
+}
