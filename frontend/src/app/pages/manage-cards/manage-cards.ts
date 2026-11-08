@@ -7,18 +7,22 @@ import { Card, CardCreateRequest } from '../../models/card';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { phosphorPlusBold, phosphorTrashBold } from '@ng-icons/phosphor-icons/bold';
 import { phosphorMagnifyingGlassLight } from '@ng-icons/phosphor-icons/light';
-import { phosphorPencilSimple } from '@ng-icons/phosphor-icons/regular';
+import { phosphorFolderSimple, phosphorPencilSimple } from '@ng-icons/phosphor-icons/regular';
 import { CardEditorModal } from '../../components/card-editor-modal/card-editor-modal';
 import { DeleteConfirmationModal } from '../../components/delete-confirmation-modal/delete-confirmation-modal';
+import { RouterLink } from '@angular/router';
+import { SubstacksService } from '../../services/substacks-service';
+import { of, switchMap } from 'rxjs';
 
 @Component({
-  imports: [BackLink, NgIcon, CardEditorModal, DeleteConfirmationModal],
+  imports: [BackLink, NgIcon, CardEditorModal, DeleteConfirmationModal, RouterLink],
   providers: [
     provideIcons({
       phosphorPlusBold,
       phosphorMagnifyingGlassLight,
       phosphorPencilSimple,
       phosphorTrashBold,
+      phosphorFolderSimple,
     }),
   ],
   selector: 'app-manage-cards',
@@ -28,13 +32,34 @@ import { DeleteConfirmationModal } from '../../components/delete-confirmation-mo
 export class ManageCards {
   // Dependency Injection
   stacksService = inject(StacksService);
+  substacksService = inject(SubstacksService);
   cardsService = inject(CardsService);
 
-  // Signals
+  // Inputs
   stackId = input.required<number, unknown>({ transform: numberAttribute });
+
+  // State
   searchQuery = signal<string>('');
   editorState = signal<{ mode: 'create' | 'edit'; card: Card | null } | null>(null);
   deleteTarget = signal<Card | null>(null);
+
+  // HTTP
+  stackResource = rxResource({
+    params: () => this.stackId(),
+    stream: ({ params }) => this.stacksService.getStackById(params),
+  });
+
+  substackResource = rxResource({
+    defaultValue: [],
+    params: () => this.stackId(),
+    stream: ({ params }) => this.substacksService.getSubstacksByStack(params),
+  });
+
+  cardResource = rxResource({
+    defaultValue: [],
+    params: () => this.stackId(),
+    stream: ({ params }) => this.cardsService.getAllCardsByStack(params),
+  });
 
   // Computed Signals
   cardCount = computed(() => {
@@ -57,6 +82,35 @@ export class ManageCards {
     );
   });
 
+  cardGroups = computed<{ substackId: number | null; name: string; cards: Card[] }[]>(() => {
+    const substacks = this.substackResource.hasValue() ? this.substackResource.value() : [];
+    const cards = this.filteredCards();
+    const substackIds = new Set(substacks.map((substack) => substack.id));
+
+    const substackGroups = substacks.map((substack) => ({
+      substackId: substack.id,
+      name: substack.name,
+      cards: cards.filter((card) => card.substackId === substack.id),
+    }));
+
+    const unsortedGroup = {
+      substackId: null,
+      name: 'Not in a substack',
+      cards: cards.filter((card) => card.substackId === null || !substackIds.has(card.substackId)),
+    };
+
+    const mergedGroups = [...substackGroups, unsortedGroup];
+
+    return mergedGroups.filter(
+      (group) =>
+        group.cards.length > 0 || (group.substackId !== null && this.searchQuery().trim() === ''),
+    );
+  });
+
+  hasSubstacks = computed(() => {
+    return this.substackResource.hasValue() && this.substackResource.value().length > 0;
+  });
+
   hasNoCards = computed(
     () =>
       !this.cardResource.isLoading() &&
@@ -72,24 +126,13 @@ export class ManageCards {
       this.filteredCards().length === 0,
   );
 
-  // HTTP
-  stackResource = rxResource({
-    params: () => this.stackId(),
-    stream: ({ params }) => this.stacksService.getStackById(params),
-  });
-
-  cardResource = rxResource({
-    defaultValue: [],
-    params: () => this.stackId(),
-    stream: ({ params }) => this.cardsService.getAllCardsByStack(params),
-  });
-
-  // Helper functions
+  // Search
   updateText(event: Event) {
     const input = event.target as HTMLInputElement;
     this.searchQuery.set(input.value);
   }
 
+  // Card editor
   onNewCardClick() {
     this.editorState.set({ mode: 'create', card: null });
   }
@@ -112,19 +155,31 @@ export class ManageCards {
       });
     } else {
       const card = this.editorState()!.card!;
-      this.cardsService.updateCardById(card.id, value).subscribe({
-        next: (response) => {
-          console.log('Update successful: ', response);
-          this.editorState.set(null);
-          this.cardResource.reload();
-        },
-        error: (err) => {
-          console.log('Failed to update Stack: ', err);
-        },
-      });
+      const substackChanged = value.substackId !== card.substackId;
+
+      this.cardsService
+        .updateCardById(card.id, value)
+        .pipe(
+          switchMap(() =>
+            substackChanged
+              ? this.cardsService.moveCards({ cardIds: [card.id], substackId: value.substackId })
+              : of(null),
+          ),
+        )
+        .subscribe({
+          next: (response) => {
+            console.log('Update successful: ', response);
+            this.editorState.set(null);
+            this.cardResource.reload();
+          },
+          error: (err) => {
+            console.log('Failed to update Stack: ', err);
+          },
+        });
     }
   }
 
+  // Delete
   onDeleteClick(card: Card) {
     this.deleteTarget.set(card);
   }

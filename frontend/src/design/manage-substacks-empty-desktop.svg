@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <rect width="1280" height="800" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="1280" height="64" fill="#FFFFFF"/>
+  <line x1="0" y1="64" x2="1280" y2="64" stroke="#E3DFD5"/>
+  <text x="48" y="32.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="18" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="1154" y="12.0" width="78" height="40" rx="8" fill="#6B675E"/>
+  <text x="1193.0" y="32.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#FFFFFF">Logout</text>
+  <text x="72" y="88" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" letter-spacing="1" fill="#6B675E">C# FUNDAMENTALS</text>
+  <path d="M56,108 L48,116 L56,124" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="116" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">Substacks</text>
+  <circle cx="640.0" cy="320" r="36" fill="#3E4C74"/>
+  <g transform="translate(640.0,320)" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"><line x1="-12" y1="0" x2="12" y2="0"/><line x1="0" y1="-12" x2="0" y2="12"/></g>
+  <text x="640.0" y="396" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="22" font-weight="600" text-anchor="middle" fill="#2A2924">No substacks yet</text>
+  <text x="640.0" y="426" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" text-anchor="middle" fill="#6B675E">Add a substack to group this stack's cards by topic.</text>
+  <rect x="550.0" y="458" width="180" height="48" rx="24" fill="#3E4C74"/>
+  <text x="640.0" y="482" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="600" text-anchor="middle" fill="#FFFFFF">Add a Substack!</text>
+  <text x="640.0" y="786" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" text-anchor="middle" font-style="italic" fill="#6B675E">No substacks yet: the search box is hidden; Add a Substack! opens the same editor as New Substack.</text>
+</svg>

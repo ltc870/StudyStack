@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 768 1024">
+  <rect width="768" height="1024" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="768" height="60" fill="#FFFFFF"/>
+  <line x1="0" y1="60" x2="768" y2="60" stroke="#E3DFD5"/>
+  <text x="32" y="30.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="20" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="658" y="10.0" width="78" height="40" rx="8" fill="#6B675E"/>
+  <text x="697.0" y="30.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#FFFFFF">Logout</text>
+  <path d="M46,94 L38,102 L46,110" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="61" y="102" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <circle cx="714" cy="102" r="22" fill="#F6F4EF"/>
+  <g transform="translate(714,102)"><rect x="-10.0" y="-9.0" width="20" height="18.0" rx="2" fill="none" stroke="#2A2924" stroke-width="1.5"/><line x1="-3.0" y1="-9.0" x2="-3.0" y2="9.0" stroke="#2A2924" stroke-width="1.5"/></g>
+  <text x="384.0" y="144" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" text-anchor="middle" fill="#6B675E">Card 2 of 24</text>
+  <rect x="32.5" y="170" width="703" height="600" rx="14" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="64.5" y="202" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" letter-spacing="1" fill="#6B675E">QUESTION</text>
+  <!-- NEW: the card's substack, whole-stack sessions only -->
+  <text x="703.5" y="202" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" text-anchor="end" letter-spacing="1" fill="#4A665A">ASYNC/AWAIT</text>
+  <text x="64.5" y="246" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="17" fill="#2A2924">When should you use ConfigureAwait(false)?</text>
+  <text x="64.5" y="744" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">Tap Flip to reveal the answer</text>
+  <path d="M61.5,807 L52.5,816 L61.5,825" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="284.0" y="788.0" width="200" height="56" rx="28.0" fill="#3E4C74"/>
+  <text x="384.0" y="816" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" text-anchor="middle" fill="#FFFFFF">Flip</text>
+  <path d="M706.5,807 L715.5,816 L706.5,825" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="384.0" y="1010" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" text-anchor="middle" font-style="italic" fill="#6B675E">Whole stack: the card shows its substack on the right of its label. Unsorted cards show none.</text>
+</svg>

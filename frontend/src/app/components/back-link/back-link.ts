@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input, computed } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -15,14 +15,14 @@ export class BackLink {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly routeData = toSignal(this.route.data);
+  backTo = input<string>();
 
-  get backTo(): string | undefined {
-    return this.routeData()?.['backTo'];
-  }
+  destination = computed<string | undefined>(() => this.backTo() ?? this.routeData()?.['backTo']);
 
   navigateBack(): void {
-    if (this.backTo) {
-      this.router.navigateByUrl(this.backTo);
+    const destination = this.destination();
+    if (destination) {
+      this.router.navigateByUrl(destination);
     }
   }
 }

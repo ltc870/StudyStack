@@ -4,12 +4,12 @@
     <button aria-label="Close" class="modal-close-button" (click)="cancel.emit()">
       <ng-icon name="remixCloseFill" class="close-icon" />
     </button>
-    <label for="stack-name-input" class="stack-name-input-label">STACK NAME</label>
+    <label for="stack-name-input" class="stack-name-input-label">{{ label() }}</label>
     <input
       type="text"
       id="stack-name-input"
       class="stack-name-input"
-      placeholder="e.g. C# Fundamentals"
+      [placeholder]="placeholder()"
       [value]="name()"
       (input)="setName($event)"
       (keydown.enter)="onEnter()"

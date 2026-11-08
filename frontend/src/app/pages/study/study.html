@@ -1,9 +1,18 @@
 <div class="study-container">
   <div class="header-container">
-    <app-back-link></app-back-link>
-    @if (stackResource.hasValue()) {
-      <h2 class="study-header">{{ stackResource.value()?.name }}</h2>
-    }
+    <app-back-link [backTo]="backAddress()"></app-back-link>
+    <div class="study-heading">
+      @if (stackResource.hasValue()) {
+        @if (isSingleSubstack()) {
+          @if (currentSubstack(); as substack) {
+            <p class="study-kicker">{{ stackResource.value().name }}</p>
+            <h2 class="study-header">{{ substack.name }}</h2>
+          }
+        } @else {
+          <h2 class="study-header">{{ stackResource.value().name }}</h2>
+        }
+      }
+    </div>
     @if (currentCard()) {
       <button
         #trayToggle
@@ -29,13 +38,20 @@
         <app-card-tray
           [cards]="cardResource.value()"
           [currentIndex]="currentIndex()"
+          [substacks]="traySubstacks()"
+          [title]="trayTitle()"
           (cardSelected)="goTo($event)"
           (closeRequested)="closeTray()"
         />
       }
       <div class="study-main">
         <div class="study-card" aria-live="polite">
-          <p class="study-card-label">{{ isFlipped() ? 'ANSWER' : 'QUESTION' }}</p>
+          <div class="study-card-label-row">
+            <p class="study-card-label">{{ isFlipped() ? 'ANSWER' : 'QUESTION' }}</p>
+            @if (currentCardTopic(); as topic) {
+              <p class="study-card-topic">{{ topic }}</p>
+            }
+          </div>
           <markdown
             class="study-card-text card-markdown"
             [class.study-card-text--mono]="card.isMonospace"
@@ -76,7 +92,7 @@
         <ng-icon name="phosphorCards" />
       </div>
       <h3 class="empty-state-title">No cards yet</h3>
-      <p class="empty-state-text">Add a few cards to start studying this stack.</p>
+      <p class="empty-state-text">{{ emptyStateText() }}</p>
       <a class="empty-state-button" [routerLink]="['/stacks', stackId(), 'cards']">Add Cards</a>
     </div>
   }

@@ -9,4 +9,6 @@ public class Card
     
     public int StackId { get; set; }
     public Stack Stack { get; set; } = null!;
+    public int? SubstackId { get; set; }
+    public Substack? Substack { get; set; }
 }

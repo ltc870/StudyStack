@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <rect width="1280" height="800" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="1280" height="64" fill="#FFFFFF"/>
+  <line x1="0" y1="64" x2="1280" y2="64" stroke="#E3DFD5"/>
+  <text x="48" y="32.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="18" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="1154" y="12.0" width="78" height="40" rx="8" fill="#6B675E"/>
+  <text x="1193.0" y="32.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#FFFFFF">Logout</text>
+  <!-- Manage Substacks behind the dialog -->
+  <text x="72" y="88" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" letter-spacing="1" fill="#6B675E">C# FUNDAMENTALS</text>
+  <path d="M56,108 L48,116 L56,124" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="116" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">Substacks</text>
+  <rect x="0" y="0" width="1280" height="800" rx="0" fill="#000000" opacity="0.45"/>
+  <rect x="360.0" y="282" width="560" height="236" rx="14" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <g transform="translate(406.0,328) scale(1.6)"><rect x="-7" y="-6" width="14" height="3" rx="1" fill="#B15C3E"/><rect x="-5" y="-2" width="10" height="14" rx="2" fill="none" stroke="#B15C3E" stroke-width="1.5"/><line x1="-2" y1="1" x2="-2" y2="9" stroke="#B15C3E" stroke-width="1.5"/><line x1="2" y1="1" x2="2" y2="9" stroke="#B15C3E" stroke-width="1.5"/></g>
+  <text x="434.0" y="332" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="20" font-weight="600" fill="#2A2924">Delete substack?</text>
+  <text x="392.0" y="376" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">This will delete "Async/Await". Its 2 cards stay in</text>
+  <text x="392.0" y="396" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">C# Fundamentals, under Not in a substack.</text>
+  <text x="392.0" y="416" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">This cannot be undone.</text>
+  <rect x="794.0" y="446" width="94" height="40" rx="8" fill="#B15C3E"/>
+  <text x="841.0" y="466" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="600" text-anchor="middle" fill="#FFFFFF">Delete</text>
+  <text x="774.0" y="466" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" text-anchor="end" fill="#6B675E">Cancel</text>
+  <text x="640.0" y="786" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" text-anchor="middle" font-style="italic" fill="#6B675E">Deleting a substack keeps its cards: they move to Not in a substack.</text>
+</svg>

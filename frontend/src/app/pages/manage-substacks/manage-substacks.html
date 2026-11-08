@@ -1,0 +1,92 @@
+<div class="manage-substacks-container">
+  <div class="header-container">
+    <app-back-link [backTo]="'/stacks/' + stackId() + '/cards'" />
+    <div class="manage-substacks-heading">
+      @if (stackResource.hasValue()) {
+        <p class="manage-substacks-kicker">{{ stackResource.value().name }}</p>
+      }
+      <h2 class="manage-substacks-header">Substacks</h2>
+    </div>
+  </div>
+  <div class="toolbar-container">
+    @if (!hasNoSubstacks()) {
+      <div class="search-substacks-container">
+        <input
+          aria-label="Search substacks"
+          (input)="updateText($event)"
+          type="text"
+          class="search-substacks-input"
+          id="search-substacks"
+          placeholder="Search substacks..."
+        />
+        <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
+      </div>
+    }
+    <button
+      (click)="onNewSubstackClick()"
+      class="new-substack-button"
+      [class.new-substack-button--empty]="hasNoSubstacks()"
+    >
+      <ng-icon name="phosphorPlusBold" class="new-substack-icon" />
+      <span class="new-substack-text">New Substack</span>
+    </button>
+  </div>
+  @if (hasNoSubstacks()) {
+    <div class="empty-state">
+      <div class="empty-state-icon">
+        <ng-icon name="phosphorPlusBold" />
+      </div>
+      <h3 class="empty-state-title">No substacks yet</h3>
+      <p class="empty-state-text">Add a substack to group this stack's cards by topic.</p>
+      <button (click)="onNewSubstackClick()" class="empty-state-button">Add a Substack!</button>
+    </div>
+  } @else if (noMatches()) {
+    <p class="no-matches-text">No substacks match &ldquo;{{ searchQuery().trim() }}&rdquo;.</p>
+  } @else {
+    <div class="substacks-container">
+      @for (substack of filteredSubstacks(); track substack.id) {
+        <div class="substack-card-container">
+          <h3 class="substack-card-title">{{ substack.name }}</h3>
+          <span class="substack-card-count"
+            >{{ substack.cardCount }} {{ substack.cardCount === 1 ? 'card' : 'cards' }}</span
+          >
+
+          <div class="edit-delete-container">
+            <button
+              (click)="onEditClick(substack)"
+              class="edit-substack-button edit-delete-buttons"
+              aria-label="Rename substack"
+            >
+              <ng-icon name="phosphorPencilSimple" class="edit-substack-icon" />
+            </button>
+            <button
+              (click)="onDeleteClick(substack)"
+              class="delete-substack-button edit-delete-buttons"
+              aria-label="Delete substack"
+            >
+              <ng-icon name="phosphorTrashBold" class="delete-substack-icon" />
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+  @if (editorState()) {
+    <app-stack-editor-modal
+      kind="substack"
+      [mode]="editorState()!.mode"
+      [item]="editorState()!.substack"
+      (save)="onEditorSave($event)"
+      (cancel)="editorState.set(null)"
+    />
+  }
+
+  @if (deleteTarget()) {
+    <app-delete-confirmation-modal
+      title="Delete substack?"
+      [message]="deleteMessage(deleteTarget()!)"
+      (confirmed)="onDeleteConfirmed()"
+      (cancelled)="deleteTarget.set(null)"
+    />
+  }
+</div>

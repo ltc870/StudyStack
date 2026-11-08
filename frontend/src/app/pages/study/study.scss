@@ -15,11 +15,35 @@
   width: 100%;
   display: grid; // CHANGED: was display: flex; flex-wrap: wrap;
   grid-template-columns: auto minmax(0, 1fr) auto; // NEW
-  grid-template-areas: // NEW
+  // CHANGED (substack header): a first row for the kicker, which collapses to
+  // nothing when there is no kicker (whole-stack sessions)
+  grid-template-areas:
+    '. kicker .'
     'back title toggle'
     'position position position';
   align-items: center;
   margin-top: var(--space-2);
+}
+
+// NEW (substack header): the wrapper steps out of the layout so the kicker and
+// the title each take their own grid area. The chevron, the tray toggle and
+// "Card X of Y" then line up with the title, not with the kicker above it.
+.study-heading {
+  display: contents;
+}
+
+// NEW (substack header): the stack's name above a substack's title, in the
+// all-caps label style (same as Manage Substacks' kicker)
+.study-kicker {
+  grid-area: kicker;
+  margin: 0;
+  font-size: var(--font-size-label);
+  line-height: var(--line-height-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;
 }
 
 // NEW: the back chevron's place in the header grid
@@ -105,6 +129,33 @@ app-back-link {
   letter-spacing: 0.08em;
   line-height: var(--line-height-label);
   color: var(--color-text-secondary);
+}
+
+// NEW (substacks): "QUESTION" or "ANSWER" on the left and, in whole-stack
+// sessions, the card's substack on the right, on one line. A long substack
+// name wraps under its own right edge instead of pushing the label.
+.study-card-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+// NEW (substacks): the card's substack, in the label style and the sage
+// accent. Uses the accent's hover shade: the plain accent on white is
+// 4.28:1, under the 4.5:1 small text needs (same reason as the tray's
+// current row).
+.study-card-topic {
+  min-inline-size: 0;
+  margin: 0;
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: var(--line-height-label);
+  text-transform: uppercase;
+  text-align: end;
+  color: var(--color-accent-hover);
+  overflow-wrap: anywhere;
 }
 
 // CHANGED: the card text is now rendered markdown (see src/scss/_markdown.scss),
@@ -269,6 +320,11 @@ app-back-link {
     margin-top: var(--space-3);
   }
 
+  // NEW (substack header)
+  .study-kicker {
+    font-size: 0.75rem;
+  }
+
   .card-position {
     font-size: 0.9375rem;
   }
@@ -288,6 +344,11 @@ app-back-link {
   }
 
   .study-card-label {
+    font-size: 0.75rem;
+  }
+
+  // NEW (substacks): grows with the label beside it
+  .study-card-topic {
     font-size: 0.75rem;
   }
 
@@ -347,6 +408,7 @@ app-back-link {
   // own row below (was flex-wrap: nowrap;)
   .header-container {
     grid-template-areas:
+      '. kicker .' // NEW (substack header)
       'back title position'
       'toggle toggle toggle';
   }

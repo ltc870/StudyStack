@@ -53,14 +53,89 @@
 // the whole New Card button (.new-card-button, its :hover and :focus-visible,
 // .new-card-icon, .new-card-text) -- now in _list-pages.scss
 
-// Card list: one full-width row per card
+// NEW: the Substacks link to Manage Substacks, beside the search box. An
+// outline button the same height as the search box, so the two read as one
+// toolbar; it stays when the stack has no cards yet
+.substacks-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex: none;
+  padding: 0.625rem var(--space-2);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-default);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-meta);
+  font-weight: 500;
+  line-height: normal; // what the search input uses, so the two are the same height
+  text-decoration: none;
+  transition: border-color 120ms ease;
+}
+
+// NEW: hover only where there's a mouse (a tap would leave it outlined)
+@media (hover: hover) {
+  .substacks-button:hover {
+    border-color: var(--color-focus-ring);
+  }
+}
+
+// NEW
+.substacks-button:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+// NEW: 1em, so the icon is no taller than the text beside it
+.substacks-button-icon {
+  font-size: 1em;
+}
+
+// Card list: one full-width row per card, in groups (one per substack, then // CHANGED: in groups
+// Not in a substack). A stack without substacks is one group with no heading,
+// so it looks as it did before substacks
 .cards-container {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3); // CHANGED: the space between groups (was 0.75rem between rows)
   margin-top: var(--space-2);
   // Keeps the last row clear of the floating "+" button
   padding-bottom: 72px;
+}
+
+// NEW: one group; its rows keep the old spacing between rows
+.card-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+// NEW: the substack's name on the left, its card count on the right
+.card-group-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+// NEW
+.card-group-name {
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  line-height: var(--line-height-body);
+  color: var(--color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+// NEW
+.card-group-count {
+  flex: none;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
 }
 
 .card-row {
@@ -163,6 +238,12 @@
     font-size: var(--font-size-body);
   }
 
+  // NEW: the search box's height and font size at this width
+  .substacks-button {
+    padding-block: 0.875rem;
+    font-size: var(--font-size-body);
+  }
+
   .new-card-button {
     right: calc(var(--space-4) + var(--safe-right)); // CHANGED: was var(--space-4)
     bottom: calc(var(--space-4) + var(--safe-bottom)); // CHANGED: was var(--space-4)
@@ -175,9 +256,24 @@
   }
 
   .cards-container {
-    gap: var(--space-2);
+    gap: var(--space-4); // CHANGED: between groups (was var(--space-2) between rows)
     margin-top: var(--space-3);
     padding-bottom: 88px;
+  }
+
+  // NEW: rows keep the old tablet spacing
+  .card-group {
+    gap: var(--space-2);
+  }
+
+  // NEW
+  .card-group-name {
+    font-size: 1.125rem;
+  }
+
+  // NEW
+  .card-group-count {
+    font-size: 0.9375rem;
   }
 
   .card-row {
@@ -203,14 +299,15 @@
   // (now in _list-pages.scss)
 }
 
-// Desktop: the title (with its count inline), search and "New Card" button
+// Desktop: the title (with its count inline), search, Substacks and "New Card" // CHANGED: Substacks added
 // share one row, like Manage Stacks. The container becomes a two-column grid:
-// the title on the left, the toolbar in a fixed 504px slot on the right
-// (300px search + 24px gap + 180px button). The card rows run the full width.
+// the title on the left, the toolbar on the right, as wide as its contents // CHANGED: was a fixed 504px slot
+// (300px search, the Substacks link and the 180px button, 24px apart). The // CHANGED
+// card rows run the full width.
 @include bp.desktop {
   .manage-cards-container {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 504px;
+    grid-template-columns: minmax(0, 1fr) auto; // CHANGED: was minmax(0, 1fr) 504px
     align-items: center;
     column-gap: var(--space-3);
   }
@@ -250,6 +347,17 @@
     font-size: var(--font-size-meta);
   }
 
+  // NEW: with the toolbar sized by its contents, the search box keeps its 300px
+  .search-cards-container {
+    flex: 0 0 300px;
+  }
+
+  // NEW: the search box's height at this width
+  .substacks-button {
+    padding-block: 0.6875rem;
+    font-size: var(--font-size-meta);
+  }
+
   // CHANGED: .empty-state and .no-matches-text get their grid-column from
   // _list-pages.scss; .cards-container's moved into its rule below
 
@@ -272,6 +380,16 @@
     grid-column: 1 / -1; // MOVED: from the shared grid-column rule
     margin-top: var(--space-4);
     padding-bottom: 0;
+  }
+
+  // NEW
+  .card-group-name {
+    font-size: 1.0625rem;
+  }
+
+  // NEW
+  .card-group-count {
+    font-size: var(--font-size-meta);
   }
 
   .card-row {

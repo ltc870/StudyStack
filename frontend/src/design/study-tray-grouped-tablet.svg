@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 768 1024">
+  <rect width="768" height="1024" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="768" height="60" fill="#FFFFFF"/>
+  <line x1="0" y1="60" x2="768" y2="60" stroke="#E3DFD5"/>
+  <text x="32" y="30.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="20" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="658" y="10.0" width="78" height="40" rx="8" fill="#6B675E"/>
+  <text x="697.0" y="30.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#FFFFFF">Logout</text>
+  <path d="M46,94 L38,102 L46,110" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="61" y="102" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <circle cx="714" cy="102" r="22" fill="#E3DFD5"/>
+  <g transform="translate(714,102)"><rect x="-10.0" y="-9.0" width="20" height="18.0" rx="2" fill="none" stroke="#2A2924" stroke-width="1.5"/><line x1="-3.0" y1="-9.0" x2="-3.0" y2="9.0" stroke="#2A2924" stroke-width="1.5"/></g>
+  <text x="384.0" y="144" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" text-anchor="middle" fill="#6B675E">Card 2 of 24</text>
+  <rect x="32.5" y="170" width="703" height="600" rx="14" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="64.5" y="202" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" letter-spacing="1" fill="#6B675E">QUESTION</text>
+  <!-- NEW: the card's substack, whole-stack sessions only -->
+  <text x="703.5" y="202" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" text-anchor="end" letter-spacing="1" fill="#4A665A">ASYNC/AWAIT</text>
+  <text x="64.5" y="246" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-size="17" fill="#2A2924">When should you use ConfigureAwait(false)?</text>
+  <text x="64.5" y="744" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="14" fill="#6B675E">Tap Flip to reveal the answer</text>
+  <path d="M61.5,807 L52.5,816 L61.5,825" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="284.0" y="788.0" width="200" height="56" rx="28.0" fill="#3E4C74"/>
+  <text x="384.0" y="816" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="17" font-weight="600" text-anchor="middle" fill="#FFFFFF">Flip</text>
+  <path d="M706.5,807 L715.5,816 L706.5,825" fill="none" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="0" y="60" width="768" height="964" rx="0" fill="#000000" opacity="0.45"/>
+  <rect x="0" y="60" width="380" height="964" rx="0" fill="#FBFAF6"/>
+  <line x1="380" y1="60" x2="380" y2="1024" stroke="#E3DFD5"/>
+  <text x="24" y="94" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="12" font-weight="600" letter-spacing="1" fill="#6B675E">CARDS IN THIS STACK</text>
+  <path d="M344,88 L356,100 M356,88 L344,100" stroke="#6B675E" stroke-width="1.7" stroke-linecap="round"/>
+  <text x="24" y="130" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#2A2924">ASYNC/AWAIT</text>
+  <rect x="24.5" y="146.5" width="331" height="63" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="36" y="178.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">1. What does async do in C#?</text>
+  <rect x="24" y="222" width="332" height="64" rx="8" fill="#4A665A"/>
+  <text x="36" y="254.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">2. When to use ConfigureAwait(false)?</text>
+  <text x="24" y="316" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#2A2924">LINQ</text>
+  <rect x="24.5" y="332.5" width="331" height="63" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="36" y="364.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">3. IEnumerable vs IQueryable?</text>
+  <text x="24" y="426" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#2A2924">NOT IN A SUBSTACK</text>
+  <rect x="24.5" y="442.5" width="331" height="63" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="36" y="474.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">4. What is dependency injection?</text>
+  <rect x="24.5" y="518.5" width="331" height="63" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="36" y="550.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">5. Boxing vs unboxing?</text>
+  <rect x="24.5" y="594.5" width="331" height="63" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="36" y="626.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#2A2924">6. Explain SOLID principles.</text>
+  <text x="384.0" y="1010" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" text-anchor="middle" font-style="italic" fill="#6B675E">Headings per substack, then Not in a substack; numbering runs straight through, like Card 2 of 24.</text>
+</svg>

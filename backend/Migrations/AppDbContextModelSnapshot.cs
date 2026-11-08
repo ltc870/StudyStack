@@ -44,9 +44,14 @@ namespace backend.Migrations
                     b.Property<int>("StackId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("SubstackId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("StackId");
+
+                    b.HasIndex("SubstackId");
 
                     b.ToTable("Cards");
                 });
@@ -104,6 +109,28 @@ namespace backend.Migrations
                     b.ToTable("Stacks");
                 });
 
+            modelBuilder.Entity("backend.Entities.Substack", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("StackId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StackId");
+
+                    b.ToTable("Substacks");
+                });
+
             modelBuilder.Entity("backend.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -136,7 +163,14 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("backend.Entities.Substack", "Substack")
+                        .WithMany("Cards")
+                        .HasForeignKey("SubstackId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("Stack");
+
+                    b.Navigation("Substack");
                 });
 
             modelBuilder.Entity("backend.Entities.RefreshToken", b =>
@@ -161,7 +195,25 @@ namespace backend.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("backend.Entities.Substack", b =>
+                {
+                    b.HasOne("backend.Entities.Stack", "Stack")
+                        .WithMany("Substacks")
+                        .HasForeignKey("StackId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Stack");
+                });
+
             modelBuilder.Entity("backend.Entities.Stack", b =>
+                {
+                    b.Navigation("Cards");
+
+                    b.Navigation("Substacks");
+                });
+
+            modelBuilder.Entity("backend.Entities.Substack", b =>
                 {
                     b.Navigation("Cards");
                 });

@@ -54,8 +54,29 @@ export const routes: Routes = [
       {
         path: 'study/:stackId',
         loadComponent: () => import('./pages/study/study').then((module) => module.Study),
-        data: { backTo: '/stacks/study' },
         title: 'Study | StudyStack',
+      },
+      {
+        path: 'study/:stackId/substacks/:substackId',
+        loadComponent: () => import('./pages/study/study').then((module) => module.Study),
+        title: 'Study | StudyStack',
+      },
+      {
+        path: 'stacks/:stackId/substacks',
+        loadComponent: () =>
+          import('./pages/manage-substacks/manage-substacks').then(
+            (module) => module.ManageSubstacks,
+          ),
+        title: 'Manage Substacks | StudyStack',
+      },
+      {
+        path: 'stacks/study/:stackId',
+        loadComponent: () =>
+          import('./pages/choose-what-to-study/choose-what-to-study').then(
+            (module) => module.ChooseWhatToStudy,
+          ),
+        data: { backTo: '/stacks/study' },
+        title: 'Choose What to Study | StudyStack',
       },
     ],
   },
