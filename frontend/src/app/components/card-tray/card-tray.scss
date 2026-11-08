@@ -83,18 +83,49 @@
   color: var(--color-text-primary);
 }
 
-// The list scrolls by itself. Its 4px padding (cancelled by the negative
-// margin) keeps the rows' focus rings from being cut off by the scroll edge.
-.card-tray-list {
+// CHANGED (substacks): the groups' wrapper scrolls now, not each list, so the
+// header stays put while every group scrolls under it as one. Its 4px padding
+// (cancelled by the negative margin) keeps the rows' focus rings from being
+// cut off by the scroll edge. (Moved from .card-tray-list: flex: 1;
+// min-block-size: 0; overflow-y: auto; margin: 0 -4px; and the padding.)
+.card-tray-groups {
   flex: 1;
   min-block-size: 0;
   overflow-y: auto;
+  margin: 0 -4px;
+  padding: 4px 4px calc(var(--space-3) + var(--safe-bottom)); // clear of the home indicator
+}
+
+// CHANGED (substacks): one list per group; the scrolling moved to
+// .card-tray-groups above
+.card-tray-list {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  margin: 0 -4px;
-  padding: 4px 4px calc(var(--space-3) + var(--safe-bottom)); // CHANGED: clear of the home indicator (was 4px 4px var(--space-3))
+  margin: 0;
+  padding: 0;
   list-style: none;
+}
+
+// NEW (substacks): a substack's name above its cards (and "Not in a
+// substack" last), in the all-caps label style but in the primary text color,
+// so it reads as a heading under the tray's lighter title
+.card-tray-group {
+  margin: var(--space-3) 0 var(--space-1);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  line-height: var(--line-height-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+// NEW (substacks): no extra space above the first heading; the header's
+// margin already separates it from the title
+.card-tray-group:first-child {
+  margin-top: 0;
 }
 
 // One row: "3. What does async do in C#?" on a single line
@@ -168,6 +199,12 @@
   .card-tray-list {
     gap: 0.75rem;
   }
+
+  // NEW (substacks)
+  .card-tray-group {
+    margin-bottom: var(--space-2);
+    font-size: 0.75rem;
+  }
 }
 
 // Desktop: a panel in Study's layout instead of a drawer. Its height is
@@ -200,6 +237,17 @@
 
   .card-tray-list {
     gap: var(--space-1);
+  }
+
+  // CHANGED (substacks): the bottom padding moved here from .card-tray-list
+  // (was padding-bottom: 1.25rem; on .card-tray-list)
+  .card-tray-groups {
     padding-bottom: 1.25rem;
+  }
+
+  // NEW (substacks): back to the mobile heading size inside the smaller panel
+  .card-tray-group {
+    margin-bottom: var(--space-1);
+    font-size: var(--font-size-label);
   }
 }

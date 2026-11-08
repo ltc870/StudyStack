@@ -54,7 +54,11 @@ export const routes: Routes = [
       {
         path: 'study/:stackId',
         loadComponent: () => import('./pages/study/study').then((module) => module.Study),
-        data: { backTo: '/stacks/study' },
+        title: 'Study | StudyStack',
+      },
+      {
+        path: 'study/:stackId/substacks/:substackId',
+        loadComponent: () => import('./pages/study/study').then((module) => module.Study),
         title: 'Study | StudyStack',
       },
       {

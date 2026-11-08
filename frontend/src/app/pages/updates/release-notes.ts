@@ -7,6 +7,18 @@ import { ReleaseNote } from '../../models/release-note';
 // to use it, never servers, Tailscale, backups or other admin work.
 // date: the day it reaches production, as 'YYYY-MM-DD'.
 export const releaseNotes: ReleaseNote[] = [
+  // NEW: substacks. Change the date to the day it reaches production.
+  {
+    date: '2026-11-08',
+    title: 'Substacks',
+    changes: [
+      "Split a stack into substacks, like Async/Await inside C# Fundamentals. On a stack's cards, tap Substacks to add, rename or delete them.",
+      'Choose a card\'s substack in the card editor. A stack\'s cards are grouped under their substacks, with "Not in a substack" last.',
+      'Deleting a substack keeps its cards: they move to "Not in a substack".',
+      'Study a whole stack or one substack. Tap a stack that has substacks and pick All cards or a substack.',
+      'When you study a whole stack, the Cards list is grouped by substack, and each card shows its substack next to Question.',
+    ],
+  },
   {
     date: '2026-10-31',
     title: 'See what changed',

@@ -1,7 +1,7 @@
 <div class="card-tray-backdrop" (click)="closeRequested.emit()" aria-hidden="true"></div>
-<nav class="card-tray" id="card-tray" aria-label="Cards in this stack">
+<nav class="card-tray" id="card-tray" [attr.aria-label]="title()">
   <div class="card-tray-header">
-    <h3 class="card-tray-title">Cards in this stack</h3>
+    <h3 class="card-tray-title">{{ title() }}</h3>
     <button
       class="card-tray-close"
       aria-label="Hide cards"
@@ -11,20 +11,27 @@
       <ng-icon name="phosphorX" />
     </button>
   </div>
-  <ol class="card-tray-list" role="list">
-    @for (card of cards(); track card.id; let index = $index) {
-      <li>
-        <button
-          class="card-tray-item"
-          type="button"
-          [class.card-tray-item--current]="index === currentIndex()"
-          [attr.aria-current]="index === currentIndex() ? 'true' : null"
-          (click)="cardSelected.emit(index)"
-        >
-          <span class="card-tray-number">{{ index + 1 }}.</span>
-          <span class="card-tray-question">{{ card.question }}</span>
-        </button>
-      </li>
+  <div class="card-tray-groups">
+    @for (group of cardGroups(); track group.name) {
+      @if (group.name) {
+        <h4 class="card-tray-group">{{ group.name }}</h4>
+      }
+      <ol class="card-tray-list" role="list">
+        @for (entry of group.entries; track entry.card.id) {
+          <li>
+            <button
+              class="card-tray-item"
+              type="button"
+              [class.card-tray-item--current]="entry.index === currentIndex()"
+              [attr.aria-current]="entry.index === currentIndex() ? 'true' : null"
+              (click)="cardSelected.emit(entry.index)"
+            >
+              <span class="card-tray-number">{{ entry.index + 1 }}.</span>
+              <span class="card-tray-question">{{ entry.card.question }}</span>
+            </button>
+          </li>
+        }
+      </ol>
     }
-  </ol>
+  </div>
 </nav>
