@@ -17,9 +17,8 @@
   grid-template-columns: auto minmax(0, 1fr) auto; // NEW
   // CHANGED (substack header): a first row for the kicker, which collapses to
   // nothing when there is no kicker (whole-stack sessions)
-  grid-template-areas: // NEW
-
-    '. kicker .' // NEW (substack header)
+  grid-template-areas:
+    '. kicker .'
     'back title toggle'
     'position position position';
   align-items: center;

@@ -54,7 +54,7 @@ export class CardTray {
       ),
     };
 
-    return [...substackGroups, unsortedGroup].filter((groups) => groups.entries.length > 0);
+    return [...substackGroups, unsortedGroup].filter((group) => group.entries.length > 0);
   });
 
   constructor() {
