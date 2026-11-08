@@ -7,7 +7,6 @@ import { ReleaseNote } from '../../models/release-note';
 // to use it, never servers, Tailscale, backups or other admin work.
 // date: the day it reaches production, as 'YYYY-MM-DD'.
 export const releaseNotes: ReleaseNote[] = [
-  // NEW: substacks. Change the date to the day it reaches production.
   {
     date: '2026-11-08',
     title: 'Substacks',
