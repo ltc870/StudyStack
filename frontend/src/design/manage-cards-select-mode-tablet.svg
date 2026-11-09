@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 768 1024">
+  <rect width="768" height="1024" fill="#F6F4EF"/>
+  <rect x="0" y="0" width="768" height="60" fill="#FFFFFF"/>
+  <line x1="0" y1="60" x2="768" y2="60" stroke="#E3DFD5"/>
+  <text x="32" y="30.0" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="20" font-weight="600" fill="#3E4C74">StudyStack</text>
+  <rect x="658" y="10.0" width="78" height="40" rx="8" fill="#6B675E"/>
+  <text x="697.0" y="30.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#FFFFFF">Logout</text>
+  <path d="M46,94 L38,102 L46,110" fill="none" stroke="#2A2924" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="61" y="102" dominant-baseline="middle" font-family="'Source Serif 4', Georgia, serif" font-size="28" font-weight="600" fill="#2A2924">C# Fundamentals</text>
+  <text x="61" y="134" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">24 cards</text>
+  <rect x="32" y="156" width="704" height="48" rx="8" fill="#FFFFFF" stroke="#3E4C74" stroke-width="1.5"/>
+  <circle cx="52" cy="180.0" r="5" fill="none" stroke="#6B675E" stroke-width="1.5"/>
+  <line x1="56" y1="184.0" x2="61" y2="189.0" stroke="#6B675E" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="68" y="180.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="16" fill="#2A2924">async</text>
+  <g transform="translate(716,180.0)" stroke="#6B675E" stroke-width="1.5" stroke-linecap="round"><line x1="-4.5" y1="-4.5" x2="4.5" y2="4.5"/><line x1="-4.5" y1="4.5" x2="4.5" y2="-4.5"/></g>
+  <text x="32" y="238" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">Async/Await</text>
+  <text x="736" y="238" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" text-anchor="end" fill="#6B675E">2 cards</text>
+  <rect x="32" y="258" width="704" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <rect x="48.75" y="295.75" width="20.5" height="20.5" rx="4" fill="#FFFFFF" stroke="#6B675E" stroke-width="1.5"/>
+  <text x="86" y="296.4" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="19" font-weight="600" fill="#2A2924">What does async do in C#?</text>
+  <text x="86" y="323.28" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">Marks a method as asynchronous...</text>
+  <rect x="32" y="370" width="704" height="96" rx="10" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <rect x="48.75" y="407.75" width="20.5" height="20.5" rx="4" fill="#FFFFFF" stroke="#6B675E" stroke-width="1.5"/>
+  <text x="86" y="408.4" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="19" font-weight="600" fill="#2A2924">When to use ConfigureAwait(false)?</text>
+  <text x="86" y="435.28" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">In library async code, so...</text>
+  <text x="32" y="512" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="18" font-weight="600" fill="#2A2924">Not in a substack</text>
+  <text x="736" y="512" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" text-anchor="end" fill="#6B675E">2 cards</text>
+  <rect x="33" y="533" width="702" height="94" rx="10" fill="#FFFFFF" stroke="#3E4C74" stroke-width="2"/>
+  <rect x="48" y="569.0" width="22" height="22" rx="4" fill="#3E4C74"/>
+  <path d="M53.5,580.44 L57.46,584.4 L64.72,576.04" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="86" y="570.4" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="19" font-weight="600" fill="#2A2924">Why avoid async void?</text>
+  <text x="86" y="597.28" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">The caller can't await them...</text>
+  <rect x="33" y="645" width="702" height="94" rx="10" fill="#FFFFFF" stroke="#3E4C74" stroke-width="2"/>
+  <rect x="48" y="681.0" width="22" height="22" rx="4" fill="#3E4C74"/>
+  <path d="M53.5,692.44 L57.46,696.4 L64.72,688.04" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="86" y="682.4" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="19" font-weight="600" fill="#2A2924">What does Task.Run do?</text>
+  <text x="86" y="709.28" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="15" fill="#6B675E">Queues work on the thread pool...</text>
+  <rect x="0" y="916" width="768" height="80" fill="#FFFFFF"/>
+  <line x1="0" y1="916" x2="768" y2="916" stroke="#E3DFD5"/>
+  <text x="32" y="956.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="16" font-weight="600" fill="#2A2924">3 selected</text>
+  <rect x="136.5" y="934.5" width="155" height="43" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="152" y="956.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="16" font-weight="500" fill="#2A2924">Select all shown</text>
+  <rect x="304.5" y="934.5" width="72" height="43" rx="8" fill="#FFFFFF" stroke="#E3DFD5"/>
+  <text x="320" y="956.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="16" font-weight="500" fill="#2A2924">Clear</text>
+  <text x="595" y="956.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="16" text-anchor="end" fill="#6B675E">Cancel</text>
+  <rect x="615" y="934.0" width="121" height="44" rx="8" fill="#3E4C74"/>
+  <text x="635" y="956.0" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="16" font-weight="600" fill="#FFFFFF">Move to ...</text>
+  <text x="384.0" y="995" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" text-anchor="middle" font-style="italic" fill="#6B675E">Select mode: tapping a row ticks it, and Substacks and New Card are hidden. 3 selected includes</text>
+  <text x="384.0" y="1010" dominant-baseline="middle" font-family="'Inter', sans-serif" font-size="11" text-anchor="middle" font-style="italic" fill="#6B675E">a card ticked under an earlier search that this one hides. Select all shown ticks only the matches.</text>
+</svg>
