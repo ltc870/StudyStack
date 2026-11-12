@@ -7,6 +7,17 @@ import { ReleaseNote } from '../../models/release-note';
 // to use it, never servers, Tailscale, backups or other admin work.
 // date: the day it reaches production, as 'YYYY-MM-DD'.
 export const releaseNotes: ReleaseNote[] = [
+  // NEW: bulk move. The date is a guess; set it to the day this reaches
+  // production, and remove this comment, before the PR
+  {
+    date: '2026-11-12',
+    title: 'Move several cards at once',
+    changes: [
+      'On a stack\'s cards, tap Select, tick the cards you want, then tap Move to ... and pick a substack or "Not in a substack". Select appears once a stack has at least one substack.',
+      'Select all shown ticks every card your search is showing, so you can search for a topic and move all its cards together. Cards you ticked before a search stay ticked.',
+      'On a phone, the search box now has a row of its own, with Select and Substacks underneath it.',
+    ],
+  },
   {
     date: '2026-11-08',
     title: 'Substacks',
