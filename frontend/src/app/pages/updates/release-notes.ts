@@ -7,8 +7,6 @@ import { ReleaseNote } from '../../models/release-note';
 // to use it, never servers, Tailscale, backups or other admin work.
 // date: the day it reaches production, as 'YYYY-MM-DD'.
 export const releaseNotes: ReleaseNote[] = [
-  // NEW: bulk move. The date is a guess; set it to the day this reaches
-  // production, and remove this comment, before the PR
   {
     date: '2026-11-12',
     title: 'Move several cards at once',
