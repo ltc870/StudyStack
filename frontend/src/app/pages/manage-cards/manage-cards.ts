@@ -7,15 +7,20 @@ import { Card, CardCreateRequest } from '../../models/card';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { phosphorPlusBold, phosphorTrashBold } from '@ng-icons/phosphor-icons/bold';
 import { phosphorMagnifyingGlassLight } from '@ng-icons/phosphor-icons/light';
-import { phosphorFolderSimple, phosphorPencilSimple } from '@ng-icons/phosphor-icons/regular';
+import {
+  phosphorCheckSquare,
+  phosphorFolderSimple,
+  phosphorPencilSimple,
+} from '@ng-icons/phosphor-icons/regular';
 import { CardEditorModal } from '../../components/card-editor-modal/card-editor-modal';
 import { DeleteConfirmationModal } from '../../components/delete-confirmation-modal/delete-confirmation-modal';
 import { RouterLink } from '@angular/router';
 import { SubstacksService } from '../../services/substacks-service';
 import { of, switchMap } from 'rxjs';
+import { MoveCardsModal } from '../../components/move-cards-modal/move-cards-modal';
 
 @Component({
-  imports: [BackLink, NgIcon, CardEditorModal, DeleteConfirmationModal, RouterLink],
+  imports: [BackLink, NgIcon, CardEditorModal, DeleteConfirmationModal, MoveCardsModal, RouterLink],
   providers: [
     provideIcons({
       phosphorPlusBold,
@@ -23,6 +28,7 @@ import { of, switchMap } from 'rxjs';
       phosphorPencilSimple,
       phosphorTrashBold,
       phosphorFolderSimple,
+      phosphorCheckSquare,
     }),
   ],
   selector: 'app-manage-cards',
@@ -42,6 +48,11 @@ export class ManageCards {
   searchQuery = signal<string>('');
   editorState = signal<{ mode: 'create' | 'edit'; card: Card | null } | null>(null);
   deleteTarget = signal<Card | null>(null);
+  isSelecting = signal<boolean>(false);
+  selectedCardIds = signal<Set<number>>(new Set());
+  isMoveOpen = signal<boolean>(false);
+  isMoving = signal<boolean>(false);
+  moveError = signal<string | null>(null);
 
   // HTTP
   stackResource = rxResource({
@@ -81,6 +92,8 @@ export class ManageCards {
         card.question.toLowerCase().includes(query) || card.answer.toLowerCase().includes(query),
     );
   });
+
+  selectedCount = computed(() => this.selectedCardIds().size);
 
   cardGroups = computed<{ substackId: number | null; name: string; cards: Card[] }[]>(() => {
     const substacks = this.substackResource.hasValue() ? this.substackResource.value() : [];
@@ -125,6 +138,68 @@ export class ManageCards {
       this.cardResource.value().length > 0 &&
       this.filteredCards().length === 0,
   );
+
+  // Select mode
+  onSelectClick() {
+    this.isSelecting.set(true);
+  }
+
+  onCancelSelect() {
+    this.isSelecting.set(false);
+    this.selectedCardIds.set(new Set());
+  }
+
+  toggleCard(cardId: number) {
+    this.selectedCardIds.update((currentSelectedIds) => {
+      const newIdsSet = new Set(currentSelectedIds);
+      if (!newIdsSet.has(cardId)) {
+        newIdsSet.add(cardId);
+      } else {
+        newIdsSet.delete(cardId);
+      }
+      return newIdsSet;
+    });
+  }
+
+  selectAllShown() {
+    const filteredCardIds = this.filteredCards().map((card) => card.id);
+    const newCombinedSet = new Set([...this.selectedCardIds(), ...filteredCardIds]);
+    this.selectedCardIds.set(newCombinedSet);
+  }
+
+  clearSelection() {
+    this.selectedCardIds.set(new Set());
+  }
+
+  onMoveToClick() {
+    this.moveError.set(null);
+    this.isMoveOpen.set(true);
+  }
+
+  onMoveCancelled() {
+    this.isMoveOpen.set(false);
+  }
+
+  onMoveConfirmed(substackId: number | null) {
+    const cardIds = [...this.selectedCardIds()];
+    this.isMoving.set(true);
+    this.moveError.set(null);
+    this.cardsService.moveCards({ cardIds, substackId }).subscribe({
+      next: (response) => {
+        console.log('Move successful: ', response);
+        this.isMoving.set(false);
+        this.isMoveOpen.set(false);
+        this.onCancelSelect();
+        this.cardResource.reload();
+        this.substackResource.reload();
+      },
+      error: (err) => {
+        console.log('Failed to move cards: ', err);
+        this.isMoving.set(false);
+        this.moveError.set("The cards couldn't be moved. Nothing was changed; try again.");
+      },
+    });
+  }
 
   // Search
   updateText(event: Event) {

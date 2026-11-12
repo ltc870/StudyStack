@@ -1,0 +1,157 @@
+@use 'breakpoints' as bp;
+
+// NEW FILE (bulk move): the bar at the bottom of Manage Cards in select mode
+// ("N selected", Select all shown, Clear, Cancel, Move to ...).
+//
+// Global (like _list-pages.scss), so it costs Manage Cards' component style
+// budget nothing; manage-cards.scss was over its 8 kB warning with it. Its
+// class names (.select-bar...) are used nowhere else.
+
+// Phone: two rows, the count and Cancel, then Select all shown, Clear and
+// Move to. The two .select-bar-button elements fill the empty cells in order.
+.select-bar {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 10; // above the cards, below the modals (100)
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-areas:
+    'count count cancel'
+    '. . move';
+  align-items: center;
+  gap: 0.625rem var(--space-1);
+  padding-block: 0.75rem calc(0.75rem + var(--safe-bottom));
+  // The page's gutter, so the bar's contents line up with the cards
+  padding-inline: calc(var(--page-inset) + var(--safe-left)) calc(var(--page-inset) + var(--safe-right));
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.select-bar-count {
+  grid-area: count;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+// Select all shown and Clear: outline buttons, like Substacks
+.select-bar-button {
+  padding: 0.625rem 0.75rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-default);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-meta);
+  font-weight: 500;
+  line-height: normal;
+  cursor: pointer;
+  transition: border-color 120ms ease;
+}
+
+// A text button, like the card editor's Cancel
+.select-bar-cancel {
+  grid-area: cancel;
+  justify-self: end;
+  padding: 0.25rem 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-default);
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-meta);
+  cursor: pointer;
+}
+
+// The primary button, like New Card on desktop
+.select-bar-move {
+  grid-area: move;
+  justify-self: end;
+  padding: 0.625rem 0.75rem;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-default);
+  color: var(--color-surface);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-meta);
+  font-weight: 600;
+  line-height: normal;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+// Hover only where there's a mouse, and never on a disabled button
+@media (hover: hover) {
+  .select-bar-button:hover:not(:disabled) {
+    border-color: var(--color-focus-ring);
+  }
+
+  .select-bar-cancel:hover {
+    color: var(--color-text-primary);
+  }
+
+  .select-bar-move:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+  }
+}
+
+.select-bar-button:focus-visible,
+.select-bar-cancel:focus-visible,
+.select-bar-move:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+// Clear and Move to with nothing ticked
+.select-bar-button:disabled,
+.select-bar-move:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+// Tablet: one row, the count, Select all shown and Clear on the left, Cancel
+// and Move to on the right
+@include bp.tablet {
+  .select-bar {
+    grid-template-columns: auto auto auto 1fr auto;
+    grid-template-areas: 'count . . cancel move';
+    column-gap: var(--space-2);
+    padding-block: var(--space-2) calc(var(--space-2) + var(--safe-bottom));
+  }
+
+  // A little more room between the count and the buttons
+  .select-bar-count {
+    margin-right: var(--space-1);
+    font-size: var(--font-size-body);
+  }
+
+  // The tablet search box's height and font size
+  .select-bar-button,
+  .select-bar-move {
+    padding: 0.75rem var(--space-2);
+    font-size: var(--font-size-body);
+  }
+
+  .select-bar-cancel {
+    font-size: var(--font-size-body);
+  }
+}
+
+// Desktop: the same row, at the desktop toolbar's sizes
+@include bp.desktop {
+  .select-bar {
+    padding-block: 0.75rem calc(0.75rem + var(--safe-bottom));
+  }
+
+  .select-bar-button,
+  .select-bar-move {
+    padding: 0.6875rem var(--space-2);
+    font-size: var(--font-size-meta);
+  }
+
+  .select-bar-cancel {
+    font-size: var(--font-size-meta);
+  }
+}

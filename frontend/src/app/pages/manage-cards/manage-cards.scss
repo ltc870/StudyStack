@@ -35,8 +35,14 @@
 
 // REMOVED: .toolbar-container (now in _list-pages.scss)
 
+// NEW (bulk move): on the phone the toolbar wraps, so Select and Substacks
+// can share the row under the search box (see .toolbar-container below)
+.manage-cards-container .toolbar-container {
+  flex-wrap: wrap;
+}
+
 .search-cards-container {
-  flex: 1;
+  flex: 1 0 100%; // CHANGED (bulk move): a full row on the phone (was flex: 1)
   position: relative;
 }
 
@@ -56,11 +62,15 @@
 // NEW: the Substacks link to Manage Substacks, beside the search box. An
 // outline button the same height as the search box, so the two read as one
 // toolbar; it stays when the stack has no cards yet
+// CHANGED (bulk move): the Select button looks the same. On the phone the two
+// share a row, half each (or Substacks alone, full width, when Select is hidden)
+.select-button,
 .substacks-button {
   display: inline-flex;
   align-items: center;
+  justify-content: center; // NEW (bulk move): centered in its half of the row
   gap: var(--space-1);
-  flex: none;
+  flex: 1 1 0; // CHANGED (bulk move): shares the phone's second row (was flex: none)
   padding: 0.625rem var(--space-2);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -71,23 +81,27 @@
   font-weight: 500;
   line-height: normal; // what the search input uses, so the two are the same height
   text-decoration: none;
+  cursor: pointer; // NEW (bulk move): Select is a <button>, not a link
   transition: border-color 120ms ease;
 }
 
 // NEW: hover only where there's a mouse (a tap would leave it outlined)
 @media (hover: hover) {
+  .select-button:hover, // NEW (bulk move)
   .substacks-button:hover {
     border-color: var(--color-focus-ring);
   }
 }
 
 // NEW
+.select-button:focus-visible, // NEW (bulk move)
 .substacks-button:focus-visible {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
 // NEW: 1em, so the icon is no taller than the text beside it
+.select-button-icon, // NEW (bulk move)
 .substacks-button-icon {
   font-size: 1em;
 }
@@ -102,6 +116,12 @@
   margin-top: var(--space-2);
   // Keeps the last row clear of the floating "+" button
   padding-bottom: 72px;
+}
+
+// NEW (bulk move): in select mode the bar replaces the floating "+" button and
+// is taller, so the last row needs more room to scroll clear of it
+.manage-cards-container:has(.select-bar) .cards-container {
+  padding-bottom: calc(7.5rem + var(--safe-bottom));
 }
 
 // NEW: one group; its rows keep the old spacing between rows
@@ -180,6 +200,57 @@
   color: var(--color-text-secondary);
 }
 
+// NEW (bulk move): a row in select mode is a <label> holding the checkbox and
+// the text, so a tap anywhere on it ticks the box. The checkbox comes first.
+.card-row--selecting {
+  grid-template-columns: auto minmax(0, 1fr);
+  cursor: pointer;
+  transition: border-color 120ms ease;
+}
+
+// NEW (bulk move): hover only where there's a mouse, as on the Substacks button
+@media (hover: hover) {
+  .card-row--selecting:hover {
+    border-color: var(--color-focus-ring);
+  }
+}
+
+// NEW (bulk move): a ticked row. The inset shadow thickens the border to 2px
+// without moving the text. Two classes, so it wins over the hover above
+.card-row--selecting.card-row--selected {
+  border-color: var(--color-primary);
+  box-shadow: inset 0 0 0 1px var(--color-primary);
+}
+
+// NEW (bulk move): the focus ring goes around the whole row when the checkbox
+// is reached with Tab, the same ring as every other control
+.card-row--selecting:has(.card-row-checkbox:focus-visible) {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+// NEW (bulk move): the browser's own checkbox, in the primary color
+.card-row-checkbox {
+  inline-size: 20px;
+  block-size: 20px;
+  margin: 0;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+// NEW (bulk move): the row's outline shows the focus instead (see above)
+.card-row-checkbox:focus-visible {
+  outline: none;
+}
+
+// NEW (bulk move): a <label> may only hold inline elements, so the select-mode
+// row uses spans; these make them stack like the normal row's div, h4 and p
+.card-row--selecting .card-row-text,
+.card-row--selecting .card-row-question,
+.card-row--selecting .card-row-answer {
+  display: block;
+}
+
 .edit-delete-container {
   display: flex;
   align-items: center;
@@ -211,6 +282,9 @@
   color: var(--color-warning);
 }
 
+// NEW (bulk move): the select-mode bar's styles are in src/scss/_select-bar.scss
+// (global, so they don't push this file past its component style budget)
+
 // CHANGED: the empty state is shared; only its bottom padding stays here, to
 // keep the "Add a Card!" button clear of the floating "+" button in short
 // windows
@@ -238,8 +312,20 @@
     font-size: var(--font-size-body);
   }
 
+  // NEW (bulk move): one row again from tablet up
+  .manage-cards-container .toolbar-container {
+    flex-wrap: nowrap;
+  }
+
+  // NEW (bulk move): the search box fills what the buttons leave, as before
+  .search-cards-container {
+    flex: 1;
+  }
+
   // NEW: the search box's height and font size at this width
+  .select-button, // NEW (bulk move)
   .substacks-button {
+    flex: none; // NEW (bulk move): sized by their contents again
     padding-block: 0.875rem;
     font-size: var(--font-size-body);
   }
@@ -259,6 +345,11 @@
     gap: var(--space-4); // CHANGED: between groups (was var(--space-2) between rows)
     margin-top: var(--space-3);
     padding-bottom: 88px;
+  }
+
+  // NEW (bulk move): room for the shorter, one-row bar
+  .manage-cards-container:has(.select-bar) .cards-container {
+    padding-bottom: calc(6.5rem + var(--safe-bottom));
   }
 
   // NEW: rows keep the old tablet spacing
@@ -289,6 +380,12 @@
   .card-row-answer {
     margin-top: 0.375rem;
     font-size: 0.9375rem;
+  }
+
+  // NEW (bulk move)
+  .card-row-checkbox {
+    inline-size: 22px;
+    block-size: 22px;
   }
 
   .empty-state {
@@ -353,6 +450,7 @@
   }
 
   // NEW: the search box's height at this width
+  .select-button, // NEW (bulk move)
   .substacks-button {
     padding-block: 0.6875rem;
     font-size: var(--font-size-meta);
@@ -380,6 +478,11 @@
     grid-column: 1 / -1; // MOVED: from the shared grid-column rule
     margin-top: var(--space-4);
     padding-bottom: 0;
+  }
+
+  // NEW (bulk move): room for the bar (no floating button on desktop)
+  .manage-cards-container:has(.select-bar) .cards-container {
+    padding-bottom: calc(5rem + var(--safe-bottom));
   }
 
   // NEW

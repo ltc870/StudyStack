@@ -1,6 +1,7 @@
 @use './scss/breakpoints' as bp;
 @use 'scss/markdown';
 @use 'scss/list-pages'; // NEW: shared Manage Stacks / Manage Cards styles
+@use 'scss/select-bar'; // NEW (bulk move): Manage Cards' select-mode bar
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=JetBrains+Mono:wght@400;500&display=swap');
 
 // frontend/src/styles.scss

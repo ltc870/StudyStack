@@ -23,18 +23,28 @@
         <ng-icon name="phosphorMagnifyingGlassLight" class="search-icon" />
       </div>
     }
-    <a class="substacks-button" [routerLink]="['/stacks', stackId(), 'substacks']">
-      <ng-icon name="phosphorFolderSimple" class="substacks-button-icon" />
-      <span class="substacks-button-text">Substacks</span>
-    </a>
-    <button
-      class="new-card-button"
-      [class.new-card-button--empty]="hasNoCards()"
-      (click)="onNewCardClick()"
-    >
-      <ng-icon name="phosphorPlusBold" class="new-card-icon" />
-      <span class="new-card-text">New Card</span>
-    </button>
+    @if (hasSubstacks() && !hasNoCards() && !isSelecting()) {
+      <button type="button" class="select-button" (click)="onSelectClick()">
+        <ng-icon name="phosphorCheckSquare" class="select-button-icon" />
+        <span class="select-button-text">Select</span>
+      </button>
+    }
+
+    @if (!isSelecting()) {
+      <a class="substacks-button" [routerLink]="['/stacks', stackId(), 'substacks']">
+        <ng-icon name="phosphorFolderSimple" class="substacks-button-icon" />
+        <span class="substacks-button-text">Substacks</span>
+      </a>
+
+      <button
+        class="new-card-button"
+        [class.new-card-button--empty]="hasNoCards()"
+        (click)="onNewCardClick()"
+      >
+        <ng-icon name="phosphorPlusBold" class="new-card-icon" />
+        <span class="new-card-text">New Card</span>
+      </button>
+    }
   </div>
 
   @if (hasNoCards()) {
@@ -62,31 +72,75 @@
           }
 
           @for (card of group.cards; track card.id) {
-            <div class="card-row">
-              <div class="card-row-text">
-                <h4 class="card-row-question">{{ card.question }}</h4>
-                <p class="card-row-answer">{{ card.answer }}</p>
+            @if (isSelecting()) {
+              <label
+                class="card-row card-row--selecting"
+                [class.card-row--selected]="selectedCardIds().has(card.id)"
+              >
+                <input
+                  type="checkbox"
+                  class="card-row-checkbox"
+                  [checked]="selectedCardIds().has(card.id)"
+                  (change)="toggleCard(card.id)"
+                />
+                <span class="card-row-text">
+                  <span class="card-row-question">{{ card.question }}</span>
+                  <span class="card-row-answer">{{ card.answer }}</span>
+                </span>
+              </label>
+            } @else {
+              <div class="card-row">
+                <div class="card-row-text">
+                  <h4 class="card-row-question">{{ card.question }}</h4>
+                  <p class="card-row-answer">{{ card.answer }}</p>
+                </div>
+                <div class="edit-delete-container">
+                  <button
+                    class="edit-card-button edit-delete-buttons"
+                    aria-label="Edit card"
+                    (click)="onEditClick(card)"
+                  >
+                    <ng-icon name="phosphorPencilSimple" class="edit-card-icon" />
+                  </button>
+                  <button
+                    class="delete-card-button edit-delete-buttons"
+                    aria-label="Delete card"
+                    (click)="onDeleteClick(card)"
+                  >
+                    <ng-icon name="phosphorTrashBold" class="delete-card-icon" />
+                  </button>
+                </div>
               </div>
-              <div class="edit-delete-container">
-                <button
-                  class="edit-card-button edit-delete-buttons"
-                  aria-label="Edit card"
-                  (click)="onEditClick(card)"
-                >
-                  <ng-icon name="phosphorPencilSimple" class="edit-card-icon" />
-                </button>
-                <button
-                  class="delete-card-button edit-delete-buttons"
-                  aria-label="Delete card"
-                  (click)="onDeleteClick(card)"
-                >
-                  <ng-icon name="phosphorTrashBold" class="delete-card-icon" />
-                </button>
-              </div>
-            </div>
+            }
           }
         </section>
       }
+    </div>
+  }
+
+  @if (isSelecting()) {
+    <div class="select-bar" role="toolbar" aria-label="Selected cards">
+      <span class="select-bar-count" aria-live="polite">{{ selectedCount() }} selected</span>
+      <button type="button" class="select-bar-button" (click)="selectAllShown()">
+        Select all shown
+      </button>
+      <button
+        class="select-bar-button"
+        type="button"
+        (click)="clearSelection()"
+        [disabled]="selectedCount() === 0"
+      >
+        Clear
+      </button>
+      <button type="button" class="select-bar-cancel" (click)="onCancelSelect()">Cancel</button>
+      <button
+        type="button"
+        class="select-bar-move"
+        [disabled]="selectedCount() === 0"
+        (click)="onMoveToClick()"
+      >
+        Move to ...
+      </button>
     </div>
   }
   @if (editorState()) {
@@ -105,6 +159,18 @@
       [itemLabel]="'this card'"
       (confirmed)="onDeleteConfirmed()"
       (cancelled)="deleteTarget.set(null)"
+    />
+  }
+
+  @if (isMoveOpen()) {
+    <app-move-cards-modal
+      [stackName]="stackResource.hasValue() ? stackResource.value().name : ''"
+      [count]="selectedCount()"
+      [substacks]="substackResource.hasValue() ? substackResource.value() : []"
+      [errorMessage]="moveError()"
+      [isMoving]="isMoving()"
+      (move)="onMoveConfirmed($event)"
+      (cancelled)="onMoveCancelled()"
     />
   }
 </div>
