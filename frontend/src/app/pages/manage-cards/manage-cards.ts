@@ -17,9 +17,10 @@ import { DeleteConfirmationModal } from '../../components/delete-confirmation-mo
 import { RouterLink } from '@angular/router';
 import { SubstacksService } from '../../services/substacks-service';
 import { of, switchMap } from 'rxjs';
+import { MoveCardsModal } from '../../components/move-cards-modal/move-cards-modal';
 
 @Component({
-  imports: [BackLink, NgIcon, CardEditorModal, DeleteConfirmationModal, RouterLink],
+  imports: [BackLink, NgIcon, CardEditorModal, DeleteConfirmationModal, MoveCardsModal, RouterLink],
   providers: [
     provideIcons({
       phosphorPlusBold,
@@ -49,6 +50,9 @@ export class ManageCards {
   deleteTarget = signal<Card | null>(null);
   isSelecting = signal<boolean>(false);
   selectedCardIds = signal<Set<number>>(new Set());
+  isMoveOpen = signal<boolean>(false);
+  isMoving = signal<boolean>(false);
+  moveError = signal<string | null>(null);
 
   // HTTP
   stackResource = rxResource({
@@ -165,6 +169,36 @@ export class ManageCards {
 
   clearSelection() {
     this.selectedCardIds.set(new Set());
+  }
+
+  onMoveToClick() {
+    this.moveError.set(null);
+    this.isMoveOpen.set(true);
+  }
+
+  onMoveCancelled() {
+    this.isMoveOpen.set(false);
+  }
+
+  onMoveConfirmed(substackId: number | null) {
+    const cardIds = [...this.selectedCardIds()];
+    this.isMoving.set(true);
+    this.moveError.set(null);
+    this.cardsService.moveCards({ cardIds, substackId }).subscribe({
+      next: (response) => {
+        console.log('Move successful: ', response);
+        this.isMoving.set(false);
+        this.isMoveOpen.set(false);
+        this.onCancelSelect();
+        this.cardResource.reload();
+        this.substackResource.reload();
+      },
+      error: (err) => {
+        console.log('Failed to move cards: ', err);
+        this.isMoving.set(false);
+        this.moveError.set("The cards couldn't be moved. Nothing was changed; try again.");
+      },
+    });
   }
 
   // Search

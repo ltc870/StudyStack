@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { Welcome } from './pages/welcome/welcome';
 import { Login } from './pages/login/login';
-import { ManageCards } from './pages/manage-cards/manage-cards';
 import { ManageStacks } from './pages/manage-stacks/manage-stacks';
 import { authGuard } from './guards/auth-guard';
 import { AppShell } from './components/app-shell/app-shell';
@@ -41,7 +40,8 @@ export const routes: Routes = [
       },
       {
         path: 'stacks/:stackId/cards',
-        component: ManageCards,
+        loadComponent: () =>
+          import('./pages/manage-cards/manage-cards').then((module) => module.ManageCards),
         data: { backTo: '/stacks' },
         title: 'Manage Cards | StudyStack',
       },

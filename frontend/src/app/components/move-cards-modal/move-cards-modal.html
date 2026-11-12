@@ -1,0 +1,54 @@
+<div class="modal-backdrop" (click)="cancelled.emit()">
+  <div
+    class="move-modal-container"
+    (click)="$event.stopPropagation()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="move-modal-title"
+  >
+    <h2 class="move-modal-title" id="move-modal-title">{{ title() }}</h2>
+    <p class="move-modal-text">Choose where they go in {{ stackName() }}.</p>
+    <fieldset class="move-choices">
+      <legend class="visually-hidden">Move to</legend>
+      @for (substack of substacks(); track substack.id) {
+        <label class="move-choice">
+          <input
+            type="radio"
+            name="move-target"
+            class="move-choice-radio"
+            [checked]="selectedChoice() === substack.id"
+            (change)="selectedChoice.set(substack.id)"
+          />
+          <span class="move-choice-name">{{ substack.name }}</span>
+          <span class="move-choice-count"
+            >{{ substack.cardCount }} {{ substack.cardCount === 1 ? 'card' : 'cards' }}
+          </span>
+        </label>
+      }
+      <label class="move-choice"
+        ><input
+          type="radio"
+          name="move-target"
+          class="move-choice-radio"
+          [checked]="selectedChoice() === 'unsorted'"
+          (change)="selectedChoice.set('unsorted')"
+        />
+        <span class="move-choice-name">Not in a substack</span>
+      </label>
+    </fieldset>
+    @if (errorMessage()) {
+      <p class="move-modal-error" role="alert">{{ errorMessage() }}</p>
+    }
+    <div class="move-modal-buttons">
+      <button type="button" class="cancel-button" (click)="cancelled.emit()">Cancel</button>
+      <button
+        type="button"
+        class="move-button"
+        (click)="onMoveClick()"
+        [disabled]="selectedChoice() === null || isMoving()"
+      >
+        Move
+      </button>
+    </div>
+  </div>
+</div>

@@ -133,7 +133,12 @@
         Clear
       </button>
       <button type="button" class="select-bar-cancel" (click)="onCancelSelect()">Cancel</button>
-      <button type="button" class="select-bar-move" [disabled]="selectedCount() === 0">
+      <button
+        type="button"
+        class="select-bar-move"
+        [disabled]="selectedCount() === 0"
+        (click)="onMoveToClick()"
+      >
         Move to ...
       </button>
     </div>
@@ -154,6 +159,18 @@
       [itemLabel]="'this card'"
       (confirmed)="onDeleteConfirmed()"
       (cancelled)="deleteTarget.set(null)"
+    />
+  }
+
+  @if (isMoveOpen()) {
+    <app-move-cards-modal
+      [stackName]="stackResource.hasValue() ? stackResource.value().name : ''"
+      [count]="selectedCount()"
+      [substacks]="substackResource.hasValue() ? substackResource.value() : []"
+      [errorMessage]="moveError()"
+      [isMoving]="isMoving()"
+      (move)="onMoveConfirmed($event)"
+      (cancelled)="onMoveCancelled()"
     />
   }
 </div>
