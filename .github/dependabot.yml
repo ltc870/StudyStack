@@ -1,0 +1,84 @@
+# Dependabot version updates for StudyStack.
+#
+# Security updates (fixes for known holes) are switched on in the repo settings and
+# don't need this file; they come as soon as an alert appears, with no cooldown.
+# This file adds weekly version updates on top, so packages don't drift years behind.
+#
+# Every Dependabot pull request must pass the same three CI checks as any other
+# (the main ruleset), and Lawrence reviews and merges it.
+#
+# Docker images are left out on purpose: every image uses a moving tag (node:24-slim,
+# aspnet:10.0, sdk:10.0, caddy:2-alpine, postgres:18, tailscale:stable), so patches
+# arrive when the images are pulled fresh (hardening item 2.3). Dependabot would only
+# offer major jumps, which CI doesn't test (it doesn't build the Dockerfiles) and which
+# need planning (postgres 18 to 19 needs a dump and restore).
+
+version: 2
+updates:
+  # The Angular app.
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "08:00"
+      timezone: "America/Kentucky/Louisville"
+    # Wait before offering a brand-new release, so a hijacked or broken release has
+    # time to be caught and pulled first. Security updates don't wait.
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+    # All minor and patch updates in one pull request; each major version alone.
+    groups:
+      npm-minor-and-patch:
+        update-types: ["minor", "patch"]
+    # Angular's major upgrades are done by hand with "ng update", which also runs its
+    # code migrations. These packages move with Angular's major version.
+    ignore:
+      - dependency-name: "@angular/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "ngx-markdown"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "marked"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@ng-icons/*"
+        update-types: ["version-update:semver-major"]
+
+  # The .NET API.
+  - package-ecosystem: "nuget"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "08:00"
+      timezone: "America/Kentucky/Louisville"
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+    groups:
+      nuget-minor-and-patch:
+        update-types: ["minor", "patch"]
+    # These follow the .NET version (10 now). Moving to .NET 11 is its own planned
+    # change, together with the Dockerfile images and CI's dotnet-version.
+    ignore:
+      - dependency-name: "Microsoft.*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "Npgsql.*"
+        update-types: ["version-update:semver-major"]
+
+  # The actions used by .github/workflows/ci.yml (checkout, setup-node, setup-dotnet).
+  # CI runs them, so a bad update shows up as a failed check on its own pull request.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "08:00"
+      timezone: "America/Kentucky/Louisville"
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ["*"]
