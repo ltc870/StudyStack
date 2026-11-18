@@ -15,8 +15,10 @@ name: CI
 on:
   push:
     branches: ["**"]
-  # A pull request from a fork has no push event in this repo, so it gets its own run.
-  # (A pull request from a branch here is already covered by that branch's push run.)
+  # CHANGED: every pull request gets its own full run, which checks the branch merged
+  # with main. The main ruleset requires these jobs, and a skipped job counts as a pass
+  # there, so pull request runs must never skip. A branch in this repo therefore runs
+  # CI twice (push and pull request); both are free for a public repo.
   pull_request:
   # The "Run workflow" button on the Actions tab.
   workflow_dispatch:
@@ -33,8 +35,6 @@ concurrency:
 jobs:
   frontend:
     name: Frontend build
-    # Skip the pull_request run when the branch is in this repo (its push run covers it).
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -61,7 +61,6 @@ jobs:
 
   backend:
     name: Backend build and migration check
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -97,7 +96,6 @@ jobs:
 
   ops:
     name: Server scripts and compose files
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
