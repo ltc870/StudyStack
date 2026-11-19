@@ -45,6 +45,15 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "@ng-icons/*"
         update-types: ["version-update:semver-major"]
+      # NEW: the unit-test tools. Angular's test runner supports a set vitest range, and
+      # CI doesn't run the tests, so a green check wouldn't prove a major works.
+      # Moved forward by hand at the next "ng update". Security fixes still arrive.
+      - dependency-name: "vitest"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@vitest/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "jsdom"
+        update-types: ["version-update:semver-major"]
 
   # The .NET API.
   - package-ecosystem: "nuget"
