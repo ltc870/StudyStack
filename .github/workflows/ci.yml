@@ -2,9 +2,11 @@
 # server files are valid, before anything is deployed with ops/deploy.sh.
 #
 # Three jobs, run side by side on GitHub's standard runners (free for a public repo):
-#   frontend  the production build of the Angular app (the same command its Dockerfile runs)
+#   frontend  the production build of the Angular app (the same command its Dockerfile runs),
+#             after checking the shipped packages for known High or Critical holes
 #   backend   the Release build of the API, and EF Core's check that the model matches
-#             the last migration (EF Core 9+ refuses to migrate at startup otherwise)
+#             the last migration (EF Core 9+ refuses to migrate at startup otherwise);
+#             restore fails on a known High or Critical hole in any NuGet package
 #   ops       shellcheck on the server scripts, and docker compose config on the
 #             production stack alone and with the Tailscale add-on
 #
@@ -54,6 +56,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # NEW: fail on a known High or Critical vulnerability in a package that ships to
+      # the browser. --omit=dev skips the build and test tools (Dependabot alerts and
+      # security updates cover those). npm audit asks npm's servers, so an npm outage
+      # can fail this step; re-run the job.
+      - name: Audit shipped packages
+        run: npm audit --omit=dev --audit-level=high
+
       # CHANGED: a size-budget warning doesn't fail the build, but there should be none
       # (they were cleared Oct 2026); an error budget does fail it.
       - name: Production build
@@ -80,8 +89,11 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
+      # CHANGED: NuGet audits every package, direct and transitive, while restoring.
+      # In CI only, a High (NU1903) or Critical (NU1904) advisory fails the restore;
+      # Moderate and Low stay warnings. %3B is an escaped ";" between the two codes.
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore -p:NuGetAuditMode=all "-p:WarningsAsErrors=NU1903%3BNU1904"
 
       - name: Build (Release)
         run: dotnet build --configuration Release --no-restore
