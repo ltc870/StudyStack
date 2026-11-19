@@ -1,0 +1,8 @@
+# gitleaks findings that are known and handled, so scans report only new ones.
+# Format: <commit>:<file>:<rule-id>:<line>
+#
+# Commit 180486d (Oct 11, 2026) put real-looking values in .env.example. Both were
+# rotated ("burned") and are no longer used anywhere; found by the Nov 13, 2026
+# hardening audit (item 4.1).
+180486d4e3a1e7166953cf5b5f9119de84a1206e:.env.example:generic-api-key:9
+180486d4e3a1e7166953cf5b5f9119de84a1206e:.env.example:generic-api-key:12
