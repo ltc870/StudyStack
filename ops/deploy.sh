@@ -16,10 +16,17 @@
 #      ends in -test), so production only ever runs main.
 #   2. Refuses if tracked files have local changes, so nothing is overwritten.
 #   3. Fetches the branch from GitHub and checks out exactly what's there.
-#   4. Rebuilds what changed and restarts those containers (docker compose up --build -d).
+#   4. Pulls newer versions of the images it uses as they are (postgres, tailscale),
+#      rebuilds the api and caddy images on freshly pulled base images (dotnet, node,
+#      caddy), then restarts only the containers whose image or settings changed.
+#      Every image uses a moving tag (postgres:18, aspnet:10.0, ...), so this is how
+#      security patches in them arrive. PULL=0 ops/deploy.sh skips the pulls and
+#      builds from what is already here (for example while a registry is down).
 #   5. Waits until every container is running (and healthy, where it has a health
-#      check), then until /api/health/db answers 200 over HTTPS with a valid
-#      certificate: Tailscale, the certificate, Caddy, the API and Postgres in one request.
+#      check), checks that each one runs the image its name now points to (so a
+#      container that wasn't recreated can't hide behind an OK), then waits until
+#      /api/health/db answers 200 over HTTPS with a valid certificate: Tailscale,
+#      the certificate, Caddy, the API and Postgres in one request.
 #   6. Prints one OK or FAILED line, also written to the journal:
 #      journalctl -t studystack-deploy
 #
@@ -40,6 +47,7 @@ main() {
   local repo_dir="${REPO_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
   local tailnet="${TAILNET:-tail63e067.ts.net}"
   local wait_seconds="${WAIT_SECONDS:-180}"
+  local pull="${PULL:-1}"
   local log_tag="studystack-deploy"
   local branch="${1:-main}"
 
@@ -111,9 +119,23 @@ main() {
   subject="$(git log -1 --format=%s)"
   echo "   $before -> $after  $subject" >&2
 
-  # 4. Build and start. Only containers whose image or settings changed are recreated.
-  step "building and starting $project"
-  sudo "${compose[@]}" up --build -d || fail "docker compose up failed for $project at $after"
+  # 4. Pull, build, start. --ignore-buildable skips api and caddy, which have no image
+  #    to pull; build --pull checks the registry for each Dockerfile's FROM image.
+  #    Unchanged base images and code still come from the build cache. Only containers
+  #    whose image or settings changed are recreated.
+  if [[ "$pull" == "1" ]]; then
+    step "pulling newer images"
+    sudo "${compose[@]}" pull --ignore-buildable \
+      || fail "docker compose pull failed for $project (PULL=0 ops/deploy.sh $branch deploys without pulling)"
+    step "building on fresh base images"
+    sudo "${compose[@]}" build --pull \
+      || fail "docker compose build --pull failed for $project at $after (PULL=0 skips the pulls)"
+  else
+    step "building (PULL=0: no pulls)"
+    sudo "${compose[@]}" build || fail "docker compose build failed for $project at $after"
+  fi
+  step "starting $project"
+  sudo "${compose[@]}" up -d || fail "docker compose up failed for $project at $after"
 
   # 5a. Containers: every service running, and healthy if it has a health check.
   step "waiting for the containers (up to ${wait_seconds}s)"
@@ -144,7 +166,21 @@ main() {
     sleep 3
   done
 
-  # 5b. The whole path. The VM's .env has SITE_ADDRESS, which it can resolve. An
+  # 5b. Each container runs the image its name points to now. If a build or pull moved
+  #     a tag but the container wasn't recreated, it would still run the old image.
+  step "checking each container runs the current image"
+  local ref have want
+  for service in "${services[@]}"; do
+    id="$(sudo "${compose[@]}" ps -a -q "$service" 2>/dev/null)"
+    ref="$(sudo docker inspect -f '{{.Config.Image}}' "$id" 2>/dev/null || true)"
+    have="$(sudo docker inspect -f '{{.Image}}' "$id" 2>/dev/null || true)"
+    want="$(sudo docker image inspect -f '{{.Id}}' "$ref" 2>/dev/null || true)"
+    if [[ -z "$have" || "$have" != "$want" ]]; then
+      fail "$service runs ${have#sha256:} but $ref is ${want#sha256:} (not recreated; sudo ${compose[*]} up -d --force-recreate --no-deps $service)"
+    fi
+  done
+
+  # 5c. The whole path. The VM's .env has SITE_ADDRESS, which it can resolve. An
   #     environment has TS_HOSTNAME instead, and homeserver can't resolve *.ts.net
   #     names, so curl is given the machine's Tailscale IP with --resolve, which keeps
   #     the normal certificate check for the real name.
