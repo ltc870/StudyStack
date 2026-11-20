@@ -17,7 +17,13 @@ services:
       retries: 5
 
   api:
-    build: ./backend
+    build:
+      context: ./backend
+      # No provenance attestation: it records the build time, so every build got a new
+      # image ID even with identical content, and ops/deploy.sh's image check (and the
+      # untagged leftovers) couldn't tell a real change from a rebuild. These images
+      # never leave homeserver, so nothing reads the attestation.
+      provenance: false
     restart: unless-stopped
     environment:
       ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}"
@@ -30,7 +36,9 @@ services:
         condition: service_healthy
 
   caddy:
-    build: ./frontend
+    build:
+      context: ./frontend
+      provenance: false  # see api
     restart: unless-stopped
     environment:
       # The Caddyfile's site address. On the server, the MagicDNS name, which turns on
